@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,8 +14,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-
 import technocite.tn.telecite.entities.Employe;
 import technocite.tn.telecite.repositories.IEmploye;
 
@@ -68,5 +67,18 @@ public class EmloyeController {
         return ResponseEntity.ok(authenticatedEmploye);
     }
 	
+	 @DeleteMapping("/{idEmploye}")
+	    public ResponseEntity deleteEmploye(@PathVariable(name = "idEmploye") Long idEmploye) {
+	        if (idEmploye == null) {
+	            return ResponseEntity.badRequest().body("Cannot remove employe with null ID");
+	        }
+	        Employe employe = employeRepository.getOne(idEmploye);
+	        if (employe == null) {
+	            return  ResponseEntity.notFound().build();
+	        }
+	        employeRepository.delete(employe);
+	        return ResponseEntity.ok("employe removed with success");
+	    }
+
 	
 }
