@@ -1,5 +1,6 @@
 package technocite.tn.telecite.controllers;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+
+
 import technocite.tn.telecite.entities.Employe;
 import technocite.tn.telecite.repositories.IEmploye;
 
@@ -31,6 +35,14 @@ public class EmloyeController {
 	public ResponseEntity findAll() {
 		
 		return  ResponseEntity.ok(employeRepository.findAll());
+	}
+	@GetMapping("/AllActives/{isActive}")
+	public ResponseEntity findEmployesActivesOrNot(@PathVariable(name = "isActive") boolean isActive) {
+		if (StringUtils.isEmpty(isActive) ) {
+            return ResponseEntity.badRequest().body("Cannot find with empty employe active");
+        }
+		List<Employe> employes = employeRepository.findByActive(isActive);
+		return  ResponseEntity.ok(employes);
 	}
 
 	@GetMapping("/{idEmploye}")
@@ -88,7 +100,7 @@ public class EmloyeController {
 	        if (employe == null) {
 	            return  ResponseEntity.notFound().build();
 	        }
-	        employe.setActive(!isActive);
+	        employe.setActive(isActive);
 	        return ResponseEntity.ok(employeRepository.save(employe));
 	    }
 
