@@ -33,7 +33,7 @@ public class Employe {
 	private Float salaire;
 	private String post;
 	private String role;
-	private Boolean etatEmploye;
+	private Boolean active;
 	@Lob
 	private Byte[] photo;
 	
@@ -44,7 +44,7 @@ public class Employe {
 	}
 	public Employe(Long idEmploye, String matricule, String nomEmploye, String prenomEmploye, Date dateNaissance,
 			String email, String password, Date dateEmbauche, Float salaire, String post, String role,
-			Boolean etatEmploye, Byte[] photo) {
+			Boolean active, Byte[] photo) {
 		super();
 		this.idEmploye = idEmploye;
 		this.matricule = matricule;
@@ -57,7 +57,7 @@ public class Employe {
 		this.salaire = salaire;
 		this.post = post;
 		this.role = role;
-		this.etatEmploye = etatEmploye;
+		this.active = active;
 		this.photo = photo;
 	}
 	public Long getIdEmploye() {
@@ -126,11 +126,11 @@ public class Employe {
 	public void setRole(String role) {
 		this.role = role;
 	}
-	public Boolean getEtatEmploye() {
-		return etatEmploye;
+	public Boolean isActive() {
+		return active;
 	}
-	public void setEtatEmploye(Boolean etatEmploye) {
-		this.etatEmploye = etatEmploye;
+	public void setActive(Boolean active) {
+		this.active = active;
 	}
 	public Byte[] getPhoto() {
 		return photo;

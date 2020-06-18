@@ -79,6 +79,18 @@ public class EmloyeController {
 	        employeRepository.delete(employe);
 	        return ResponseEntity.ok("employe removed with success");
 	    }
+	 @GetMapping("/active/{idEmploye}/{isActive}")
+	    public ResponseEntity employeActif(@PathVariable(name = "idEmploye") Long idEmploye, @PathVariable(name = "isActive") boolean isActive) {
+	        if (idEmploye == null) {
+	            return ResponseEntity.badRequest().body("Cannot see employe with null ID");
+	        }
+	        Employe employe = employeRepository.getOne(idEmploye);
+	        if (employe == null) {
+	            return  ResponseEntity.notFound().build();
+	        }
+	        employe.setActive(!isActive);
+	        return ResponseEntity.ok(employeRepository.save(employe));
+	    }
 
 	
 }
