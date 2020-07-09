@@ -6,11 +6,13 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.StringUtils;
+
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,11 +21,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 import technocite.tn.telecite.entities.Employe;
+import technocite.tn.telecite.exception.ResourceNotFoundException;
 import technocite.tn.telecite.repositories.IEmploye;
 
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
-@RequestMapping("/telecite/emlpoyes")
+@RequestMapping("/telecite/employes")
 public class EmloyeController {
 	
 	
@@ -67,6 +70,29 @@ public class EmloyeController {
         Employe createEmploye = employeRepository.save(employe);
         return ResponseEntity.ok(createEmploye);
     }
+	 @PutMapping("/update/{idEmploye}")
+		public ResponseEntity<Employe> updateEmploye(@PathVariable(value = "idEmploye") Long idEmploye, @RequestBody 
+			Employe employeeDetails) throws ResourceNotFoundException {
+			Employe employe = employeRepository.findById(idEmploye)
+					.orElseThrow(() -> new ResourceNotFoundException("Employee not found for this id :: " + idEmploye));
+			
+			employe.setMatricule(employeeDetails.getMatricule());
+			employe.setNomEmploye(employeeDetails.getNomEmploye());
+			employe.setPrenomEmploye(employeeDetails.getNomEmploye());
+			employe.setDateNaissance(employeeDetails.getDateNaissance());
+			employe.setEmail(employeeDetails.getEmail());
+			employe.setPassword(employeeDetails.getPassword());
+			employe.setDateEmbauche(employeeDetails.getDateEmbauche());
+			employe.setSalaire(employeeDetails.getSalaire());
+			
+			employe.setPost(employeeDetails.getPost());
+			employe.setRole(employeeDetails.getRole());
+			employe.setActive(employeeDetails.isActive());
+			employe.setPhoto(employeeDetails.getPhoto());
+			
+			final Employe updatedEmploye = employeRepository.save(employe);
+			return ResponseEntity.ok(updatedEmploye);
+		}
 	@PostMapping("/login")
     public ResponseEntity login(@RequestParam(name = "email") String email, @RequestParam(name = "password") String password) {
         if (StringUtils.isEmpty(email) || StringUtils.isEmpty(password)) {
@@ -103,6 +129,7 @@ public class EmloyeController {
 	        employe.setActive(isActive);
 	        return ResponseEntity.ok(employeRepository.save(employe));
 	    }
+	
 
 	
 }
