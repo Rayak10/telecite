@@ -78,7 +78,7 @@ public class EmloyeController {
 			
 			employe.setMatricule(employeeDetails.getMatricule());
 			employe.setNomEmploye(employeeDetails.getNomEmploye());
-			employe.setPrenomEmploye(employeeDetails.getNomEmploye());
+			employe.setPrenomEmploye(employeeDetails.getPrenomEmploye());
 			employe.setDateNaissance(employeeDetails.getDateNaissance());
 			employe.setEmail(employeeDetails.getEmail());
 			employe.setPassword(employeeDetails.getPassword());
