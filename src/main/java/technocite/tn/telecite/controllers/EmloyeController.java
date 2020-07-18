@@ -115,7 +115,7 @@ public class EmloyeController {
 	            return  ResponseEntity.notFound().build();
 	        }
 	        employeRepository.delete(employe);
-	        return ResponseEntity.ok("employe removed with success");
+	        return ResponseEntity.ok(employeRepository.findAll());
 	    }
 	 @GetMapping("/active/{idEmploye}/{isActive}")
 	    public ResponseEntity employeActif(@PathVariable(name = "idEmploye") Long idEmploye, @PathVariable(name = "isActive") boolean isActive) {

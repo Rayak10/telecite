@@ -81,6 +81,6 @@ public class ProjetController {
 	            return  ResponseEntity.notFound().build();
 	        }
 	        projetRepository.delete(projet);
-	        return ResponseEntity.ok("projet removed with success");
+	        return ResponseEntity.ok(projetRepository.findAll());
 	    }
 }
