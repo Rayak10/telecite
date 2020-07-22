@@ -44,6 +44,19 @@ public class ProjetController {
 	        }
 	        return ResponseEntity.ok().body(projet);
 	}
+@GetMapping("/nom/{nomProjet}")
+	
+	public ResponseEntity findProjetByNom(@PathVariable(name="nomProjet") String nomProjet) { 
+		
+		  if (nomProjet == null) {
+	            return ResponseEntity.badRequest().body("Cannot retrieve Projet with null name");
+	        }
+		  Projet projet = projetRepository.findByNomProjet(nomProjet);
+	        if (projet == null) {
+	            return ResponseEntity.notFound().build();
+	        }
+	        return ResponseEntity.ok().body(projet);
+	}
 	
 	@PostMapping("/")
     public ResponseEntity createProjet(@RequestBody Projet projet) {

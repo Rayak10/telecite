@@ -25,7 +25,7 @@ public class Employe {
 	private Long idEmploye;
 	private String matricule;
 	private String nomEmploye;
-	private String PrenomEmploye;
+	private String prenomEmploye;
 	private Date dateNaissance;
 	private String email;
 	private String password;
@@ -49,7 +49,7 @@ public class Employe {
 		this.idEmploye = idEmploye;
 		this.matricule = matricule;
 		this.nomEmploye = nomEmploye;
-		PrenomEmploye = prenomEmploye;
+		prenomEmploye = prenomEmploye;
 		this.dateNaissance = dateNaissance;
 		this.email = email;
 		this.password = password;
@@ -79,10 +79,10 @@ public class Employe {
 		this.nomEmploye = nomEmploye;
 	}
 	public String getPrenomEmploye() {
-		return PrenomEmploye;
+		return prenomEmploye;
 	}
 	public void setPrenomEmploye(String prenomEmploye) {
-		PrenomEmploye = prenomEmploye;
+		prenomEmploye = prenomEmploye;
 	}
 	public Date getDateNaissance() {
 		return dateNaissance;

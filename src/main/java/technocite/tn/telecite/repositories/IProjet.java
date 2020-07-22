@@ -7,4 +7,7 @@ import technocite.tn.telecite.entities.Projet;
 
 public interface IProjet  extends JpaRepository<Projet, Long>{
 
+	Projet findByNomProjet(String nomProjet);
+
+
 }

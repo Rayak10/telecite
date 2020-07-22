@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 import technocite.tn.telecite.entities.Employe;
+import technocite.tn.telecite.entities.Projet;
 import technocite.tn.telecite.exception.ResourceNotFoundException;
 import technocite.tn.telecite.repositories.IEmploye;
 
@@ -39,6 +40,7 @@ public class EmloyeController {
 		
 		return  ResponseEntity.ok(employeRepository.findAll());
 	}
+	
 	@GetMapping("/AllActives/{isActive}")
 	public ResponseEntity findEmployesActivesOrNot(@PathVariable(name = "isActive") boolean isActive) {
 		if (StringUtils.isEmpty(isActive) ) {
@@ -61,9 +63,34 @@ public class EmloyeController {
 	        }
 	        return ResponseEntity.ok().body(employe);
 	}
+	@GetMapping("/nom/{nomEmploye}")
+
+	public ResponseEntity findByNomEmploye(@PathVariable(name="nomEmploye") String nomEmploye) { 
+		 if (nomEmploye == null) {
+	            return ResponseEntity.badRequest().body("Cannot retrieve employe with null name");
+	        }
+		  Employe employe = employeRepository.findByNomEmploye(nomEmploye);
+	        if (employe == null) {
+	            return ResponseEntity.notFound().build();
+	        }
+	        return ResponseEntity.ok().body(employe);
+	}
 	
+	
+	@GetMapping("/nomPrenom/{nomEmploye}/{prenomEmploye}")
+
+	public ResponseEntity findByNomEmployeAndPrenomEmploye(@PathVariable(name="nomEmploye") String nomEmploye,@PathVariable(name="prenomEmploye") String prenomEmploye) { 
+		 if (nomEmploye == null) {
+	            return ResponseEntity.badRequest().body("Cannot retrieve employe with null name");
+	        }
+		  Employe employe = employeRepository.findByNomEmployeAndPrenomEmploye(nomEmploye, prenomEmploye);
+	        if (employe == null) {
+	            return ResponseEntity.notFound().build();
+	        }
+	        return ResponseEntity.ok().body(employe);
+	}
 	@PostMapping("/")
-    public ResponseEntity createEmploye(@RequestBody Employe employe) {
+    	public ResponseEntity createEmploye(@RequestBody Employe employe) {
         if (employe == null) {
             return ResponseEntity.badRequest().body("Cannot create employe with empty fields");
         }

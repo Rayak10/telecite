@@ -1,11 +1,18 @@
 package technocite.tn.telecite.entities;
 
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -28,6 +35,8 @@ public class Projet {
 	private String descriptionTechnique;
 	private Date dateDebut;
 	private Date dateFin ;
+	@OneToMany(targetEntity = Sprint.class,mappedBy = "projet",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+	private List<Sprint>sprints;
 	
 	
 	
@@ -36,8 +45,10 @@ public class Projet {
 		super();
 	}
 
+	
+
 	public Projet(Long idProjet, String nomProjet, String theme, String description, String descriptionTechnique,
-			Date dateDebut, Date dateFin) {
+			Date dateDebut, Date dateFin, List<Sprint> sprints) {
 		super();
 		this.idProjet = idProjet;
 		this.nomProjet = nomProjet;
@@ -46,7 +57,10 @@ public class Projet {
 		this.descriptionTechnique = descriptionTechnique;
 		this.dateDebut = dateDebut;
 		this.dateFin = dateFin;
+		this.sprints = sprints;
 	}
+
+
 
 	public Long getIdProjet() {
 		return idProjet;
@@ -102,6 +116,18 @@ public class Projet {
 
 	public void setDateFin(Date dateFin) {
 		this.dateFin = dateFin;
+	}
+
+
+
+	public List<Sprint> getSprints() {
+		return sprints;
+	}
+
+
+
+	public void setSprints(List<Sprint> sprints) {
+		this.sprints = sprints;
 	}
 
 	
