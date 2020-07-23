@@ -10,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -18,6 +19,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Entity
 @Table(name="PROJET")
@@ -25,6 +27,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @Builder
+@ToString
 public class Projet {
 	@Id
 	@GeneratedValue
@@ -38,7 +41,8 @@ public class Projet {
 	@OneToMany(targetEntity = Sprint.class,mappedBy = "projet",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
 	private List<Sprint>sprints;
 	
-	
+	@OneToOne(mappedBy="projet")
+	private Equipe equipe;
 	
 	
 	public Projet() {
@@ -47,8 +51,12 @@ public class Projet {
 
 	
 
+	
+
+
+
 	public Projet(Long idProjet, String nomProjet, String theme, String description, String descriptionTechnique,
-			Date dateDebut, Date dateFin, List<Sprint> sprints) {
+			Date dateDebut, Date dateFin, List<Sprint> sprints, Equipe equipe) {
 		super();
 		this.idProjet = idProjet;
 		this.nomProjet = nomProjet;
@@ -58,7 +66,12 @@ public class Projet {
 		this.dateDebut = dateDebut;
 		this.dateFin = dateFin;
 		this.sprints = sprints;
+		this.equipe = equipe;
 	}
+
+
+
+
 
 
 
@@ -128,6 +141,26 @@ public class Projet {
 
 	public void setSprints(List<Sprint> sprints) {
 		this.sprints = sprints;
+	}
+
+
+
+
+
+
+	@JsonIgnore
+	public Equipe getEquipe() {
+		return equipe;
+	}
+
+
+
+
+
+
+
+	public void setEquipe(Equipe equipe) {
+		this.equipe = equipe;
 	}
 
 	

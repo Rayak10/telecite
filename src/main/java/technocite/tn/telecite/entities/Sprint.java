@@ -1,13 +1,17 @@
 package technocite.tn.telecite.entities;
 
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -17,6 +21,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Entity
 @Table(name="SPRINT")
@@ -24,6 +29,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @Builder
+@ToString
 public class Sprint {
 	@Id
 	@GeneratedValue
@@ -32,11 +38,16 @@ public class Sprint {
 	private Integer numeroSprint;
 	private Date dateDebut;
 	private Date dateFin;
-	private String etat;
+	private String etatSprint;
 	
 	@ManyToOne
 	@JoinColumn(name="FK_PS_ID")
 	private Projet projet;
+	@OneToMany(targetEntity = UserStory.class,mappedBy = "sprint",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+	private List<UserStory>userstorys;
+
+	@OneToMany(targetEntity = Remarque.class,mappedBy = "sprint",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+	private List<Remarque>remarques;
 
 	public Sprint() {
 		super();
@@ -45,27 +56,19 @@ public class Sprint {
 
 	
 
-
-
-
-
-	public Sprint(Long idSprint, String nomSprint, Integer numeroSprint, Date dateDebut, Date dateFin, String etat,
-			 Projet projet  ) {
+	public Sprint(Long idSprint, String nomSprint, Integer numeroSprint, Date dateDebut, Date dateFin, String etatSprint,
+			Projet projet, List<UserStory> userstorys, List<Remarque> remarques) {
 		super();
 		this.idSprint = idSprint;
 		this.nomSprint = nomSprint;
 		this.numeroSprint = numeroSprint;
 		this.dateDebut = dateDebut;
 		this.dateFin = dateFin;
-		this.etat = etat;
-	
+		this.etatSprint = etatSprint;
 		this.projet = projet;
-	
+		this.userstorys = userstorys;
+		this.remarques = remarques;
 	}
-
-
-
-
 
 
 
@@ -120,13 +123,13 @@ public class Sprint {
 	}
 
 
-	public String getEtat() {
-		return etat;
+	public String getEtatSprint() {
+		return etatSprint;
 	}
 
 
-	public void setEtat(String etat) {
-		this.etat = etat;
+	public void setEtatSprin(String etatSprint) {
+		this.etatSprint = etatSprint;
 	}
 
 @JsonIgnore
@@ -139,6 +142,30 @@ public class Sprint {
 
 	public void setProjet(Projet projet) {
 		this.projet = projet;
+	}
+
+
+	public List<UserStory> getUserstorys() {
+		return userstorys;
+	}
+
+
+	public void setUserstorys(List<UserStory> userstorys) {
+		this.userstorys = userstorys;
+	}
+
+
+
+
+	public List<Remarque> getRemarques() {
+		return remarques;
+	}
+
+
+
+
+	public void setRemarques(List<Remarque> remarques) {
+		this.remarques = remarques;
 	}
 
 

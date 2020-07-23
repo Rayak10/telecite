@@ -47,13 +47,13 @@ public class SprintController {
 	        if (projet == null) {
 	            return ResponseEntity.notFound().build();
 	        }
-	        List<Sprint> projetSprint = sprintRepository.findByProjet(projet);
+	        List<Sprint> projetSprints = sprintRepository.findByProjet(projet);
 	        
 	        
 	       // projetSprint.forEach(sprint -> sprint.setIdOwner(idProjet));
 	       
 
-	        return ResponseEntity.ok(projetSprint);
+	        return ResponseEntity.ok(projetSprints);
 	    }
 	    
 	
@@ -72,6 +72,21 @@ public class SprintController {
 	        return ResponseEntity.ok().body(sprint);
 	          
 	}
+@GetMapping("/etat/{etatSprint}")
+
+public ResponseEntity findByEtatSprint(@PathVariable(name="etatSprint") String etatSprint) { 
+	
+	  if (etatSprint == null) {
+            return ResponseEntity.badRequest().body("Cannot retrieve sprint with null etat");
+        }
+	  List<Sprint> sprints = sprintRepository.findByEtatSprint(etatSprint);
+        if (sprints == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok().body(sprints);
+          
+}
+
 @PostMapping("/")
 
     public ResponseEntity createSprint(@RequestBody Sprint sprint) {
@@ -95,7 +110,7 @@ public ResponseEntity<Sprint> updateSprint(@PathVariable(value = "idSprint") Lon
 	sprint.setNumeroSprint(sprintDetails.getNumeroSprint());
 	sprint.setDateDebut(sprintDetails.getDateDebut());
 	sprint.setDateFin(sprintDetails.getDateFin());
-	sprint.setEtat(sprintDetails.getEtat());
+	sprint.setEtatSprin(sprintDetails.getEtatSprint());
 	sprint.setProjet(sprintDetails.getProjet());
 	
 	
