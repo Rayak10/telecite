@@ -4,6 +4,7 @@ import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -26,7 +27,7 @@ import lombok.ToString;
 @ToString
 public class Tache {
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long idTache;
 	private String descriptionTache;
 	private String etatTache;
@@ -119,7 +120,7 @@ public class Tache {
 		this.dateFin = dateFin;
 	}
 
-
+	@JsonIgnore
 	public UserStory getUserStory() {
 		return userStory;
 	}
@@ -129,17 +130,16 @@ public class Tache {
 		this.userStory = userStory;
 	}
 
-@JsonIgnore
+	@JsonIgnore
 	public Employe getEmploye() {
 		return employe;
 	}
 
-@JsonIgnore
+
 	public void setEmploye(Employe employe) {
 		this.employe = employe;
 	}
-	
-	
-	
-	
+
+
+
 }

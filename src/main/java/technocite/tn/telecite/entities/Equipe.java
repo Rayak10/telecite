@@ -6,6 +6,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
@@ -29,8 +30,8 @@ import lombok.ToString;
 @ToString
 public class Equipe {
 	@Id
-	@GeneratedValue
-	private Long idTache;
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	private Long idEquipe;
 	private String nomEquipe;
 	private String specialite;
 	@OneToMany(targetEntity = Employe.class,mappedBy = "equipe",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
@@ -38,61 +39,69 @@ public class Equipe {
 	@OneToOne
 	@JoinColumn(name="FK_PE_ID")
 	private Projet projet;
-	
+	@OneToMany(targetEntity = Notification.class,mappedBy = "equipe",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+	private List<Notification>notifications;
+	@OneToMany(targetEntity = ReunionScrum.class,mappedBy = "equipe",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+	private List<ReunionScrum>reunionScrums;
 	public Equipe() {
 		super();
 	}
-
-	public Equipe(Long idTache, String nomEquipe, String specialite, List<Employe> employes, Projet projet) {
+	public Equipe(Long idEquipe, String nomEquipe, String specialite, List<Employe> employes, Projet projet,
+			List<Notification> notifications, List<ReunionScrum> reunionScrums) {
 		super();
-		this.idTache = idTache;
+		this.idEquipe = idEquipe;
 		this.nomEquipe = nomEquipe;
 		this.specialite = specialite;
 		this.employes = employes;
 		this.projet = projet;
+		this.notifications = notifications;
+		this.reunionScrums = reunionScrums;
 	}
-
-	public Long getIdTache() {
-		return idTache;
+	public Long getIdEquipe() {
+		return idEquipe;
 	}
-
-	public void setIdTache(Long idTache) {
-		this.idTache = idTache;
+	public void setIdTache(Long idEquipe) {
+		this.idEquipe = idEquipe;
 	}
-
 	public String getNomEquipe() {
 		return nomEquipe;
 	}
-
 	public void setNomEquipe(String nomEquipe) {
 		this.nomEquipe = nomEquipe;
 	}
-
 	public String getSpecialite() {
 		return specialite;
 	}
-
 	public void setSpecialite(String specialite) {
 		this.specialite = specialite;
 	}
-
 	public List<Employe> getEmployes() {
 		return employes;
 	}
-
 	public void setEmployes(List<Employe> employes) {
 		this.employes = employes;
 	}
-@JsonIgnore
+	@JsonIgnore
 	public Projet getProjet() {
 		return projet;
 	}
-
 	public void setProjet(Projet projet) {
 		this.projet = projet;
 	}
+	public List<Notification> getNotifications() {
+		return notifications;
+	}
+	public void setNotifications(List<Notification> notifications) {
+		this.notifications = notifications;
+	}
+	public List<ReunionScrum> getReunionScrums() {
+		return reunionScrums;
+	}
+	public void setReunionScrums(List<ReunionScrum> reunionScrums) {
+		this.reunionScrums = reunionScrums;
+	}
 	
-
-
+	
+	
 }
 

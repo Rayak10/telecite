@@ -80,6 +80,7 @@ public class ProjetController {
 			projet.setDateFin(projetDetails.getDateFin());
 			
 			
+			
 			final Projet updatedProjet = projetRepository.save(projet);
 			return ResponseEntity.ok(updatedProjet);
 		}

@@ -2,21 +2,17 @@ package technocite.tn.telecite.entities;
 
 import java.util.Date;
 import java.util.List;
-
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -32,7 +28,7 @@ import lombok.ToString;
 @ToString
 public class Sprint {
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long idSprint;
 	private String nomSprint;
 	private Integer numeroSprint;
@@ -53,11 +49,8 @@ public class Sprint {
 		super();
 	}
 
-
-	
-
-	public Sprint(Long idSprint, String nomSprint, Integer numeroSprint, Date dateDebut, Date dateFin, String etatSprint,
-			Projet projet, List<UserStory> userstorys, List<Remarque> remarques) {
+	public Sprint(Long idSprint, String nomSprint, Integer numeroSprint, Date dateDebut, Date dateFin,
+			String etatSprint, Projet projet, List<UserStory> userstorys, List<Remarque> remarques) {
 		super();
 		this.idSprint = idSprint;
 		this.nomSprint = nomSprint;
@@ -70,108 +63,78 @@ public class Sprint {
 		this.remarques = remarques;
 	}
 
-
-
-
 	public Long getIdSprint() {
 		return idSprint;
 	}
-
 
 	public void setIdSprint(Long idSprint) {
 		this.idSprint = idSprint;
 	}
 
-
 	public String getNomSprint() {
 		return nomSprint;
 	}
-
 
 	public void setNomSprint(String nomSprint) {
 		this.nomSprint = nomSprint;
 	}
 
-
 	public Integer getNumeroSprint() {
 		return numeroSprint;
 	}
-
 
 	public void setNumeroSprint(Integer numeroSprint) {
 		this.numeroSprint = numeroSprint;
 	}
 
-
 	public Date getDateDebut() {
 		return dateDebut;
 	}
-
 
 	public void setDateDebut(Date dateDebut) {
 		this.dateDebut = dateDebut;
 	}
 
-
 	public Date getDateFin() {
 		return dateFin;
 	}
-
 
 	public void setDateFin(Date dateFin) {
 		this.dateFin = dateFin;
 	}
 
-
 	public String getEtatSprint() {
 		return etatSprint;
 	}
 
-
-	public void setEtatSprin(String etatSprint) {
+	public void setEtatSprint(String etatSprint) {
 		this.etatSprint = etatSprint;
 	}
-
-@JsonIgnore
+	@JsonIgnore
 	public Projet getProjet() {
 		return projet;
 	}
-
-
-
 
 	public void setProjet(Projet projet) {
 		this.projet = projet;
 	}
 
-
 	public List<UserStory> getUserstorys() {
 		return userstorys;
 	}
-
 
 	public void setUserstorys(List<UserStory> userstorys) {
 		this.userstorys = userstorys;
 	}
 
-
-
-
 	public List<Remarque> getRemarques() {
 		return remarques;
 	}
-
-
-
 
 	public void setRemarques(List<Remarque> remarques) {
 		this.remarques = remarques;
 	}
 
 
-
-
-	
-	
 	
 }

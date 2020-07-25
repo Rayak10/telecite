@@ -6,7 +6,6 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.StringUtils;
-
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,13 +16,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-
-
 import technocite.tn.telecite.entities.Employe;
-import technocite.tn.telecite.entities.Projet;
+import technocite.tn.telecite.entities.Equipe;
 import technocite.tn.telecite.exception.ResourceNotFoundException;
 import technocite.tn.telecite.repositories.IEmploye;
+import technocite.tn.telecite.repositories.IEquipe;
 
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -33,6 +30,8 @@ public class EmloyeController {
 	
 	@Autowired
 	private IEmploye employeRepository;
+	@Autowired
+	private IEquipe equipeRepository;
 	
 	
 	@GetMapping("/")
@@ -114,8 +113,10 @@ public class EmloyeController {
 			
 			employe.setPost(employeeDetails.getPost());
 			employe.setRole(employeeDetails.getRole());
-			employe.setActive(employeeDetails.isActive());
+			employe.setActive(employeeDetails.getActive());
 			employe.setPhoto(employeeDetails.getPhoto());
+			employe.setBureau(employeeDetails.getBureau());
+			employe.setDepartement(employeeDetails.getDepartement());
 			
 			final Employe updatedEmploye = employeRepository.save(employe);
 			return ResponseEntity.ok(updatedEmploye);
@@ -156,6 +157,24 @@ public class EmloyeController {
 	        employe.setActive(isActive);
 	        return ResponseEntity.ok(employeRepository.save(employe));
 	    }
+	 @GetMapping("/all/{nomEquipe}")
+	    public ResponseEntity findAllEemployesEquipe(@PathVariable String nomEquipe) {
+	        if (nomEquipe == null) {
+	            return ResponseEntity.badRequest().body("Cannot find employes with null nomEquipe");
+	        }
+	        Equipe equipe = equipeRepository.findByNomEquipe(nomEquipe);
+	        if (equipe == null) {
+	            return ResponseEntity.notFound().build();
+	        }
+	        List<Employe> equipeEmployes = employeRepository.findByEquipe(equipe);
+	        
+	        
+	       // projetSprint.forEach(sprint -> sprint.setIdOwner(idProjet));
+	       
+
+	        return ResponseEntity.ok(equipeEmployes);
+	    }
+	    
 	
 
 	

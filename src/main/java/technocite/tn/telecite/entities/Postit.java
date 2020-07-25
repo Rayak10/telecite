@@ -1,5 +1,7 @@
 package technocite.tn.telecite.entities;
 
+import java.util.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -17,67 +19,58 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 @Entity
-@Table(name="REMARQUE")
+@Table(name="POSTIT")
 @NoArgsConstructor
 @Data
 @AllArgsConstructor
 @Builder
 @ToString
-public class Remarque {
+public class Postit {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private Long idRemarque;
-	private String libelleRemarque;
+	private Long idPostit;
+	private String descriptionPostit;
+	private Date datePostit;
 	@ManyToOne
-	@JoinColumn(name="FK_SR_ID")
-	private Sprint sprint;
-	@ManyToOne
-	@JoinColumn(name="FK_ER_ID")
+	@JoinColumn(name="FK_EP_ID")
 	private Employe employe;
-	
-	public Remarque() {
+	public Postit() {
 		super();
 	}
-
-	public Remarque(Long idRemarque, String libelleRemarque, Sprint sprint, Employe employe) {
+	public Postit(Long idPostit, String descriptionPostit, Date datePostit, Employe employe) {
 		super();
-		this.idRemarque = idRemarque;
-		this.libelleRemarque = libelleRemarque;
-		this.sprint = sprint;
+		this.idPostit = idPostit;
+		this.descriptionPostit = descriptionPostit;
+		this.datePostit = datePostit;
 		this.employe = employe;
 	}
-
-	public Long getIdRemarque() {
-		return idRemarque;
+	public Long getIdPostit() {
+		return idPostit;
 	}
-
-	public void setIdRemarque(Long idRemarque) {
-		this.idRemarque = idRemarque;
+	public void setIdPostit(Long idPostit) {
+		this.idPostit = idPostit;
 	}
-
-	public String getLibelleRemarque() {
-		return libelleRemarque;
+	public String getDescriptionPostit() {
+		return descriptionPostit;
 	}
-
-	public void setLibelleRemarque(String libelleRemarque) {
-		this.libelleRemarque = libelleRemarque;
+	public void setDescriptionPostit(String descriptionPostit) {
+		this.descriptionPostit = descriptionPostit;
 	}
-
-	public Sprint getSprint() {
-		return sprint;
+	public Date getDatePostit() {
+		return datePostit;
 	}
-
-	public void setSprint(Sprint sprint) {
-		this.sprint = sprint;
+	public void setDatePostit(Date datePostit) {
+		this.datePostit = datePostit;
 	}
-@JsonIgnore
+	@JsonIgnore
 	public Employe getEmploye() {
 		return employe;
 	}
-
 	public void setEmploye(Employe employe) {
 		this.employe = employe;
 	}
-
+	
+	
+	
 	
 }
