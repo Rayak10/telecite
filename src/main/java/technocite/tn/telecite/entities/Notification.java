@@ -9,6 +9,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -27,6 +29,8 @@ public class Notification {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long idNotification;
 	private String nomNotification;
+	private String libelleNotification;
+
 	@ManyToOne
 	@JoinColumn(name="FK_EN_ID")
 	private Equipe equipe;
@@ -37,10 +41,11 @@ public class Notification {
 		super();
 	}
 
-	public Notification(Long idNotification, String nomNotification, Equipe equipe, ReunionScrum reunionScrum) {
+	public Notification(Long idNotification, String nomNotification, String libelleNotification, Equipe equipe, ReunionScrum reunionScrum) {
 		super();
 		this.idNotification = idNotification;
 		this.nomNotification = nomNotification;
+		this.libelleNotification=libelleNotification;
 		this.equipe = equipe;
 		this.reunionScrum = reunionScrum;
 	}
@@ -60,7 +65,20 @@ public class Notification {
 	public void setNomNotification(String nomNotification) {
 		this.nomNotification = nomNotification;
 	}
+	
+public String getLibelleNotification() {
+		return libelleNotification;
+	}
 
+	public void setLibelleNotification(String libelleNotification) {
+		this.libelleNotification = libelleNotification;
+	}
+
+	public void setReunionScrum(ReunionScrum reunionScrum) {
+		this.reunionScrum = reunionScrum;
+	}
+
+@JsonIgnore
 	public Equipe getEquipe() {
 		return equipe;
 	}
@@ -68,7 +86,7 @@ public class Notification {
 	public void setEquipe(Equipe equipe) {
 		this.equipe = equipe;
 	}
-
+@JsonIgnore
 	public ReunionScrum getReunionScrum() {
 		return reunionScrum;
 	}

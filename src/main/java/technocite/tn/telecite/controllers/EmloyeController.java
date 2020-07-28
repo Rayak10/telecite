@@ -16,9 +16,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import technocite.tn.telecite.entities.Bureau;
 import technocite.tn.telecite.entities.Employe;
 import technocite.tn.telecite.entities.Equipe;
 import technocite.tn.telecite.exception.ResourceNotFoundException;
+import technocite.tn.telecite.repositories.IBureau;
 import technocite.tn.telecite.repositories.IEmploye;
 import technocite.tn.telecite.repositories.IEquipe;
 
@@ -32,7 +35,8 @@ public class EmloyeController {
 	private IEmploye employeRepository;
 	@Autowired
 	private IEquipe equipeRepository;
-	
+	@Autowired
+	private IBureau bureauRepository;
 	
 	@GetMapping("/")
 	public ResponseEntity findAll() {
@@ -157,7 +161,7 @@ public class EmloyeController {
 	        employe.setActive(isActive);
 	        return ResponseEntity.ok(employeRepository.save(employe));
 	    }
-	 @GetMapping("/all/{nomEquipe}")
+	 @GetMapping("/employesEquipe/{nomEquipe}")
 	    public ResponseEntity findAllEemployesEquipe(@PathVariable String nomEquipe) {
 	        if (nomEquipe == null) {
 	            return ResponseEntity.badRequest().body("Cannot find employes with null nomEquipe");
@@ -169,13 +173,27 @@ public class EmloyeController {
 	        List<Employe> equipeEmployes = employeRepository.findByEquipe(equipe);
 	        
 	        
-	       // projetSprint.forEach(sprint -> sprint.setIdOwner(idProjet));
 	       
 
 	        return ResponseEntity.ok(equipeEmployes);
 	    }
 	    
-	
+	 @GetMapping("/employesBureau/{nomBureau}")
+	    public ResponseEntity findAllEemployesBureau(@PathVariable String nomBureau) {
+	        if (nomBureau == null) {
+	            return ResponseEntity.badRequest().body("Cannot find employes with null nomBureau");
+	        }
+	        Bureau bureau = bureauRepository.findByNomBureau(nomBureau);
+	        if (bureau == null) {
+	            return ResponseEntity.notFound().build();
+	        }
+	        List<Employe> equipeEmployes = employeRepository.findByBureau(bureau);
+	        
+	        
+	       
+
+	        return ResponseEntity.ok(equipeEmployes);
+	    }
 
 	
 }

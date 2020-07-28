@@ -1,5 +1,7 @@
 package technocite.tn.telecite.entities;
 
+import java.util.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -28,6 +30,7 @@ public class Remarque {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long idRemarque;
 	private String libelleRemarque;
+	private Date dateRemarque;
 	@ManyToOne
 	@JoinColumn(name="FK_SR_ID")
 	private Sprint sprint;
@@ -39,10 +42,11 @@ public class Remarque {
 		super();
 	}
 
-	public Remarque(Long idRemarque, String libelleRemarque, Sprint sprint, Employe employe) {
+	public Remarque(Long idRemarque, String libelleRemarque,Date dateRemarque, Sprint sprint, Employe employe) {
 		super();
 		this.idRemarque = idRemarque;
 		this.libelleRemarque = libelleRemarque;
+		this.dateRemarque=dateRemarque;
 		this.sprint = sprint;
 		this.employe = employe;
 	}
@@ -62,7 +66,16 @@ public class Remarque {
 	public void setLibelleRemarque(String libelleRemarque) {
 		this.libelleRemarque = libelleRemarque;
 	}
+	
 
+	public Date getDateRemarque() {
+		return dateRemarque;
+	}
+
+	public void setDateRemarque(Date dateRemarque) {
+		this.dateRemarque = dateRemarque;
+	}
+@JsonIgnore
 	public Sprint getSprint() {
 		return sprint;
 	}

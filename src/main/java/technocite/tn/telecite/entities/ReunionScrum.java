@@ -49,8 +49,9 @@ public class ReunionScrum {
 	public ReunionScrum() {
 		super();
 	}
+	
 	public ReunionScrum(Long idReunionScrum, String nomReunionScrum, String descriptionReunionScrum, Date dateDebut,
-			Date dateFin, Notification notification, Equipe equipe) {
+			Date dateFin, Notification notification, Equipe equipe, List<Message> messages) {
 		super();
 		this.idReunionScrum = idReunionScrum;
 		this.nomReunionScrum = nomReunionScrum;
@@ -59,8 +60,9 @@ public class ReunionScrum {
 		this.dateFin = dateFin;
 		this.notification = notification;
 		this.equipe = equipe;
-	
+		this.messages = messages;
 	}
+
 	public Long getIdReunionScrum() {
 		return idReunionScrum;
 	}
@@ -104,6 +106,14 @@ public class ReunionScrum {
 	}
 	public void setEquipe(Equipe equipe) {
 		this.equipe = equipe;
+	}
+@JsonIgnore
+	public List<Message> getMessages() {
+		return messages;
+	}
+
+	public void setMessages(List<Message> messages) {
+		this.messages = messages;
 	}
 	
 	

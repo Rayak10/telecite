@@ -27,7 +27,10 @@ public class BureauController {
 	private IBureau bureauRepository;
 	@Autowired
 	private IEmploye employeRepository;
-	@GetMapping("/")
+	
+	
+	
+@GetMapping("/")
 	public ResponseEntity findAll() {
 		
 		return  ResponseEntity.ok(bureauRepository.findAll());

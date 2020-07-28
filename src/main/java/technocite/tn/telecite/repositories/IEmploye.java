@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-
+import technocite.tn.telecite.entities.Bureau;
 import technocite.tn.telecite.entities.Employe;
 import technocite.tn.telecite.entities.Equipe;
 
@@ -15,5 +15,6 @@ public interface IEmploye extends JpaRepository<Employe, Long>{
 
 	Employe findByNomEmploye (String nomEmploye);
 	Employe findByNomEmployeAndPrenomEmploye (String nomEmploye ,String PrenomEmploye);
+	List<Employe> findByBureau(Bureau bureau);
 	}
 
