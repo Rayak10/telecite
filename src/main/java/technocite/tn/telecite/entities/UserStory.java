@@ -28,7 +28,7 @@ import lombok.ToString;
 public class UserStory {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private Long userStory;
+	private Long idUserStory;
 	private String libelleUserStory;
 	private Integer priorite;
 	private Integer complexite;
@@ -42,10 +42,10 @@ public class UserStory {
 		super();
 	}
 
-	public UserStory(Long userStory, String libelleUserStory, Integer priorite, Integer complexite, Sprint sprint,
+	public UserStory(Long idUserStory, String libelleUserStory, Integer priorite, Integer complexite, Sprint sprint,
 			List<Tache> taches) {
 		super();
-		this.userStory = userStory;
+		this.idUserStory = idUserStory;
 		this.libelleUserStory = libelleUserStory;
 		this.priorite = priorite;
 		this.complexite = complexite;
@@ -53,12 +53,12 @@ public class UserStory {
 		this.taches = taches;
 	}
 
-	public Long getUserStory() {
-		return userStory;
+	public Long getIdUserStory() {
+		return idUserStory;
 	}
 
-	public void setUserStory(Long userStory) {
-		this.userStory = userStory;
+	public void setIdUserStory(Long idUserStory) {
+		this.idUserStory = idUserStory;
 	}
 
 	public String getLibelleUserStory() {

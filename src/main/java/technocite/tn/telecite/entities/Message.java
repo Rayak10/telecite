@@ -40,18 +40,19 @@ public class Message {
 	@JoinColumn(name="FK_EM_ID")
 	private Employe employe;
 	@ManyToOne
-	@JoinColumn(name="FK_RM_ID")
-	private ReunionScrum reunionScrum;
+	@JoinColumn(name="FK_CM_ID")
+	private Conversation conversation;
+	
 	public Message() {
 		super();
 	}
-	public Message(Long idMessage, Date dateEnvoi, Date dateLecture, Employe employe, ReunionScrum reunionScrum) {
+	public Message(Long idMessage, Date dateEnvoi, Date dateLecture, Employe employe, Conversation conversation) {
 		super();
 		this.idMessage = idMessage;
 		this.dateEnvoi = dateEnvoi;
 		this.dateLecture = dateLecture;
 		this.employe = employe;
-		this.reunionScrum = reunionScrum;
+		this.conversation = conversation;
 	}
 	public Long getIdMessage() {
 		return idMessage;
@@ -77,11 +78,12 @@ public class Message {
 	public void setEmploye(Employe employe) {
 		this.employe = employe;
 	}
-	public ReunionScrum getReunionScrum() {
-		return reunionScrum;
+	public Conversation getConversation() {
+		return conversation;
 	}
-	public void setReunionScrum(ReunionScrum reunionScrum) {
-		this.reunionScrum = reunionScrum;
+	public void setConversation(Conversation conversation) {
+		this.conversation = conversation;
 	}
+	
 	
 }

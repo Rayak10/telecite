@@ -41,10 +41,16 @@ public class Video extends Message  {
 	}
 
 
-	public Video(Long idMessage, Date dateEnvoi, Date dateLecture, Employe employe, ReunionScrum reunionScrum,Byte[] video) {
-		super(idMessage, dateEnvoi, dateLecture, employe, reunionScrum);
-this.video=video;
-}
+	
+
+
+
+
+
+	public Video(Long idMessage, Date dateEnvoi, Date dateLecture, Employe employe, Conversation conversation,Byte[] video) {
+		super(idMessage, dateEnvoi, dateLecture, employe, conversation);
+		this.video=video;
+	}
 
 
 

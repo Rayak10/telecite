@@ -1,17 +1,13 @@
 package technocite.tn.telecite.entities;
 
 import java.util.Date;
-import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -42,16 +38,16 @@ public class ReunionScrum {
 	@ManyToOne
 	@JoinColumn(name="FK_ER_ID")
 	private Equipe equipe;
-	@OneToMany(targetEntity = Message.class,mappedBy = "reunionScrum",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
-	private List<Message>messages;
-	
+	@OneToOne
+	@JoinColumn(name="FK_CR_ID")
+	private Conversation conversation;
 	
 	public ReunionScrum() {
 		super();
 	}
 	
 	public ReunionScrum(Long idReunionScrum, String nomReunionScrum, String descriptionReunionScrum, Date dateDebut,
-			Date dateFin, Notification notification, Equipe equipe, List<Message> messages) {
+			Date dateFin, Notification notification, Equipe equipe,Conversation conversation) {
 		super();
 		this.idReunionScrum = idReunionScrum;
 		this.nomReunionScrum = nomReunionScrum;
@@ -60,7 +56,7 @@ public class ReunionScrum {
 		this.dateFin = dateFin;
 		this.notification = notification;
 		this.equipe = equipe;
-		this.messages = messages;
+		this.conversation=conversation;
 	}
 
 	public Long getIdReunionScrum() {
@@ -107,14 +103,17 @@ public class ReunionScrum {
 	public void setEquipe(Equipe equipe) {
 		this.equipe = equipe;
 	}
-@JsonIgnore
-	public List<Message> getMessages() {
-		return messages;
+	@JsonIgnore
+	public Conversation getConversation() {
+		return conversation;
 	}
 
-	public void setMessages(List<Message> messages) {
-		this.messages = messages;
+	public void setConversation(Conversation conversation) {
+		this.conversation = conversation;
 	}
+
+
+
 	
 	
 	

@@ -37,8 +37,11 @@ public class Text extends Message {
 	
 	
 
-	public Text(Long idMessage, Date dateEnvoi, Date dateLecture, Employe employe, ReunionScrum reunionScrum,String text) {
-		super(idMessage, dateEnvoi, dateLecture, employe, reunionScrum);
+	
+
+
+	public Text(Long idMessage, Date dateEnvoi, Date dateLecture, Employe employe, Conversation conversation,String text) {
+		super(idMessage, dateEnvoi, dateLecture, employe, conversation);
 this.text=text;	}
 
 

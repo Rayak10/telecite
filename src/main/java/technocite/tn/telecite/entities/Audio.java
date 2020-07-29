@@ -33,8 +33,10 @@ public class Audio extends Message{
 	public Audio() {
 		super();
 	}
-	public Audio(Long idMessage, Date dateEnvoi, Date dateLecture, Employe employe, ReunionScrum reunionScrum,Byte[] vocale) {
-		super(idMessage, dateEnvoi, dateLecture, employe, reunionScrum);
+	
+
+	public Audio(Long idMessage, Date dateEnvoi, Date dateLecture, Employe employe, Conversation conversation,Byte[] vocale) {
+		super(idMessage, dateEnvoi, dateLecture, employe, conversation);
 		this.vocale=vocale;
 	}
 
