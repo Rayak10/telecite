@@ -37,8 +37,11 @@ public class Equipe {
 	@OneToMany(targetEntity = Employe.class,mappedBy = "equipe",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
 	private List<Employe>employes;
 	@OneToOne
-	@JoinColumn(name="FK_PE_ID")
+	@JoinColumn(name="FK_Prj_Eq_ID")
 	private Projet projet;
+	public void setIdEquipe(Long idEquipe) {
+		this.idEquipe = idEquipe;
+	}
 	@OneToMany(targetEntity = Notification.class,mappedBy = "equipe",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
 	private List<Notification>notifications;
 	@OneToMany(targetEntity = ReunionScrum.class,mappedBy = "equipe",fetch = FetchType.LAZY,cascade = CascadeType.ALL)

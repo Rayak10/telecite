@@ -1,6 +1,7 @@
 package technocite.tn.telecite.entities;
 
 import java.util.Date;
+import java.util.Set;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
@@ -33,10 +34,10 @@ public class Audio extends Message{
 	public Audio() {
 		super();
 	}
-	
 
-	public Audio(Long idMessage, Date dateEnvoi, Date dateLecture, Employe employe, Conversation conversation,Byte[] vocale) {
-		super(idMessage, dateEnvoi, dateLecture, employe, conversation);
+	public Audio(Long idMessage, Date dateEnvoi, Date dateLecture, Employe employe, Conversation conversation,
+			Set<Employe> employes,Byte[] vocale) {
+		super(idMessage, dateEnvoi, dateLecture, employe, conversation, employes);
 		this.vocale=vocale;
 	}
 
@@ -47,7 +48,7 @@ public class Audio extends Message{
 	public void setVocale(Byte[] vocale) {
 		this.vocale = vocale;
 	}
-
 	
+
 	
 }

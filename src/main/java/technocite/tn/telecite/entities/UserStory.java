@@ -33,7 +33,7 @@ public class UserStory {
 	private Integer priorite;
 	private Integer complexite;
 	@ManyToOne
-	@JoinColumn(name="FK_SU_ID")
+	@JoinColumn(name="FK_Sprint_Us_ID")
 	private Sprint sprint;
 	@OneToMany(targetEntity = Tache.class,mappedBy = "userStory",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
 	private List<Tache>taches;

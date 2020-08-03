@@ -32,7 +32,7 @@ public class Postit {
 	private String descriptionPostit;
 	private Date datePostit;
 	@ManyToOne
-	@JoinColumn(name="FK_EP_ID")
+	@JoinColumn(name="FK_Emp_Post_ID")
 	private Employe employe;
 	public Postit() {
 		super();

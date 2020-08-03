@@ -35,10 +35,10 @@ public class Tache {
 	private Date dateDebut;
 	private Date dateFin;
 	@ManyToOne
-	@JoinColumn(name="FK_UT_ID")
+	@JoinColumn(name="FK_Us_Tache_ID")
 	private UserStory userStory;
 	@ManyToOne
-	@JoinColumn(name="FK_ET_ID")
+	@JoinColumn(name="FK_Emp_Tache_ID")
 	private Employe employe;
 	
 	

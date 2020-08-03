@@ -14,10 +14,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import technocite.tn.telecite.entities.Bureau;
 import technocite.tn.telecite.entities.Postit;
 import technocite.tn.telecite.exception.ResourceNotFoundException;
-import technocite.tn.telecite.repositories.IBureau;
 import technocite.tn.telecite.repositories.IEmploye;
 import technocite.tn.telecite.repositories.IPostit;
 

@@ -33,13 +33,13 @@ public class ReunionScrum {
 	private Date dateDebut;
 	private Date dateFin;
 	@OneToOne
-	@JoinColumn(name="FK_NR_ID")
+	@JoinColumn(name="FK_Notif_Rsc_ID")
 	private Notification notification;
 	@ManyToOne
-	@JoinColumn(name="FK_ER_ID")
+	@JoinColumn(name="FK_Eq_Rsc_ID")
 	private Equipe equipe;
 	@OneToOne
-	@JoinColumn(name="FK_CR_ID")
+	@JoinColumn(name="FK_Conv_Rsc_ID")
 	private Conversation conversation;
 	
 	public ReunionScrum() {

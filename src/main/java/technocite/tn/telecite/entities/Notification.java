@@ -32,7 +32,7 @@ public class Notification {
 	private String libelleNotification;
 
 	@ManyToOne
-	@JoinColumn(name="FK_EN_ID")
+	@JoinColumn(name="FK_Eq_Notif_ID")
 	private Equipe equipe;
 	@OneToOne(mappedBy="notification")
 	private ReunionScrum reunionScrum;

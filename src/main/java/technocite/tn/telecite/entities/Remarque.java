@@ -32,10 +32,10 @@ public class Remarque {
 	private String libelleRemarque;
 	private Date dateRemarque;
 	@ManyToOne
-	@JoinColumn(name="FK_SR_ID")
+	@JoinColumn(name="FK_Sprint_Rmq_ID")
 	private Sprint sprint;
 	@ManyToOne
-	@JoinColumn(name="FK_ER_ID")
+	@JoinColumn(name="FK_Emp_Rmq_ID")
 	private Employe employe;
 	
 	public Remarque() {

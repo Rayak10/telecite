@@ -2,6 +2,7 @@ package technocite.tn.telecite.entities;
 
 
 import java.util.Date;
+import java.util.Set;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
@@ -41,16 +42,14 @@ public class Video extends Message  {
 	}
 
 
-	
 
 
 
-
-
-	public Video(Long idMessage, Date dateEnvoi, Date dateLecture, Employe employe, Conversation conversation,Byte[] video) {
-		super(idMessage, dateEnvoi, dateLecture, employe, conversation);
-		this.video=video;
-	}
+	public Video(Long idMessage, Date dateEnvoi, Date dateLecture, Employe employe, Conversation conversation,
+			Set<Employe> employes,Byte[] video) {
+		super(idMessage, dateEnvoi, dateLecture, employe, conversation, employes);
+        this.video=video;
+}
 
 
 
@@ -60,9 +59,18 @@ public class Video extends Message  {
 		return video;
 	}
 
+
+
+
+
 	public void setVideo(Byte[] video) {
 		this.video = video;
 	}
+
+
 	
+
+
+
 	
 }

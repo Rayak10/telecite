@@ -37,7 +37,7 @@ public class Sprint {
 	private String etatSprint;
 	
 	@ManyToOne
-	@JoinColumn(name="FK_PS_ID")
+	@JoinColumn(name="FK_Prj_Sprint_ID")
 	private Projet projet;
 	@OneToMany(targetEntity = UserStory.class,mappedBy = "sprint",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
 	private List<UserStory>userstorys;

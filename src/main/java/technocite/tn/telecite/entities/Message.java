@@ -1,15 +1,19 @@
 package technocite.tn.telecite.entities;
 
 import java.util.Date;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -37,22 +41,25 @@ public class Message {
 	private Date dateEnvoi;
 	private Date dateLecture;
 	@ManyToOne
-	@JoinColumn(name="FK_EM_ID")
+	@JoinColumn(name="FK_Emp_Msg_ID")
 	private Employe employe;
 	@ManyToOne
-	@JoinColumn(name="FK_CM_ID")
+	@JoinColumn(name="FK_Conv_Msg_ID")
 	private Conversation conversation;
-	
+	@ManyToMany(fetch = FetchType.LAZY,cascade =CascadeType.ALL,mappedBy = "recevoirMessages" )
+	private Set<Employe> employes;
 	public Message() {
 		super();
 	}
-	public Message(Long idMessage, Date dateEnvoi, Date dateLecture, Employe employe, Conversation conversation) {
+	public Message(Long idMessage, Date dateEnvoi, Date dateLecture, Employe employe, Conversation conversation,
+			Set<Employe> employes) {
 		super();
 		this.idMessage = idMessage;
 		this.dateEnvoi = dateEnvoi;
 		this.dateLecture = dateLecture;
 		this.employe = employe;
 		this.conversation = conversation;
+		this.employes = employes;
 	}
 	public Long getIdMessage() {
 		return idMessage;
@@ -84,6 +91,11 @@ public class Message {
 	public void setConversation(Conversation conversation) {
 		this.conversation = conversation;
 	}
-	
+	public Set<Employe> getEmployes() {
+		return employes;
+	}
+	public void setEmployes(Set<Employe> employes) {
+		this.employes = employes;
+	}
 	
 }

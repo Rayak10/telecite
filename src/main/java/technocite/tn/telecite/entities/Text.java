@@ -3,6 +3,7 @@ package technocite.tn.telecite.entities;
 
 
 import java.util.Date;
+import java.util.Set;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
@@ -34,15 +35,14 @@ public class Text extends Message {
 		super();
 		this.text = text;
 	}
-	
-	
-
-	
 
 
-	public Text(Long idMessage, Date dateEnvoi, Date dateLecture, Employe employe, Conversation conversation,String text) {
-		super(idMessage, dateEnvoi, dateLecture, employe, conversation);
-this.text=text;	}
+
+	public Text(Long idMessage, Date dateEnvoi, Date dateLecture, Employe employe, Conversation conversation,
+			Set<Employe> employes,String text) {
+		super(idMessage, dateEnvoi, dateLecture, employe, conversation, employes);
+		this.text = text;
+	}
 
 
 
@@ -50,9 +50,14 @@ this.text=text;	}
 		return text;
 	}
 
+
+
 	public void setText(String text) {
 		this.text = text;
 	}
+	
+	
 
 	
+
 }
