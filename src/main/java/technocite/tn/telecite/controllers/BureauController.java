@@ -1,5 +1,6 @@
 package technocite.tn.telecite.controllers;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import technocite.tn.telecite.entities.Bureau;
+import technocite.tn.telecite.entities.Employe;
+import technocite.tn.telecite.entities.Equipe;
 import technocite.tn.telecite.exception.ResourceNotFoundException;
 import technocite.tn.telecite.repositories.IBureau;
 import technocite.tn.telecite.repositories.IEmploye;
@@ -48,6 +51,22 @@ public class BureauController {
 	        }
 	        return ResponseEntity.ok().body(bureau);
 	}
+@GetMapping("employeBureau/{idEmploye}")
+public ResponseEntity findBureuEmploye(@PathVariable Long idEmploye) {
+    if (idEmploye == null) {
+        return ResponseEntity.badRequest().body("Cannot find bureau with null idEmploye");
+    }
+    Optional<Employe> employe = employeRepository.findById(idEmploye);
+    if (employe == null) {
+        return ResponseEntity.notFound().build();
+    }
+    Bureau bureauEmploye = bureauRepository.findByEmployes(employe);
+    
+    
+   
+
+    return ResponseEntity.ok(bureauEmploye);
+}
 
 @GetMapping("/nom/{nomBureau}")
 
@@ -61,6 +80,7 @@ public ResponseEntity findByNomBureau(@PathVariable(name="nomBureau") String nom
         }
         return ResponseEntity.ok().body(bureau);
 }
+
 
 @PostMapping("/")
 public ResponseEntity createBureau(@RequestBody Bureau bureau) {

@@ -11,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -52,6 +54,7 @@ public class Departement {
 	public void setNomDepartement(String nomDepartement) {
 		this.nomDepartement = nomDepartement;
 	}
+	@JsonIgnore
 	public List<Employe> getEmployes() {
 		return employes;
 	}

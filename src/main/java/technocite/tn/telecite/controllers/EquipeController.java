@@ -1,5 +1,7 @@
 package technocite.tn.telecite.controllers;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,10 +16,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import technocite.tn.telecite.entities.Departement;
 import technocite.tn.telecite.entities.Employe;
 import technocite.tn.telecite.entities.Equipe;
 import technocite.tn.telecite.entities.Projet;
 import technocite.tn.telecite.exception.ResourceNotFoundException;
+import technocite.tn.telecite.repositories.IEmploye;
 import technocite.tn.telecite.repositories.IEquipe;
 
 @RestController
@@ -26,12 +30,15 @@ import technocite.tn.telecite.repositories.IEquipe;
 public class EquipeController {
 	@Autowired
 	private IEquipe equipeRepository;
+	@Autowired
+	private IEmploye employeRepository;
+
 	@GetMapping("/")
-	public ResponseEntity findAll() {
-		
-		return  ResponseEntity.ok(equipeRepository.findAll());
+	public List<Equipe> findAll() {
+		List<Equipe> equipes= new ArrayList<>();
+		equipeRepository.findAll().forEach(equipes::add);
+		return equipes; 
 	}
-	
 	@GetMapping("/{idEquipe}")
 	
 	public ResponseEntity findEquipeById(@PathVariable(name="idEquipe") Long idEquipe) { 
@@ -44,6 +51,22 @@ public class EquipeController {
 	            return ResponseEntity.notFound().build();
 	        }
 	        return ResponseEntity.ok().body(equipe);
+	}
+	@GetMapping("employeEquipe/{idEmploye}")
+	public ResponseEntity findEquipeEmploye(@PathVariable Long idEmploye) {
+	    if (idEmploye == null) {
+	        return ResponseEntity.badRequest().body("Cannot find bureau with null idEmploye");
+	    }
+	    Optional<Employe> employe = employeRepository.findById(idEmploye);
+	    if (employe == null) {
+	        return ResponseEntity.notFound().build();
+	    }
+	    Equipe equipeEmploye = equipeRepository.findByEmployes(employe);
+	    
+	    
+	   
+
+	    return ResponseEntity.ok(equipeEmploye);
 	}
 	@GetMapping("/nom/{nomEquipe}")
 

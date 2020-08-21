@@ -11,6 +11,9 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -52,11 +55,17 @@ public class Bureau {
 	public void setNomBureau(String nomBureau) {
 		this.nomBureau = nomBureau;
 	}
+	@JsonManagedReference
+	@JsonIgnore
 	public List<Employe> getEmployes() {
 		return employes;
 	}
 	public void setEmployes(List<Employe> employes) {
 		this.employes = employes;
+	}
+	@Override
+	public String toString() {
+		return "Bureau [idBureau=" + idBureau + ", nomBureau=" + nomBureau + ", employes=" + employes + "]";
 	}
 	
 }

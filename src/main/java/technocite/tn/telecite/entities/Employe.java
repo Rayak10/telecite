@@ -1,5 +1,7 @@
 package technocite.tn.telecite.entities;
 
+import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -17,6 +19,13 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -37,10 +46,10 @@ public class Employe {
 	private String matricule;
 	private String nomEmploye;
 	private String prenomEmploye;
-	private Date dateNaissance;
+	private Date  dateNaissance;
 	private String email;
 	private String password;
-	private Date dateEmbauche;
+	private Date  dateEmbauche;
 	private Float salaire;
 	private String post;
 	private String role;
@@ -66,6 +75,16 @@ public class Employe {
 	private List<Message>envoimessages;
 	@ManyToMany(fetch = FetchType.LAZY,cascade =CascadeType.ALL,mappedBy = "employes" )
 	private Set<Conversation> conversations;
+	@Override
+	public String toString() {
+		return "Employe [idEmploye=" + idEmploye + ", matricule=" + matricule + ", nomEmploye=" + nomEmploye
+				+ ", prenomEmploye=" + prenomEmploye + ", dateNaissance=" + dateNaissance + ", email=" + email
+				+ ", password=" + password + ", dateEmbauche=" + dateEmbauche + ", salaire=" + salaire + ", post="
+				+ post + ", role=" + role + ", active=" + active + ", photo=" + Arrays.toString(photo) + ", remarques="
+				+ remarques + ", equipe=" + equipe + ", bureau=" + bureau + ", postits=" + postits + ", taches="
+				+ taches + ", departement=" + departement + ", envoimessages=" + envoimessages + ", conversations="
+				+ conversations + ", recevoirMessages=" + recevoirMessages + "]";
+	}
 	@ManyToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
 	@JoinTable(name ="employe_messages",
 	joinColumns  ={@JoinColumn(name = "employe_id")},
@@ -181,54 +200,63 @@ public class Employe {
 	public void setPhoto(Byte[] photo) {
 		this.photo = photo;
 	}
+	@JsonIgnore
 	public List<Remarque> getRemarques() {
 		return remarques;
 	}
 	public void setRemarques(List<Remarque> remarques) {
 		this.remarques = remarques;
 	}
+	@JsonIgnore
 	public Equipe getEquipe() {
 		return equipe;
 	}
 	public void setEquipe(Equipe equipe) {
 		this.equipe = equipe;
 	}
+	@JsonIgnore
 	public Bureau getBureau() {
 		return bureau;
 	}
 	public void setBureau(Bureau bureau) {
 		this.bureau = bureau;
 	}
+	@JsonIgnore
 	public List<Postit> getPostits() {
 		return postits;
 	}
 	public void setPostits(List<Postit> postits) {
 		this.postits = postits;
 	}
+	@JsonIgnore
 	public List<Tache> getTaches() {
 		return taches;
 	}
 	public void setTaches(List<Tache> taches) {
 		this.taches = taches;
 	}
+	@JsonIgnore
 	public Departement getDepartement() {
 		return departement;
 	}
 	public void setDepartement(Departement departement) {
 		this.departement = departement;
 	}
+	@JsonIgnore
 	public List<Message> getEnvoimessages() {
 		return envoimessages;
 	}
 	public void setEnvoimessages(List<Message> envoimessages) {
 		this.envoimessages = envoimessages;
 	}
+	@JsonIgnore
 	public Set<Conversation> getConversations() {
 		return conversations;
 	}
 	public void setConversations(Set<Conversation> conversations) {
 		this.conversations = conversations;
 	}
+	@JsonIgnore
 	public Set<Message> getRecevoirMessages() {
 		return recevoirMessages;
 	}

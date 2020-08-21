@@ -1,5 +1,6 @@
 package technocite.tn.telecite.controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -39,9 +40,10 @@ public class EmloyeController {
 	private IBureau bureauRepository;
 	
 	@GetMapping("/")
-	public ResponseEntity findAll() {
-		
-		return  ResponseEntity.ok(employeRepository.findAll());
+	public List<Employe> findAll() {
+		List<Employe> employes= new ArrayList<>();
+		employeRepository.findAll().forEach(employes::add);
+		return employes; 
 	}
 	
 	@GetMapping("/AllActives/{isActive}")
@@ -101,7 +103,7 @@ public class EmloyeController {
         return ResponseEntity.ok(createEmploye);
     }
 	 @PutMapping("/update/{idEmploye}")
-		public ResponseEntity<Employe> updateEmploye(@PathVariable(value = "idEmploye") Long idEmploye, @RequestBody 
+		public ResponseEntity updateEmploye(@PathVariable(value = "idEmploye") Long idEmploye, @RequestBody 
 			Employe employeeDetails) throws ResourceNotFoundException {
 			Employe employe = employeRepository.findById(idEmploye)
 					.orElseThrow(() -> new ResourceNotFoundException("Employee not found for this id :: " + idEmploye));
@@ -123,7 +125,7 @@ public class EmloyeController {
 			employe.setDepartement(employeeDetails.getDepartement());
 			
 			final Employe updatedEmploye = employeRepository.save(employe);
-			return ResponseEntity.ok(updatedEmploye);
+			 return ResponseEntity.ok(employeRepository.findAll());
 		}
 	@PostMapping("/login")
     public ResponseEntity login(@RequestParam(name = "email") String email, @RequestParam(name = "password") String password) {
@@ -178,6 +180,8 @@ public class EmloyeController {
 	        return ResponseEntity.ok(equipeEmployes);
 	    }
 	    
+	 
+	
 	 @GetMapping("/employesBureau/{nomBureau}")
 	    public ResponseEntity findAllEemployesBureau(@PathVariable String nomBureau) {
 	        if (nomBureau == null) {

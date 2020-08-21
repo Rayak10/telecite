@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import technocite.tn.telecite.entities.Bureau;
 import technocite.tn.telecite.entities.Departement;
+import technocite.tn.telecite.entities.Employe;
 import technocite.tn.telecite.exception.ResourceNotFoundException;
 import technocite.tn.telecite.repositories.IDepartement;
 import technocite.tn.telecite.repositories.IEmploye;
@@ -46,6 +48,22 @@ public class DepartementController {
 	        }
 	        return ResponseEntity.ok().body(departement);
 	}
+@GetMapping("employeDepartement/{idEmploye}")
+public ResponseEntity findBureuEmploye(@PathVariable Long idEmploye) {
+    if (idEmploye == null) {
+        return ResponseEntity.badRequest().body("Cannot find bureau with null idEmploye");
+    }
+    Optional<Employe> employe = employeRepository.findById(idEmploye);
+    if (employe == null) {
+        return ResponseEntity.notFound().build();
+    }
+    Departement departementEmploye = departementRepository.findByEmployes(employe);
+    
+    
+   
+
+    return ResponseEntity.ok(departementEmploye);
+}
 
 @GetMapping("/nom/{nomDepartement}")
 
