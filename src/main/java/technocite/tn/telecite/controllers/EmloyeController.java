@@ -123,7 +123,7 @@ public class EmloyeController {
 			employe.setPhoto(employeeDetails.getPhoto());
 			employe.setBureau(employeeDetails.getBureau());
 			employe.setDepartement(employeeDetails.getDepartement());
-			
+			employe.setEquipe(employeeDetails.getEquipe());
 			final Employe updatedEmploye = employeRepository.save(employe);
 			 return ResponseEntity.ok(employeRepository.findAll());
 		}

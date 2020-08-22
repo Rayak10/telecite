@@ -170,7 +170,7 @@ public class Projet {
 	}
 
 
-@JsonIgnore
+
 	public Equipe getEquipe() {
 		return equipe;
 	}

@@ -122,6 +122,28 @@ public class Employe {
 		this.conversations = conversations;
 		this.recevoirMessages = recevoirMessages;
 	}
+	
+	public Employe(Long idEmploye, String matricule, String nomEmploye, String prenomEmploye, Date dateNaissance,
+			String email, String password, Date dateEmbauche, Float salaire, String post, String role, Boolean active,
+			Byte[] photo, Equipe equipe, Bureau bureau, Departement departement) {
+		super();
+		this.idEmploye = idEmploye;
+		this.matricule = matricule;
+		this.nomEmploye = nomEmploye;
+		this.prenomEmploye = prenomEmploye;
+		this.dateNaissance = dateNaissance;
+		this.email = email;
+		this.password = password;
+		this.dateEmbauche = dateEmbauche;
+		this.salaire = salaire;
+		this.post = post;
+		this.role = role;
+		this.active = active;
+		this.photo = photo;
+		this.equipe = equipe;
+		this.bureau = bureau;
+		this.departement = departement;
+	}
 	public Long getIdEmploye() {
 		return idEmploye;
 	}
@@ -200,63 +222,61 @@ public class Employe {
 	public void setPhoto(Byte[] photo) {
 		this.photo = photo;
 	}
-	@JsonIgnore
+	
 	public List<Remarque> getRemarques() {
 		return remarques;
 	}
 	public void setRemarques(List<Remarque> remarques) {
 		this.remarques = remarques;
 	}
-	@JsonIgnore
 	public Equipe getEquipe() {
 		return equipe;
 	}
 	public void setEquipe(Equipe equipe) {
 		this.equipe = equipe;
 	}
-	@JsonIgnore
 	public Bureau getBureau() {
 		return bureau;
 	}
 	public void setBureau(Bureau bureau) {
 		this.bureau = bureau;
 	}
-	@JsonIgnore
+	
 	public List<Postit> getPostits() {
 		return postits;
 	}
 	public void setPostits(List<Postit> postits) {
 		this.postits = postits;
 	}
-	@JsonIgnore
+	
 	public List<Tache> getTaches() {
 		return taches;
 	}
 	public void setTaches(List<Tache> taches) {
 		this.taches = taches;
 	}
-	@JsonIgnore
+	
 	public Departement getDepartement() {
 		return departement;
 	}
 	public void setDepartement(Departement departement) {
 		this.departement = departement;
 	}
-	@JsonIgnore
+	
 	public List<Message> getEnvoimessages() {
 		return envoimessages;
 	}
 	public void setEnvoimessages(List<Message> envoimessages) {
 		this.envoimessages = envoimessages;
 	}
-	@JsonIgnore
+	
 	public Set<Conversation> getConversations() {
 		return conversations;
 	}
 	public void setConversations(Set<Conversation> conversations) {
 		this.conversations = conversations;
 	}
-	@JsonIgnore
+	
 	public Set<Message> getRecevoirMessages() {
 		return recevoirMessages;
 	}
