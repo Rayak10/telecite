@@ -102,7 +102,7 @@ public class EquipeController {
 			equipe.setNomEquipe(equipeDetails.getNomEquipe());
 			equipe.setSpecialite(equipeDetails.getSpecialite());
 			equipe.setEmployes(equipeDetails.getEmployes());
-			equipe.setProjet(equipeDetails.getProjet());
+			equipe.setProjets(equipeDetails.getProjets());
 			
 			
 			

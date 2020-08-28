@@ -63,7 +63,11 @@ public class ProjetController {
         if (projet == null) {
             return ResponseEntity.badRequest().body("Cannot create projet with empty fields");
         }
+        System.out.println(projet.getDateDebut());
+        System.out.println(projet.getDateFin());
+
         Projet createProjet = projetRepository.save(projet);
+        
         return ResponseEntity.ok(createProjet);
     }
 	 @PutMapping("/update/{idProjet}")
@@ -78,6 +82,7 @@ public class ProjetController {
 			projet.setDescriptionTechnique(projetDetails.getDescriptionTechnique());
 			projet.setDateDebut(projetDetails.getDateDebut());
 			projet.setDateFin(projetDetails.getDateFin());
+			projet.setEquipe(projetDetails.getEquipe());
 			
 			
 			

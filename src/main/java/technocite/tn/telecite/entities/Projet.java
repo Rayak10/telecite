@@ -8,6 +8,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -39,8 +41,8 @@ public class Projet {
 	private Date dateFin ;
 	@OneToMany(targetEntity = Sprint.class,mappedBy = "projet",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
 	private List<Sprint>sprints;
-	
-	@OneToOne(mappedBy="projet")
+	@ManyToOne
+	@JoinColumn(name="FK_Equ_Projet_ID")
 	private Equipe equipe;
 	
 	
@@ -158,7 +160,7 @@ public class Projet {
 	}
 
 
-
+	@JsonIgnore
 	public List<Sprint> getSprints() {
 		return sprints;
 	}

@@ -35,6 +35,7 @@ public class Sprint {
 	private Date dateDebut;
 	private Date dateFin;
 	private String etatSprint;
+	private String descriptionSprint;
 	
 	@ManyToOne
 	@JoinColumn(name="FK_Prj_Sprint_ID")
@@ -50,7 +51,7 @@ public class Sprint {
 	}
 
 	public Sprint(Long idSprint, String nomSprint, Integer numeroSprint, Date dateDebut, Date dateFin,
-			String etatSprint, Projet projet, List<UserStory> userstorys, List<Remarque> remarques) {
+			String etatSprint, String descriptionSprint,Projet projet, List<UserStory> userstorys, List<Remarque> remarques) {
 		super();
 		this.idSprint = idSprint;
 		this.nomSprint = nomSprint;
@@ -61,7 +62,9 @@ public class Sprint {
 		this.projet = projet;
 		this.userstorys = userstorys;
 		this.remarques = remarques;
+		this.descriptionSprint=descriptionSprint;
 	}
+
 
 	public Long getIdSprint() {
 		return idSprint;
@@ -110,7 +113,15 @@ public class Sprint {
 	public void setEtatSprint(String etatSprint) {
 		this.etatSprint = etatSprint;
 	}
-	@JsonIgnore
+
+	public String getDescriptionSprint() {
+		return descriptionSprint;
+	}
+
+	public void setDescriptionSprint(String descriptionSprint) {
+		this.descriptionSprint = descriptionSprint;
+	}
+	
 	public Projet getProjet() {
 		return projet;
 	}
@@ -118,7 +129,7 @@ public class Sprint {
 	public void setProjet(Projet projet) {
 		this.projet = projet;
 	}
-
+	@JsonIgnore
 	public List<UserStory> getUserstorys() {
 		return userstorys;
 	}
@@ -126,7 +137,7 @@ public class Sprint {
 	public void setUserstorys(List<UserStory> userstorys) {
 		this.userstorys = userstorys;
 	}
-
+	@JsonIgnore
 	public List<Remarque> getRemarques() {
 		return remarques;
 	}

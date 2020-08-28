@@ -37,10 +37,8 @@ public class Equipe {
 	private String specialite;
 	@OneToMany(targetEntity = Employe.class,mappedBy = "equipe",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
 	private List<Employe>employes;
-	@OneToOne
-	@JoinColumn(name="FK_Prj_Eq_ID")
-	private Projet projet;
-	
+	@OneToMany(targetEntity = Projet.class,mappedBy = "equipe",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+	private List<Projet>projets;
 	@OneToMany(targetEntity = Notification.class,mappedBy = "equipe",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
 	private List<Notification>notifications;
 	@OneToMany(targetEntity = ReunionScrum.class,mappedBy = "equipe",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
@@ -52,17 +50,21 @@ public class Equipe {
 	}
 
 
-	public Equipe(Long idEquipe, String nomEquipe, String specialite, List<Employe> employes, Projet projet,
+
+
+	public Equipe(Long idEquipe, String nomEquipe, String specialite, List<Employe> employes, List<Projet> projets,
 			List<Notification> notifications, List<ReunionScrum> reunionScrums) {
 		super();
 		this.idEquipe = idEquipe;
 		this.nomEquipe = nomEquipe;
 		this.specialite = specialite;
 		this.employes = employes;
-		this.projet = projet;
+		this.projets = projets;
 		this.notifications = notifications;
 		this.reunionScrums = reunionScrums;
 	}
+
+
 
 
 	public Long getIdEquipe() {
@@ -103,22 +105,29 @@ public class Equipe {
 	public void setEmployes(List<Employe> employes) {
 		this.employes = employes;
 	}
-	@JsonManagedReference
+	
+	
+@JsonManagedReference
 	@JsonIgnore
-	public Projet getProjet() {
-		return projet;
+	public List<Projet> getProjets() {
+		return projets;
 	}
 
 
-	public void setProjet(Projet projet) {
-		this.projet = projet;
-	}
 
+
+	public void setProjets(List<Projet> projets) {
+		this.projets = projets;
+	}
 	@JsonManagedReference
 	@JsonIgnore
 	public List<Notification> getNotifications() {
 		return notifications;
 	}
+
+	
+
+
 
 
 	public void setNotifications(List<Notification> notifications) {
