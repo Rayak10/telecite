@@ -11,4 +11,6 @@ public interface ITache extends JpaRepository<Tache, Long> {
 
 	List<Tache> findByUserStory(UserStory userStory);
 
+
+
 }

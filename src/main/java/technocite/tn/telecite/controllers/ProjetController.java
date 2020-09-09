@@ -1,7 +1,6 @@
 package technocite.tn.telecite.controllers;
 
 import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -14,15 +13,20 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import technocite.tn.telecite.entities.Projet;
+import technocite.tn.telecite.entities.Sprint;
 import technocite.tn.telecite.exception.ResourceNotFoundException;
 import technocite.tn.telecite.repositories.IProjet;
+import technocite.tn.telecite.repositories.ISprint;
 
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RequestMapping("/telecite/projets")
 public class ProjetController {
+
 	@Autowired
 	private IProjet projetRepository;
+	@Autowired
+	private ISprint sprintRepository;
 	@GetMapping("/")
 	public ResponseEntity findAll() {
 		
@@ -57,17 +61,40 @@ public class ProjetController {
 	        }
 	        return ResponseEntity.ok().body(projet);
 	}
-	
+
+
+@GetMapping("sprintProjet/{idSprint}")
+public ResponseEntity findProjetSprint(@PathVariable Long idSprint) {
+    if (idSprint == null) {
+        return ResponseEntity.badRequest().body("Cannot find sprint with null idSprint");
+    }
+    Optional<Sprint> sprint = sprintRepository.findById(idSprint);
+    if (sprint == null) {
+        return ResponseEntity.notFound().build();
+    }
+    Projet projetSprint = projetRepository.findBySprints(sprint);
+    
+    
+   
+
+    return ResponseEntity.ok(projetSprint);
+}
+
 	@PostMapping("/")
     public ResponseEntity createProjet(@RequestBody Projet projet) {
         if (projet == null) {
             return ResponseEntity.badRequest().body("Cannot create projet with empty fields");
         }
-        System.out.println(projet.getDateDebut());
-        System.out.println(projet.getDateFin());
-
+    Sprint firstSprint=new Sprint();
+           firstSprint.setNomSprint("Backlog produit");
+           firstSprint.setNumeroSprint(1);
+           firstSprint.setDateDebut(projet.getDateDebut());
+           firstSprint.setDateFin(projet.getDateFin());
+           firstSprint.setEtatSprint("Non terminé");
+           firstSprint.setDescriptionSprint("Le product backlog de projet :"+projet.getNomProjet());
+           firstSprint.setProjet(projet);
         Projet createProjet = projetRepository.save(projet);
-        
+         sprintRepository.save(firstSprint);
         return ResponseEntity.ok(createProjet);
     }
 	 @PutMapping("/update/{idProjet}")

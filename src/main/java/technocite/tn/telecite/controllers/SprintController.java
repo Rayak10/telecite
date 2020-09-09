@@ -33,26 +33,30 @@ public class SprintController {
 		
 		return  ResponseEntity.ok(sprintRepository.findAll());
 	}
+
+	@GetMapping("/orderByprojets/")
+	public ResponseEntity findAllOrderByProjet() {
+		
+		return  ResponseEntity.ok(sprintRepository.findByOrderByProjetAsc());
+	}
 	
 	
-	 @GetMapping("/all/{idProjet}")
-	    public ResponseEntity findAllsprintsProjet(@PathVariable Long idProjet) {
+	 @GetMapping("/projet/{idProjet}")
+	    public ResponseEntity findAllSprintsProjet(@PathVariable Long idProjet) {
 	        if (idProjet == null) {
-	            return ResponseEntity.badRequest().body("Cannot find sprints with null Projet");
+	            return ResponseEntity.badRequest().body("Cannot find sprints with null idProjet");
 	        }
-	        Projet projet = projetRepository.getOne(idProjet);
+	        Optional<Projet> projet = projetRepository.findById(idProjet);
 	        if (projet == null) {
 	            return ResponseEntity.notFound().build();
 	        }
 	        List<Sprint> projetSprints = sprintRepository.findByProjet(projet);
 	        
 	        
-	       // projetSprint.forEach(sprint -> sprint.setIdOwner(idProjet));
 	       
 
 	        return ResponseEntity.ok(projetSprints);
 	    }
-	    
 	
 	
 @GetMapping("/{idSprint}")
@@ -69,6 +73,36 @@ public class SprintController {
 	        return ResponseEntity.ok().body(sprint);
 	          
 	}
+@GetMapping("backProduit/{idProjet}")
+
+public ResponseEntity findSprintBpByIdProjet(@PathVariable(name="idProjet") Long idProjet) { 
+	
+	  if (idProjet == null) {
+            return ResponseEntity.badRequest().body("Cannot retrieve Employe with null ID");
+        }
+        Optional<Projet> projet = projetRepository.findById(idProjet);
+        if (projet == null) {
+            return ResponseEntity.notFound().build();
+        }
+        
+        List<Sprint> projetSprints = sprintRepository.findByProjet(projet);
+        
+
+        Sprint sprintCherche=null;
+        
+for( Sprint sprint : projetSprints) {
+   if(sprint.getNomSprint().equals("Backlog produit")) {
+	   sprintCherche=sprint;
+	   break;
+	   }
+	  
+}
+return ResponseEntity.ok().body(sprintCherche);
+
+}
+       
+
+    
 @GetMapping("/etat/{etatSprint}")
 
 public ResponseEntity findByEtatSprint(@PathVariable(name="etatSprint") String etatSprint) { 
@@ -108,6 +142,8 @@ public ResponseEntity<Sprint> updateSprint(@PathVariable(value = "idSprint") Lon
 	sprint.setDateDebut(sprintDetails.getDateDebut());
 	sprint.setDateFin(sprintDetails.getDateFin());
 	sprint.setEtatSprint(sprintDetails.getEtatSprint());
+	sprint.setDescriptionSprint(sprintDetails.getDescriptionSprint());
+	sprint.setProjet(sprintDetails.getProjet());
 	
 	
 	final Sprint updatedSprint = sprintRepository.save(sprint);

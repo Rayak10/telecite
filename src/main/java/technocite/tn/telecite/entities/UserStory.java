@@ -12,6 +12,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -25,6 +27,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @Builder
 @ToString
+@JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
 public class UserStory {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -32,6 +35,10 @@ public class UserStory {
 	private String libelleUserStory;
 	private Integer priorite;
 	private Integer complexite;
+	@ManyToOne
+	@JoinColumn(name="FK_BP_Us_ID")
+	private Sprint backlogProduct;
+	
 	@ManyToOne
 	@JoinColumn(name="FK_Sprint_Us_ID")
 	private Sprint sprint;
@@ -84,7 +91,7 @@ public class UserStory {
 	public void setComplexite(Integer complexite) {
 		this.complexite = complexite;
 	}
-	@JsonIgnore
+
 	public Sprint getSprint() {
 		return sprint;
 	}
@@ -92,7 +99,7 @@ public class UserStory {
 	public void setSprint(Sprint sprint) {
 		this.sprint = sprint;
 	}
-
+@JsonIgnore
 	public List<Tache> getTaches() {
 		return taches;
 	}

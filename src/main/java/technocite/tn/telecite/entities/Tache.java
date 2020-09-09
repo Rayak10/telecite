@@ -11,6 +11,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -25,6 +26,8 @@ import lombok.ToString;
 @AllArgsConstructor
 @Builder
 @ToString
+@JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
+
 public class Tache {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -32,8 +35,8 @@ public class Tache {
 	private String descriptionTache;
 	private String etatTache;
 	private Integer dureeTache;
-	private Date dateDebut;
-	private Date dateFin;
+
+
 	@ManyToOne
 	@JoinColumn(name="FK_Us_Tache_ID")
 	private UserStory userStory;
@@ -47,15 +50,12 @@ public class Tache {
 	}
 
 
-	public Tache(Long idTache, String descriptionTache, String etatTache, Integer dureeTache, Date dateDebut,
-			Date dateFin, UserStory userStory, Employe employe) {
+	public Tache(Long idTache, String descriptionTache, String etatTache, Integer dureeTache,UserStory userStory, Employe employe) {
 		super();
 		this.idTache = idTache;
 		this.descriptionTache = descriptionTache;
 		this.etatTache = etatTache;
 		this.dureeTache = dureeTache;
-		this.dateDebut = dateDebut;
-		this.dateFin = dateFin;
 		this.userStory = userStory;
 		this.employe = employe;
 	}
@@ -100,27 +100,7 @@ public class Tache {
 		this.dureeTache = dureeTache;
 	}
 
-
-	public Date getDateDebut() {
-		return dateDebut;
-	}
-
-
-	public void setDateDebut(Date dateDebut) {
-		this.dateDebut = dateDebut;
-	}
-
-
-	public Date getDateFin() {
-		return dateFin;
-	}
-
-
-	public void setDateFin(Date dateFin) {
-		this.dateFin = dateFin;
-	}
-
-	@JsonIgnore
+	
 	public UserStory getUserStory() {
 		return userStory;
 	}
@@ -130,7 +110,7 @@ public class Tache {
 		this.userStory = userStory;
 	}
 
-	@JsonIgnore
+	
 	public Employe getEmploye() {
 		return employe;
 	}

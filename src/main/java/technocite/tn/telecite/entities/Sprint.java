@@ -12,7 +12,13 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -26,6 +32,8 @@ import lombok.ToString;
 @AllArgsConstructor
 @Builder
 @ToString
+@JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
+
 public class Sprint {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -129,11 +137,11 @@ public class Sprint {
 	public void setProjet(Projet projet) {
 		this.projet = projet;
 	}
-	@JsonIgnore
 	public List<UserStory> getUserstorys() {
 		return userstorys;
 	}
-
+	
+	@JsonIgnore
 	public void setUserstorys(List<UserStory> userstorys) {
 		this.userstorys = userstorys;
 	}
