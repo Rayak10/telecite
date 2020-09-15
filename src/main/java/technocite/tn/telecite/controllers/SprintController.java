@@ -1,5 +1,7 @@
 package technocite.tn.telecite.controllers;
 
+import java.time.LocalTime;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,10 +15,15 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import technocite.tn.telecite.entities.Equipe;
 import technocite.tn.telecite.entities.Projet;
+import technocite.tn.telecite.entities.Reunion;
+import technocite.tn.telecite.entities.Reunion.Type;
 import technocite.tn.telecite.entities.Sprint;
 import technocite.tn.telecite.exception.ResourceNotFoundException;
 import technocite.tn.telecite.repositories.IProjet;
+import technocite.tn.telecite.repositories.IReunion;
 import technocite.tn.telecite.repositories.ISprint;
 
 @RestController
@@ -27,7 +34,8 @@ public class SprintController {
 	private ISprint sprintRepository;
 	 @Autowired
 	    private IProjet projetRepository;
-	
+	 @Autowired
+	    private IReunion reunionRepository;
 	@GetMapping("/")
 	public ResponseEntity findAll() {
 		
@@ -126,7 +134,51 @@ public ResponseEntity findByEtatSprint(@PathVariable(name="etatSprint") String e
         	
           return ResponseEntity.badRequest().body("Cannot create Sprint with empty fields");
       }
-          Sprint createSprint = sprintRepository.save(sprint);
+       
+        Reunion  reunionPlanification =new Reunion();
+        reunionPlanification.setNomReunion("Réunion de planification");
+        reunionPlanification.setDateDebut(sprint.getDateDebut());
+        reunionPlanification.setDateFin(sprint.getDateDebut());
+        reunionPlanification.setDescriptionReunion("Réunion de planification du sprint "+sprint.getNomSprint());
+        reunionPlanification.setHeurDeb(LocalTime.of(10, 20));
+        reunionPlanification.setHeurFin(LocalTime.of(18, 20));
+        reunionPlanification.setType(Type.ReunionScrum);
+        reunionPlanification.setEquipe(sprint.getProjet().getEquipe());
+        Reunion dalyScrum=new Reunion();
+        dalyScrum.setNomReunion("Réunion DalyScrum");
+        dalyScrum.setDateDebut(new Date(sprint.getDateDebut().getTime()+(3600000*24)));
+        dalyScrum.setDateFin(new Date(sprint.getDateFin().getTime()-3600000*24));
+        dalyScrum.setDescriptionReunion("Réunion DalyScrum du sprint "+sprint.getNomSprint());
+        dalyScrum.setHeurDeb(LocalTime.of(10, 00));
+        dalyScrum.setHeurFin(LocalTime.of(10, 20));
+
+        dalyScrum.setType(Type.ReunionScrum);
+        dalyScrum.setEquipe(sprint.getProjet().getEquipe());
+        
+        
+        Reunion  reunionretrospective =new Reunion();
+        reunionretrospective.setNomReunion("Réunion rétrospective");
+        reunionretrospective.setDateDebut(sprint.getDateFin());
+        reunionretrospective.setDateFin(sprint.getDateFin());
+        reunionretrospective.setHeurDeb(LocalTime.of(10, 20));
+        reunionretrospective.setHeurFin(LocalTime.of(17, 20));
+        reunionretrospective.setDescriptionReunion("Réunion rétrospective du sprint "+sprint.getNomSprint());;
+        reunionretrospective.setType(Type.ReunionScrum);
+        reunionretrospective.setEquipe(sprint.getProjet().getEquipe());
+        Reunion  reunionreview =new Reunion();
+        reunionreview.setNomReunion("Réunion sprint review");
+        reunionreview.setDateDebut(sprint.getDateFin());
+        reunionreview.setDateFin(sprint.getDateFin());
+        reunionreview.setHeurDeb(LocalTime.of(10, 20));
+        reunionreview.setHeurFin(LocalTime.of(17, 20));
+        reunionreview.setDescriptionReunion("Réunion sprint review du sprint "+sprint.getNomSprint());;
+        reunionreview.setType(Type.ReunionScrum);
+        reunionreview.setEquipe(sprint.getProjet().getEquipe());
+        Sprint createSprint = sprintRepository.save(sprint);
+        reunionRepository.save(reunionPlanification);
+        reunionRepository.save(dalyScrum);
+      reunionRepository.save(reunionreview);
+      reunionRepository.save(reunionretrospective);
           return ResponseEntity.ok(createSprint);
 }
 	

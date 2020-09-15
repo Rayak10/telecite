@@ -37,7 +37,7 @@ public class Conversation {
 	private List <Message>messages;
 
 	@OneToOne(mappedBy="conversation")
-	private ReunionScrum reunionScrum;
+	private Reunion reunion;
 	@ManyToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
 	@JoinTable(name ="conv_messages",
 	joinColumns  ={@JoinColumn(name = "conversation_id")},
@@ -46,13 +46,13 @@ public class Conversation {
 	public Conversation() {
 		super();
 	}
-	public Conversation(Long idConversation, String nomConversation, List<Message> messages, ReunionScrum reunionScrum,
+	public Conversation(Long idConversation, String nomConversation, List<Message> messages, Reunion reunion,
 			Set<Employe> employes) {
 		super();
 		this.idConversation = idConversation;
 		this.nomConversation = nomConversation;
 		this.messages = messages;
-		this.reunionScrum = reunionScrum;
+		this.reunion = reunion;
 		this.employes = employes;
 	}
 	public Long getIdConversation() {
@@ -73,11 +73,11 @@ public class Conversation {
 	public void setMessages(List<Message> messages) {
 		this.messages = messages;
 	}
-	public ReunionScrum getReunionScrum() {
-		return reunionScrum;
+	public Reunion getReunion() {
+		return reunion;
 	}
-	public void setReunionScrum(ReunionScrum reunionScrum) {
-		this.reunionScrum = reunionScrum;
+	public void setReunionScrum(Reunion reunion) {
+		this.reunion = reunion;
 	}
 	public Set<Employe> getEmployes() {
 		return employes;

@@ -1,8 +1,11 @@
 package technocite.tn.telecite.entities;
 
+import java.time.LocalTime;
 import java.util.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -18,21 +21,26 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 @Entity
-@Table(name="REUNIONSCRUM")
+@Table(name="REUNION")
 @NoArgsConstructor
 @Data
 @AllArgsConstructor
 @Builder
 @ToString
-public class ReunionScrum {
+public class Reunion {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private Long idReunionScrum;
-	private String nomReunionScrum;
-	private String descriptionReunionScrum;
+	private Long idReunion;
+	private String nomReunion;
+	private String descriptionReunion;
 	private Date dateDebut;
 	private Date dateFin;
-	@OneToOne
+	private LocalTime heurDeb; 
+	private LocalTime heurFin; 
+
+    @Enumerated(EnumType.STRING)
+    private Type type;	
+    @OneToOne
 	@JoinColumn(name="FK_Notif_Rsc_ID")
 	private Notification notification;
 	@ManyToOne
@@ -42,41 +50,48 @@ public class ReunionScrum {
 	@JoinColumn(name="FK_Conv_Rsc_ID")
 	private Conversation conversation;
 	
-	public ReunionScrum() {
+	public Reunion() {
 		super();
+	}
+	public enum Type {
+	    ReunionScrum, ReunionAdministratif;
 	}
 	
-	public ReunionScrum(Long idReunionScrum, String nomReunionScrum, String descriptionReunionScrum, Date dateDebut,
-			Date dateFin, Notification notification, Equipe equipe,Conversation conversation) {
+
+	public Reunion(Long idReunion, String nomReunion, String descriptionReunion, Date dateDebut,
+			Date dateFin, Type type, Notification notification, Equipe equipe, Conversation conversation,LocalTime heurDeb,LocalTime heurFin) {
 		super();
-		this.idReunionScrum = idReunionScrum;
-		this.nomReunionScrum = nomReunionScrum;
-		this.descriptionReunionScrum = descriptionReunionScrum;
+		this.idReunion = idReunion;
+		this.nomReunion = nomReunion;
+		this.descriptionReunion = descriptionReunion;
 		this.dateDebut = dateDebut;
 		this.dateFin = dateFin;
+		this.type = type;
 		this.notification = notification;
 		this.equipe = equipe;
-		this.conversation=conversation;
+		this.conversation = conversation;
+		this.heurDeb=heurDeb;
+		this.heurFin=heurFin;
 	}
-
-	public Long getIdReunionScrum() {
-		return idReunionScrum;
+	public Long getIdReunion() {
+		return idReunion;
 	}
-	public void setIdReunionScrum(Long idReunionScrum) {
-		this.idReunionScrum = idReunionScrum;
+	public void setIdReunion(Long idReunion) {
+		this.idReunion = idReunion;
 	}
-	public String getNomReunionScrum() {
-		return nomReunionScrum;
+	public String getNomReunion() {
+		return nomReunion;
 	}
-	public void setNomReunionScrum(String nomReunionScrum) {
-		this.nomReunionScrum = nomReunionScrum;
+	public void setNomReunion(String nomReunion) {
+		this.nomReunion = nomReunion;
 	}
-	public String getDescriptionReunionScrum() {
-		return descriptionReunionScrum;
+	public String getDescriptionReunion() {
+		return descriptionReunion;
 	}
-	public void setDescriptionReunionScrum(String descriptionReunionScrum) {
-		this.descriptionReunionScrum = descriptionReunionScrum;
+	public void setDescriptionReunion(String descriptionReunion) {
+		this.descriptionReunion = descriptionReunion;
 	}
+	
 	public Date getDateDebut() {
 		return dateDebut;
 	}
@@ -89,27 +104,44 @@ public class ReunionScrum {
 	public void setDateFin(Date dateFin) {
 		this.dateFin = dateFin;
 	}
-	@JsonIgnore
 	public Notification getNotification() {
 		return notification;
 	}
 	public void setNotification(Notification notification) {
 		this.notification = notification;
 	}
-	@JsonIgnore
 	public Equipe getEquipe() {
 		return equipe;
 	}
 	public void setEquipe(Equipe equipe) {
 		this.equipe = equipe;
 	}
-	@JsonIgnore
 	public Conversation getConversation() {
 		return conversation;
 	}
 
 	public void setConversation(Conversation conversation) {
 		this.conversation = conversation;
+	}
+
+	public Type getType() {
+		return type;
+	}
+
+	public void setType(Type type) {
+		this.type = type;
+	}
+	public LocalTime getHeurDeb() {
+		return heurDeb;
+	}
+	public void setHeurDeb(LocalTime heurDeb) {
+		this.heurDeb = heurDeb;
+	}
+	public LocalTime getHeurFin() {
+		return heurFin;
+	}
+	public void setHeurFin(LocalTime heurFin) {
+		this.heurFin = heurFin;
 	}
 
 

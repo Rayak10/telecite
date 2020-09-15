@@ -15,10 +15,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import technocite.tn.telecite.entities.Projet;
 import technocite.tn.telecite.entities.Sprint;
+import technocite.tn.telecite.entities.Tache;
 import technocite.tn.telecite.entities.UserStory;
 import technocite.tn.telecite.exception.ResourceNotFoundException;
 import technocite.tn.telecite.repositories.IProjet;
 import technocite.tn.telecite.repositories.ISprint;
+import technocite.tn.telecite.repositories.ITache;
 import technocite.tn.telecite.repositories.IUserStory;
 
 @RestController
@@ -31,6 +33,8 @@ public class UserStoryController {
 	    private IUserStory userStoryRepository;
 @Autowired
 private IProjet projetRepository;
+@Autowired
+private ITache tacheRepository;
 
 @GetMapping("/")
 		public ResponseEntity findAll() {
@@ -76,24 +80,7 @@ private IProjet projetRepository;
 public ResponseEntity findUserStorysByProjet(@PathVariable(name="idProjet") Long idProjet) { 
 	
     List<UserStory> userstorysprintsprojet = userStoryRepository.findBySprint_Projet_IdProjet(idProjet);
-	  /*if (idProjet == null) {
-            return ResponseEntity.badRequest().body("Cannot retrieve UserStory with null ID");
-        }
-        Optional<Projet> projet = projetRepository.findById(idProjet);
-        System.out.println(projet);
-        if (projet == null) {
-            return ResponseEntity.notFound().build();
-        }
-        List<Sprint> projetSprints = sprintRepository.findByProjet(projet);
-        System.out.println(projetSprints);
 
-        List<UserStory> userstorysprintsprojet = null;
-    
-        
-for( Sprint sprint : projetSprints) {
-	 userstorysprintsprojet =userStoryRepository.findBySprint(sprint);
-	}*/
-	  
 
 return ResponseEntity.ok().body(userstorysprintsprojet);
 
@@ -117,7 +104,9 @@ return ResponseEntity.ok().body(userstorys);
 	        	
 	          return ResponseEntity.badRequest().body("Cannot create userStory with empty fields");
 	      }
+	       
 	        UserStory createUserStory = userStoryRepository.save(userStory);
+	       
 	          return ResponseEntity.ok(createUserStory);
 	}
 		

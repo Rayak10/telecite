@@ -137,11 +137,11 @@ public class Sprint {
 	public void setProjet(Projet projet) {
 		this.projet = projet;
 	}
+	@JsonIgnore
 	public List<UserStory> getUserstorys() {
 		return userstorys;
 	}
 	
-	@JsonIgnore
 	public void setUserstorys(List<UserStory> userstorys) {
 		this.userstorys = userstorys;
 	}
