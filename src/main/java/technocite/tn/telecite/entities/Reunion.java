@@ -2,23 +2,27 @@ package technocite.tn.telecite.entities;
 
 import java.time.LocalTime;
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import technocite.tn.telecite.enums.ReunionType;
 
 @Entity
 @Table(name="REUNION")
@@ -39,7 +43,7 @@ public class Reunion {
 	private LocalTime heurFin; 
 
     @Enumerated(EnumType.STRING)
-    private Type type;	
+    private ReunionType type;	
     @OneToOne
 	@JoinColumn(name="FK_Notif_Rsc_ID")
 	private Notification notification;
@@ -49,17 +53,16 @@ public class Reunion {
 	@OneToOne
 	@JoinColumn(name="FK_Conv_Rsc_ID")
 	private Conversation conversation;
-	
+	@ManyToMany(fetch = FetchType.LAZY,cascade =CascadeType.ALL,mappedBy = "reunionsadministratif" )
+	private List<Employe> employes;
 	public Reunion() {
 		super();
 	}
-	public enum Type {
-	    ReunionScrum, ReunionAdministratif;
-	}
+	
 	
 
 	public Reunion(Long idReunion, String nomReunion, String descriptionReunion, Date dateDebut,
-			Date dateFin, Type type, Notification notification, Equipe equipe, Conversation conversation,LocalTime heurDeb,LocalTime heurFin) {
+			Date dateFin, ReunionType type, Notification notification, Equipe equipe, Conversation conversation,LocalTime heurDeb,LocalTime heurFin) {
 		super();
 		this.idReunion = idReunion;
 		this.nomReunion = nomReunion;
@@ -124,11 +127,11 @@ public class Reunion {
 		this.conversation = conversation;
 	}
 
-	public Type getType() {
+	public ReunionType getType() {
 		return type;
 	}
 
-	public void setType(Type type) {
+	public void setType(ReunionType type) {
 		this.type = type;
 	}
 	public LocalTime getHeurDeb() {
@@ -142,6 +145,16 @@ public class Reunion {
 	}
 	public void setHeurFin(LocalTime heurFin) {
 		this.heurFin = heurFin;
+	}
+
+
+
+	@Override
+	public String toString() {
+		return "Reunion [idReunion=" + idReunion + ", nomReunion=" + nomReunion + ", descriptionReunion="
+				+ descriptionReunion + ", dateDebut=" + dateDebut + ", dateFin=" + dateFin + ", heurDeb=" + heurDeb
+				+ ", heurFin=" + heurFin + ", type=" + type + ", notification=" + notification + ", equipe=" + equipe
+				+ ", conversation=" + conversation + ", employes=" + employes + "]";
 	}
 
 

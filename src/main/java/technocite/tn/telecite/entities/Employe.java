@@ -66,21 +66,17 @@ public class Employe {
 	private List<Message>envoimessages;
 	@ManyToMany(fetch = FetchType.LAZY,cascade =CascadeType.ALL,mappedBy = "employes" )
 	private Set<Conversation> conversations;
-	@Override
-	public String toString() {
-		return "Employe [idEmploye=" + idEmploye + ", matricule=" + matricule + ", nomEmploye=" + nomEmploye
-				+ ", prenomEmploye=" + prenomEmploye + ", dateNaissance=" + dateNaissance + ", email=" + email
-				+ ", password=" + password + ", dateEmbauche=" + dateEmbauche + ", salaire=" + salaire + ", post="
-				+ post + ", role=" + role + ", active=" + active + ", photo=" + Arrays.toString(photo) + ", remarques="
-				+ remarques + ", equipe=" + equipe + ", bureau=" + bureau + ", postits=" + postits + ", taches="
-				+ taches + ", departement=" + departement + ", envoimessages=" + envoimessages + ", conversations="
-				+ conversations + ", recevoirMessages=" + recevoirMessages + "]";
-	}
+	
 	@ManyToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
 	@JoinTable(name ="employe_messages",
 	joinColumns  ={@JoinColumn(name = "employe_id")},
 			inverseJoinColumns={@JoinColumn(name="message_id")})
 	private Set<Message> recevoirMessages;
+	@ManyToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+	@JoinTable(name ="employe_reunions",
+	joinColumns  ={@JoinColumn(name = "employe_id")},
+			inverseJoinColumns={@JoinColumn(name="reunion_id")})
+	private List<Reunion> reunionsadministratif;
 	public Employe() {
 		super();
 	}

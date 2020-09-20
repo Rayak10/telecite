@@ -1,7 +1,10 @@
 package technocite.tn.telecite.controllers;
 
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
+
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -13,6 +16,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import technocite.tn.telecite.dto.ReunionDto;
 import technocite.tn.telecite.entities.Equipe;
 import technocite.tn.telecite.entities.Reunion;
 import technocite.tn.telecite.exception.ResourceNotFoundException;
@@ -23,6 +28,9 @@ import technocite.tn.telecite.repositories.IReunion;
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RequestMapping("/telecite/reunions")
 public class ReunionController {
+	
+	@Autowired
+	private  ModelMapper modelMapper;
 	@Autowired
 	private IReunion reunionRepository;
 	@Autowired
@@ -50,10 +58,19 @@ public class ReunionController {
 	}
 	
 	@PostMapping("/")
-	public ResponseEntity createReunion(@RequestBody Reunion reunion) {
-    if (reunion == null) {
+	public ResponseEntity createReunion(@RequestBody ReunionDto reunionDto) {
+	//	System.out.println("dtoùùùùù: "+ reunionDto);
+	
+	//	System.out.println("entity: £££££"+reunion);
+	//	return ResponseEntity.ok("ok");
+    if (reunionDto == null) {
         return ResponseEntity.badRequest().body("Cannot create Reunion   with empty fields");
     }
+	Reunion reunion= new Reunion();
+	modelMapper.map(reunionDto, reunion);
+	reunion.setHeurDeb(LocalTime.of(reunionDto.getHeureDeb().getHour(), reunionDto.getHeureDeb().getMinute(),00));
+	reunion.setHeurFin(LocalTime.of(reunionDto.getHeureFin().getHour(), reunionDto.getHeureFin().getMinute(),00));
+    System.out.println(reunion.getHeurDeb() +"  "+reunion.getHeurFin()+"ùùù*$$$$$$");
     Reunion createReunion = reunionRepository.save(reunion);
     return ResponseEntity.ok(createReunion);
 }
