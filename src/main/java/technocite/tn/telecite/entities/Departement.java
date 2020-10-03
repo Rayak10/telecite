@@ -12,6 +12,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -54,12 +55,17 @@ public class Departement {
 	public void setNomDepartement(String nomDepartement) {
 		this.nomDepartement = nomDepartement;
 	}
+	@JsonManagedReference
 	@JsonIgnore
 	public List<Employe> getEmployes() {
 		return employes;
 	}
 	public void setEmployes(List<Employe> employes) {
 		this.employes = employes;
+	}
+	@Override
+	public String toString() {
+		return "Departement [idDepartement=" + idDepartement + ", nomDepartement=" + nomDepartement +"]";
 	}
 	
 	

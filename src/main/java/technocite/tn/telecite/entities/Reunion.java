@@ -1,8 +1,11 @@
 package technocite.tn.telecite.entities;
 
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -13,22 +16,34 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
+import technocite.tn.telecite.dto.TimeDTO;
 import technocite.tn.telecite.enums.ReunionType;
-
+@Getter
+@Setter
 @Entity
 @Table(name="REUNION")
-@NoArgsConstructor
 @Data
-@AllArgsConstructor
 @Builder
 @ToString
 public class Reunion {
@@ -44,38 +59,75 @@ public class Reunion {
 
     @Enumerated(EnumType.STRING)
     private ReunionType type;	
+    
     @OneToOne
 	@JoinColumn(name="FK_Notif_Rsc_ID")
 	private Notification notification;
-	@ManyToOne
+	
+    @ManyToOne
 	@JoinColumn(name="FK_Eq_Rsc_ID")
 	private Equipe equipe;
-	@OneToOne
+	
+    @OneToOne
 	@JoinColumn(name="FK_Conv_Rsc_ID")
 	private Conversation conversation;
-	@ManyToMany(fetch = FetchType.LAZY,cascade =CascadeType.ALL,mappedBy = "reunionsadministratif" )
-	private List<Employe> employes;
+	
+    @ManyToMany(cascade = { CascadeType.MERGE, CascadeType.PERSIST })
+    @JoinTable(name = "REUNION_EMPLOYE", joinColumns = { @JoinColumn(name = "REUNION_ID") }, inverseJoinColumns = {
+            @JoinColumn(name = "EMPLOYE_ID") })
+	private Set<Employe> employes;
+	
+    public Reunion(String nomReunion) {
+		super();
+		this.nomReunion = nomReunion;
+	}
+
+	@Transient
+	private TimeDTO heureDeb;
+	
+    @Transient
+	private TimeDTO heureFin;
+	
+	
+
+
+
 	public Reunion() {
 		super();
 	}
 	
 	
 
-	public Reunion(Long idReunion, String nomReunion, String descriptionReunion, Date dateDebut,
-			Date dateFin, ReunionType type, Notification notification, Equipe equipe, Conversation conversation,LocalTime heurDeb,LocalTime heurFin) {
+
+
+
+
+	public Reunion(Long idReunion, String nomReunion, String descriptionReunion, Date dateDebut, Date dateFin,
+			LocalTime heurDeb, LocalTime heurFin, ReunionType type, Notification notification, Equipe equipe,
+			Conversation conversation, Set<Employe> employes, TimeDTO heureDeb, TimeDTO heureFin) {
 		super();
 		this.idReunion = idReunion;
 		this.nomReunion = nomReunion;
 		this.descriptionReunion = descriptionReunion;
 		this.dateDebut = dateDebut;
 		this.dateFin = dateFin;
+		this.heurDeb = heurDeb;
+		this.heurFin = heurFin;
 		this.type = type;
 		this.notification = notification;
 		this.equipe = equipe;
 		this.conversation = conversation;
-		this.heurDeb=heurDeb;
-		this.heurFin=heurFin;
+		this.employes = employes;
+		this.heureDeb = heureDeb;
+		this.heureFin = heureFin;
 	}
+
+
+
+
+
+
+
 	public Long getIdReunion() {
 		return idReunion;
 	}
@@ -149,6 +201,50 @@ public class Reunion {
 
 
 
+	public TimeDTO getHeureDeb() {
+		return heureDeb;
+	}
+
+
+
+	public void setHeureDeb(TimeDTO heureDeb) {
+		this.heureDeb = heureDeb;
+	}
+
+
+
+	public Set<Employe> getEmployes() {
+		return employes;
+	}
+
+
+
+
+
+
+
+	public void setEmployes(Set<Employe> employes) {
+		this.employes = employes;
+	}
+
+
+
+
+
+
+
+	public TimeDTO getHeureFin() {
+		return heureFin;
+	}
+
+
+
+	public void setHeureFin(TimeDTO heureFin) {
+		this.heureFin = heureFin;
+	}
+
+
+
 	@Override
 	public String toString() {
 		return "Reunion [idReunion=" + idReunion + ", nomReunion=" + nomReunion + ", descriptionReunion="
@@ -158,6 +254,27 @@ public class Reunion {
 	}
 
 
+
+
+
+
+	
+	 public void addEmploye(Employe employe) {
+	        this.employes.add(employe);
+	        employe.getReunions().add(this);
+	    }
+	 
+	    public void removeEmploye(Employe employe) {
+	        this.getEmployes().remove(employe);
+	        employe.getReunions().remove(this);
+	    }
+	 
+	    public void removeEmployes() {
+	        for (Employe employe : new HashSet<>(employes)) {
+	            removeEmploye(employe);
+	        }
+	    }
+	
 
 	
 	

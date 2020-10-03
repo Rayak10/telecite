@@ -1,7 +1,9 @@
 package technocite.tn.telecite.entities;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import javax.persistence.CascadeType;
@@ -16,12 +18,19 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import technocite.tn.telecite.dto.ReunionDto;
 
 @Entity
 @Table(name="EMPLOYE")
@@ -45,23 +54,31 @@ public class Employe {
 	private String post;
 	private String role;
 	private Boolean active;
+	private Boolean isChecked;
 	@Lob
 	private Byte[] photo;
+	
 	@OneToMany(targetEntity = Remarque.class,mappedBy = "employe",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
 	private List<Remarque>remarques;
+	
 	@ManyToOne
 	@JoinColumn(name="FK_Eq_Emp_ID")
 	private Equipe equipe;
+	
 	@ManyToOne
 	@JoinColumn(name="FK_Bur_Emp_ID")
 	private Bureau bureau;
+	
 	@OneToMany(targetEntity = Postit.class,mappedBy = "employe",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
 	private List<Postit>postits;
+	
 	@OneToMany(targetEntity = Tache.class,mappedBy = "employe",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
 	private List<Tache>taches;
+	
 	@ManyToOne
 	@JoinColumn(name="FK_Dep_Emp_ID")
 	private Departement departement;
+	
 	@OneToMany(targetEntity = Message.class,mappedBy = "employe",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
 	private List<Message>envoimessages;
 	@ManyToMany(fetch = FetchType.LAZY,cascade =CascadeType.ALL,mappedBy = "employes" )
@@ -72,19 +89,23 @@ public class Employe {
 	joinColumns  ={@JoinColumn(name = "employe_id")},
 			inverseJoinColumns={@JoinColumn(name="message_id")})
 	private Set<Message> recevoirMessages;
-	@ManyToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
-	@JoinTable(name ="employe_reunions",
-	joinColumns  ={@JoinColumn(name = "employe_id")},
-			inverseJoinColumns={@JoinColumn(name="reunion_id")})
-	private List<Reunion> reunionsadministratif;
+	@ManyToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL,mappedBy = "employes")
+    @JsonIgnore
+    private Set<Reunion> reunions=new HashSet<>();
+	
 	public Employe() {
 		super();
 	}
+	
+	
+
+
+	
 	public Employe(Long idEmploye, String matricule, String nomEmploye, String prenomEmploye, Date dateNaissance,
 			String email, String password, Date dateEmbauche, Float salaire, String post, String role, Boolean active,
-			Byte[] photo, List<Remarque> remarques, Equipe equipe, Bureau bureau, List<Postit> postits,
-			List<Tache> taches, Departement departement, List<Message> envoimessages, Set<Conversation> conversations,
-			Set<Message> recevoirMessages) {
+			Boolean isChecked, Byte[] photo, List<Remarque> remarques, Equipe equipe, Bureau bureau,
+			List<Postit> postits, List<Tache> taches, Departement departement, List<Message> envoimessages,
+			Set<Conversation> conversations, Set<Message> recevoirMessages, Set<Reunion> reunions) {
 		super();
 		this.idEmploye = idEmploye;
 		this.matricule = matricule;
@@ -98,6 +119,7 @@ public class Employe {
 		this.post = post;
 		this.role = role;
 		this.active = active;
+		this.isChecked = isChecked;
 		this.photo = photo;
 		this.remarques = remarques;
 		this.equipe = equipe;
@@ -108,29 +130,18 @@ public class Employe {
 		this.envoimessages = envoimessages;
 		this.conversations = conversations;
 		this.recevoirMessages = recevoirMessages;
+		this.reunions = reunions;
 	}
-	
-	public Employe(Long idEmploye, String matricule, String nomEmploye, String prenomEmploye, Date dateNaissance,
-			String email, String password, Date dateEmbauche, Float salaire, String post, String role, Boolean active,
-			Byte[] photo, Equipe equipe, Bureau bureau, Departement departement) {
+
+
+
+
+
+	public Employe(String nomEmploye) {
 		super();
-		this.idEmploye = idEmploye;
-		this.matricule = matricule;
 		this.nomEmploye = nomEmploye;
-		this.prenomEmploye = prenomEmploye;
-		this.dateNaissance = dateNaissance;
-		this.email = email;
-		this.password = password;
-		this.dateEmbauche = dateEmbauche;
-		this.salaire = salaire;
-		this.post = post;
-		this.role = role;
-		this.active = active;
-		this.photo = photo;
-		this.equipe = equipe;
-		this.bureau = bureau;
-		this.departement = departement;
 	}
+
 	public Long getIdEmploye() {
 		return idEmploye;
 	}
@@ -203,13 +214,19 @@ public class Employe {
 	public void setActive(Boolean active) {
 		this.active = active;
 	}
+	public Boolean getIsChecked() {
+		return isChecked;
+	}
+	public void setIsChecked(Boolean isChecked) {
+		this.isChecked = isChecked;
+	}
 	public Byte[] getPhoto() {
 		return photo;
 	}
 	public void setPhoto(Byte[] photo) {
 		this.photo = photo;
 	}
-	
+	@JsonIgnore
 	public List<Remarque> getRemarques() {
 		return remarques;
 	}
@@ -228,51 +245,79 @@ public class Employe {
 	public void setBureau(Bureau bureau) {
 		this.bureau = bureau;
 	}
-	
+	@JsonIgnore
 	public List<Postit> getPostits() {
 		return postits;
 	}
 	public void setPostits(List<Postit> postits) {
 		this.postits = postits;
 	}
-	
+	@JsonIgnore
 	public List<Tache> getTaches() {
 		return taches;
 	}
 	public void setTaches(List<Tache> taches) {
 		this.taches = taches;
 	}
-	
 	public Departement getDepartement() {
 		return departement;
 	}
 	public void setDepartement(Departement departement) {
 		this.departement = departement;
 	}
-	
+	@JsonIgnore
 	public List<Message> getEnvoimessages() {
 		return envoimessages;
 	}
 	public void setEnvoimessages(List<Message> envoimessages) {
 		this.envoimessages = envoimessages;
 	}
-	
+	@JsonIgnore
 	public Set<Conversation> getConversations() {
 		return conversations;
 	}
 	public void setConversations(Set<Conversation> conversations) {
 		this.conversations = conversations;
 	}
-	
+	@JsonIgnore
 	public Set<Message> getRecevoirMessages() {
 		return recevoirMessages;
 	}
 	public void setRecevoirMessages(Set<Message> recevoirMessages) {
 		this.recevoirMessages = recevoirMessages;
 	}
+	@JsonIgnore
+	public Set<Reunion> getReunions() {
+		return reunions;
+	}
+
+
+
+
+
+	public void setReunions(Set<Reunion> reunions) {
+		this.reunions = reunions;
+	}
+
+
+
+
+
+	@Override
+	public String toString() {
+		return "Employe [idEmploye=" + idEmploye + ", matricule=" + matricule + ", nomEmploye=" + nomEmploye
+				+ ", prenomEmploye=" + prenomEmploye + ", dateNaissance=" + dateNaissance + ", email=" + email
+				+ ", password=" + password + ", dateEmbauche=" + dateEmbauche + ", salaire=" + salaire + ", post="
+				+ post + ", role=" + role + ", active=" + active + ", isChecked=" + isChecked + ", photo="
+				+ Arrays.toString(photo) + "]";
+	}
 
 	
 
 	
+	public void addReunion(Reunion reunion) {
+		this.reunions.add(reunion);	
+	}
+
 
 }

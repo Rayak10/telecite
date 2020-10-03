@@ -139,6 +139,49 @@ public class Equipe {
 	public void setReunions(List<Reunion> reunions) {
 		this.reunions = reunions;
 	}
+
+
+
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((idEquipe == null) ? 0 : idEquipe.hashCode());
+		result = prime * result + ((nomEquipe == null) ? 0 : nomEquipe.hashCode());
+		result = prime * result + ((specialite == null) ? 0 : specialite.hashCode());
+		return result;
+	}
+
+
+
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Equipe other = (Equipe) obj;
+		if (idEquipe == null) {
+			if (other.idEquipe != null)
+				return false;
+		} else if (!idEquipe.equals(other.idEquipe))
+			return false;
+		if (nomEquipe == null) {
+			if (other.nomEquipe != null)
+				return false;
+		} else if (!nomEquipe.equals(other.nomEquipe))
+			return false;
+		if (specialite == null) {
+			if (other.specialite != null)
+				return false;
+		} else if (!specialite.equals(other.specialite))
+			return false;
+		return true;
+	}
 	
 	
 	

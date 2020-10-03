@@ -17,10 +17,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import technocite.tn.telecite.entities.Bureau;
+import technocite.tn.telecite.entities.Departement;
 import technocite.tn.telecite.entities.Employe;
 import technocite.tn.telecite.entities.Equipe;
 import technocite.tn.telecite.exception.ResourceNotFoundException;
 import technocite.tn.telecite.repositories.IBureau;
+import technocite.tn.telecite.repositories.IDepartement;
 import technocite.tn.telecite.repositories.IEmploye;
 import technocite.tn.telecite.repositories.IEquipe;
 
@@ -36,6 +38,8 @@ public class EmloyeController {
 	private IEquipe equipeRepository;
 	@Autowired
 	private IBureau bureauRepository;
+	@Autowired
+	private IDepartement departementRepository;
 	
 	@GetMapping("/")
 	public List<Employe> findAll() {
@@ -196,6 +200,44 @@ public class EmloyeController {
 
 	        return ResponseEntity.ok(equipeEmployes);
 	    }
+	 
+	 @GetMapping("/employesDepartement/{idDepartement}")
+	    public ResponseEntity findAllEemployesDepartement(@PathVariable Long idDepartement) {
+	        if (idDepartement == null) {
+	            return ResponseEntity.badRequest().body("Cannot find employes with null idDepartement");
+	        }
+	        Optional<Departement> departement = departementRepository.findById(idDepartement);
+	        System.out.println("55555555555555"+departement);
 
+	        if (departement == null) {
+	            return ResponseEntity.notFound().build();
+	        }
+	        List<Employe> departementEmployes = employeRepository.findByDepartement(departement);
+	        
+	        System.out.println("55555555555555"+departementEmployes);
+	       
+
+	        return ResponseEntity.ok(departementEmployes);
+	    }
+	 @GetMapping("/employesDepartements/{idDepartement}")
+	    public ResponseEntity findAllEemployesDepartements(@PathVariable Long idDepartement) {
+	        if (idDepartement == null) {
+	            return ResponseEntity.badRequest().body("Cannot find employes with null idDepartement");
+	        }
+	        Optional<Departement> departement = departementRepository.findById(idDepartement);
+	        System.out.println("55555555555555"+departement);
+
+	        if (departement == null) {
+	            return ResponseEntity.notFound().build();
+	        }
+	        List<Employe> departementEmployes = employeRepository.findByDepartement(departement);
+	        
+	        System.out.println("55555555555555"+departementEmployes);
+	       
+
+	        return ResponseEntity.ok(departementEmployes);
+	    }
+
+	
 	
 }

@@ -1,34 +1,75 @@
 package technocite.tn.telecite.dto;
 
+import java.time.LocalTime;
 import java.util.Date;
+import java.util.List;
+import java.util.Set;
 
 import javax.management.Notification;
+import javax.persistence.CascadeType;
+import javax.persistence.FetchType;
+import javax.persistence.ManyToMany;
+import javax.persistence.Transient;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
+import technocite.tn.telecite.entities.Employe;
 import technocite.tn.telecite.entities.Equipe;
 import technocite.tn.telecite.enums.ReunionType;
 
 @Builder
 @ToString
+@Setter
+@Getter
 public class ReunionDto {
-	private int  idReunion;
+	private Long  idReunion;
 	private String nomReunion;
 	private String descriptionReunion;
 	private Date dateDebut= new Date();
 	private Date dateFin= new Date();
+	private LocalTime heurDeb;
+	private LocalTime heurFin;
+	@Transient
 	private TimeDTO heureDeb;
+    public LocalTime getHeurDeb() {
+		return heurDeb;
+	}
+	public void setHeurDeb(LocalTime heurDeb) {
+		this.heurDeb = heurDeb;
+	}
+	public LocalTime getHeurFin() {
+		return heurFin;
+	}
+	public void setHeurFin(LocalTime heurFin) {
+		this.heurFin = heurFin;
+	}
+
+
+
+	@Transient
 	private TimeDTO heureFin;
 	private Notification notification;
 	private Equipe equipe;
+	private Set<Long> employes;
+	public Set<Long> getEmployes() {
+		return employes;
+	}
+	public void setEmployes(Set<Long> employes) {
+		this.employes = employes;
+	}
+
+
+
 	private ReunionType type;
-	public int getIdReunion() {
+	public Long getIdReunion() {
 		return idReunion;
 	}
-	public void setIdReunion(int idReunion) {
+	public void setIdReunion(Long idReunion) {
 		this.idReunion = idReunion;
 	}
 	public String getNomReunion() {
@@ -85,12 +126,17 @@ public class ReunionDto {
 	public void setType(ReunionType type) {
 		this.type = type;
 	}
+	
+	
+	
 	@Override
 	public String toString() {
 		return "ReunionDto [idReunion=" + idReunion + ", nomReunion=" + nomReunion + ", descriptionReunion="
 				+ descriptionReunion + ", dateDebut=" + dateDebut + ", dateFin=" + dateFin + ", heureDeb=" + heureDeb
-				+ ", heureFin=" + heureFin + ", type=" + type + "]";
+				+ ", heureFin=" + heureFin + ", notification=" + notification + ", equipe=" + equipe
+				+ ", employesReunion=" + employes + ", type=" + type + "]";
 	}
+	
 	
 
 }
