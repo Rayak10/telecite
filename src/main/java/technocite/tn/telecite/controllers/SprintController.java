@@ -142,7 +142,7 @@ public ResponseEntity findByEtatSprint(@PathVariable(name="etatSprint") String e
         reunionPlanification.setDescriptionReunion("Réunion de planification du sprint "+sprint.getNomSprint());
         reunionPlanification.setHeurDeb(LocalTime.of(10, 00,00));
         reunionPlanification.setHeurFin(LocalTime.of(19, 00,00));
-        reunionPlanification.setType(ReunionType.ReunionScrum);
+        reunionPlanification.setType(ReunionType.Reunion_Scrum);
         reunionPlanification.setEquipe(sprint.getProjet().getEquipe());
         Reunion dalyScrum=new Reunion();
         dalyScrum.setNomReunion("Réunion DalyScrum");
@@ -152,7 +152,7 @@ public ResponseEntity findByEtatSprint(@PathVariable(name="etatSprint") String e
         dalyScrum.setHeurDeb(LocalTime.of(10, 00,00));
         dalyScrum.setHeurFin(LocalTime.of(10, 15,00));
 
-        dalyScrum.setType(ReunionType.ReunionScrum);
+        dalyScrum.setType(ReunionType.Reunion_Scrum);
         dalyScrum.setEquipe(sprint.getProjet().getEquipe());
         
         
@@ -163,7 +163,7 @@ public ResponseEntity findByEtatSprint(@PathVariable(name="etatSprint") String e
         reunionretrospective.setHeurDeb(LocalTime.of(10, 00,00));
         reunionretrospective.setHeurFin(LocalTime.of(19, 00,00));
         reunionretrospective.setDescriptionReunion("Réunion rétrospective du sprint "+sprint.getNomSprint());;
-        reunionretrospective.setType(ReunionType.ReunionScrum);
+        reunionretrospective.setType(ReunionType.Reunion_Scrum);
         reunionretrospective.setEquipe(sprint.getProjet().getEquipe());
         Reunion  reunionreview =new Reunion();
         reunionreview.setNomReunion("Réunion sprint review");
@@ -172,7 +172,7 @@ public ResponseEntity findByEtatSprint(@PathVariable(name="etatSprint") String e
         reunionreview.setHeurDeb(LocalTime.of(10, 00,00));
         reunionreview.setHeurFin(LocalTime.of(19, 00,00));
         reunionreview.setDescriptionReunion("Réunion sprint review du sprint "+sprint.getNomSprint());;
-        reunionreview.setType(ReunionType.ReunionScrum);
+        reunionreview.setType(ReunionType.Reunion_Scrum);
         reunionreview.setEquipe(sprint.getProjet().getEquipe());
         Sprint createSprint = sprintRepository.save(sprint);
         reunionRepository.save(reunionPlanification);

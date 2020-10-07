@@ -25,6 +25,7 @@ import technocite.tn.telecite.dto.ReunionService;
 import technocite.tn.telecite.entities.Employe;
 import technocite.tn.telecite.entities.Equipe;
 import technocite.tn.telecite.entities.Reunion;
+import technocite.tn.telecite.enums.ReunionType;
 import technocite.tn.telecite.exception.ResourceNotFoundException;
 import technocite.tn.telecite.repositories.IEmploye;
 import technocite.tn.telecite.repositories.IEquipe;
@@ -88,13 +89,13 @@ public class ReunionController {
 	  
 	//}
 	 @PostMapping("/")
-	    public ResponseEntity<ReunionDto> getAllReunions(@RequestBody ReunionDto reunionDto) {
+	    public ResponseEntity<ReunionDto> addReunions(@RequestBody ReunionDto reunionDto) {
 		 
 		// reunionDto.setHeurDeb(LocalTime.of(reunionDto.getHeureDeb().getHour()+1,reunionDto.getHeureDeb().getMinute(),00));
 		 //reunionDto.setHeurFin(LocalTime.of(reunionDto.getHeureFin().getHour()+1,reunionDto.getHeureFin().getMinute(),00));
 
-	        ReunionDto std = reunionService.addReunion(reunionDto);
-	        return new ResponseEntity<>(std, HttpStatus.CREATED);
+	        ReunionDto rdto = reunionService.addReunion(reunionDto);
+	        return new ResponseEntity<>(rdto, HttpStatus.CREATED);
 	    }
  @PutMapping("/update/{idReunion}")
 	public ResponseEntity<Reunion> updateRieunion(@PathVariable(value = "idReunion") Long idReunion, @RequestBody 
@@ -143,5 +144,20 @@ public class ReunionController {
 
      return ResponseEntity.ok(equipeReunions);
  }
+ @GetMapping("/reunionsType/{type}")
+ public ResponseEntity findAllReunionsType(@PathVariable ReunionType type) {
+     if (type == null) {
+         return ResponseEntity.badRequest().body("Cannot find reunions with null type");
+     }
+     List<Reunion> typeReunions = reunionRepository.findByType(type);
+		typeReunions.forEach(reunion -> {
+			reunion.setHeurDeb(reunion.getHeurDeb().minusHours(1));
+			reunion.setHeurFin(reunion.getHeurFin().minusHours(1));
+		});
+     
+     
+    
 
+     return ResponseEntity.ok(typeReunions);
+ }
 }

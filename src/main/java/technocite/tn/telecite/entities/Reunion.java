@@ -37,7 +37,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import technocite.tn.telecite.dto.TimeDTO;
 import technocite.tn.telecite.enums.ReunionType;
 @Getter
 @Setter
@@ -75,19 +74,13 @@ public class Reunion {
     @ManyToMany(cascade = { CascadeType.MERGE, CascadeType.PERSIST })
     @JoinTable(name = "REUNION_EMPLOYE", joinColumns = { @JoinColumn(name = "REUNION_ID") }, inverseJoinColumns = {
             @JoinColumn(name = "EMPLOYE_ID") })
-	private Set<Employe> employes;
+	private List<Employe> employes;
 	
     public Reunion(String nomReunion) {
 		super();
 		this.nomReunion = nomReunion;
 	}
 
-	@Transient
-	private TimeDTO heureDeb;
-	
-    @Transient
-	private TimeDTO heureFin;
-	
 	
 
 
@@ -104,7 +97,7 @@ public class Reunion {
 
 	public Reunion(Long idReunion, String nomReunion, String descriptionReunion, Date dateDebut, Date dateFin,
 			LocalTime heurDeb, LocalTime heurFin, ReunionType type, Notification notification, Equipe equipe,
-			Conversation conversation, Set<Employe> employes, TimeDTO heureDeb, TimeDTO heureFin) {
+			Conversation conversation, List<Employe> employes) {
 		super();
 		this.idReunion = idReunion;
 		this.nomReunion = nomReunion;
@@ -118,8 +111,7 @@ public class Reunion {
 		this.equipe = equipe;
 		this.conversation = conversation;
 		this.employes = employes;
-		this.heureDeb = heureDeb;
-		this.heureFin = heureFin;
+		
 	}
 
 
@@ -201,19 +193,9 @@ public class Reunion {
 
 
 
-	public TimeDTO getHeureDeb() {
-		return heureDeb;
-	}
 
 
-
-	public void setHeureDeb(TimeDTO heureDeb) {
-		this.heureDeb = heureDeb;
-	}
-
-
-
-	public Set<Employe> getEmployes() {
+	public List<Employe> getEmployes() {
 		return employes;
 	}
 
@@ -223,7 +205,7 @@ public class Reunion {
 
 
 
-	public void setEmployes(Set<Employe> employes) {
+	public void setEmployes(List<Employe> employes) {
 		this.employes = employes;
 	}
 
@@ -233,15 +215,6 @@ public class Reunion {
 
 
 
-	public TimeDTO getHeureFin() {
-		return heureFin;
-	}
-
-
-
-	public void setHeureFin(TimeDTO heureFin) {
-		this.heureFin = heureFin;
-	}
 
 
 

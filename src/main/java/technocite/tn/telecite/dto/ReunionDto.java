@@ -32,30 +32,16 @@ public class ReunionDto {
 	private String descriptionReunion;
 	private Date dateDebut= new Date();
 	private Date dateFin= new Date();
-	private LocalTime heurDeb;
-	private LocalTime heurFin;
-	@Transient
 	private TimeDTO heureDeb;
-    public LocalTime getHeurDeb() {
-		return heurDeb;
-	}
-	public void setHeurDeb(LocalTime heurDeb) {
-		this.heurDeb = heurDeb;
-	}
-	public LocalTime getHeurFin() {
-		return heurFin;
-	}
-	public void setHeurFin(LocalTime heurFin) {
-		this.heurFin = heurFin;
-	}
-
-
-
-	@Transient
 	private TimeDTO heureFin;
 	private Notification notification;
 	private Equipe equipe;
 	private Set<Long> employes;
+   
+
+
+
+	
 	public Set<Long> getEmployes() {
 		return employes;
 	}

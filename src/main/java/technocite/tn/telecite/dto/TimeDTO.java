@@ -13,6 +13,16 @@ public class TimeDTO {
 	private int hour;
 	private int minute;
 	private int second;
+	
+	public TimeDTO() {
+		super();
+	}
+	public TimeDTO(int hour, int minute, int second) {
+		super();
+		this.hour = hour;
+		this.minute = minute;
+		this.second = second;
+	}
 	public int getHour() {
 		return hour;
 	}

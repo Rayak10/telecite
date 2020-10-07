@@ -20,11 +20,13 @@ import technocite.tn.telecite.entities.Bureau;
 import technocite.tn.telecite.entities.Departement;
 import technocite.tn.telecite.entities.Employe;
 import technocite.tn.telecite.entities.Equipe;
+import technocite.tn.telecite.entities.Reunion;
 import technocite.tn.telecite.exception.ResourceNotFoundException;
 import technocite.tn.telecite.repositories.IBureau;
 import technocite.tn.telecite.repositories.IDepartement;
 import technocite.tn.telecite.repositories.IEmploye;
 import technocite.tn.telecite.repositories.IEquipe;
+import technocite.tn.telecite.repositories.IReunion;
 
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -40,6 +42,8 @@ public class EmloyeController {
 	private IBureau bureauRepository;
 	@Autowired
 	private IDepartement departementRepository;
+	@Autowired
+	private IReunion reunionRepository;
 	
 	@GetMapping("/")
 	public List<Employe> findAll() {
@@ -236,6 +240,23 @@ public class EmloyeController {
 	       
 
 	        return ResponseEntity.ok(departementEmployes);
+	    }
+	 @GetMapping("/employesReunions/{idReunion}")
+	    public ResponseEntity findAllEemployesReunion(@PathVariable Long idReunion) {
+	        if (idReunion == null) {
+	            return ResponseEntity.badRequest().body("Cannot find employes with null idReunion");
+	        }
+	        Optional<Reunion> reunion = reunionRepository.findById(idReunion);
+	        System.out.println("55555555555555"+idReunion);
+
+	        if (reunion == null) {
+	            return ResponseEntity.notFound().build();
+	        }
+	        List<Employe> reunionEmployes = employeRepository.findByReunions(reunion);
+	        
+	       
+
+	        return ResponseEntity.ok(reunionEmployes);
 	    }
 
 	

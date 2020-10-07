@@ -1,6 +1,7 @@
 package technocite.tn.telecite.dto;
 
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
@@ -32,6 +33,7 @@ public class ReunionServiceImpl implements ReunionService {
 	public ReunionDto addReunion(ReunionDto reunionDto) {
 		 Reunion reunion = new Reunion();
 	        mapDtoToEntity(reunionDto, reunion);
+	        
 	        Reunion savedReunion = reunionRepository.save(reunion);
 	        return mapEntityToDto(savedReunion);
 	}
@@ -60,23 +62,34 @@ public class ReunionServiceImpl implements ReunionService {
 	        reunion.setDateDebut(reunionDto.getDateDebut());
 	        reunion.setDateFin(reunionDto.getDateFin());
 	        reunion.setDescriptionReunion(reunionDto.getDescriptionReunion());
-	       // reunion.setHeurDeb(LocalTime.of(reunion.getHeureDeb().getHour()+1,reunion.getHeureDeb().getMinute(),00));
-	       // reunion.setHeurFin(LocalTime.of(reunion.getHeureFin().getHour()+1,reunion.getHeureFin().getMinute(),00));
+	       reunion.setHeurDeb(LocalTime.of(reunionDto.getHeureDeb().getHour()+1,reunionDto.getHeureDeb().getMinute(),00));
+	       reunion.setHeurFin(LocalTime.of(reunionDto.getHeureFin().getHour()+1,reunionDto.getHeureFin().getMinute(),00));
 	        reunion.setEquipe(reunionDto.getEquipe());
 	        reunion.setType(reunionDto.getType());
+
 	        
 	        if (null == reunion.getEmployes()) {
-	            reunion.setEmployes(new HashSet<>());
+	            reunion.setEmployes(new ArrayList<>());
 	        }
-	        reunionDto.getEmployes().stream().forEach(id -> {
-	            Employe employe = employeRepository.findEmployeByIdEmploye(id);
-	            if (null == employe) {
-	                employe = new Employe() ;
-	                employe.setReunions(new HashSet<>());
-	            }
-	            employe.setIdEmploye(id);
-	            reunion.addEmploye(employe);
-	        });
+	        if (reunionDto.getType()==ReunionType.Reunion_Scrum) {
+	        	 reunion.setEmployes(employeRepository.findByEquipe(reunionDto.getEquipe()));
+	        	 System.out.println(reunion.getEmployes());
+	        }
+	        else {
+	        	  reunionDto.getEmployes().stream().forEach(id -> {
+	  	            Employe employe = employeRepository.findEmployeByIdEmploye(id);
+	  	            if (null == employe) {
+	  	                employe = new Employe() ;
+	  	                employe.setReunions(new HashSet<>());
+	  	            }
+	  	            employe.setIdEmploye(id);
+	  	            reunion.addEmploye(employe);
+	  	        });
+	        }
+	        
+	        
+	        
+	      
 	    }
 	 
 	    private ReunionDto mapEntityToDto(Reunion reunion) {
@@ -86,10 +99,9 @@ public class ReunionServiceImpl implements ReunionService {
 	        responseDto.setDateFin(reunion.getDateFin());
 	        responseDto.setDescriptionReunion(reunion.getDescriptionReunion());
 	        responseDto.setEquipe(reunion.getEquipe());
-	       // responseDto.setHeurDeb(LocalTime.of(responseDto.getHeureDeb().getHour()+1,responseDto.getHeureDeb().getMinute(),00));
-	       // responseDto.setHeurFin(LocalTime.of(responseDto.getHeureFin().getHour()+1,responseDto.getHeureFin().getMinute(),00));
-	        responseDto.setHeureDeb(reunion.getHeureDeb());
-	        responseDto.setHeureFin(reunion.getHeureFin());
+	        responseDto.setHeureDeb(new TimeDTO(reunion.getHeurDeb().getHour(), reunion.getHeurDeb().getMinute(), 00));
+	        responseDto.setHeureFin(new TimeDTO(reunion.getHeurFin().getHour(), reunion.getHeurFin().getMinute(), 00));
+	      
 	        responseDto.setDateDebut(reunion.getDateDebut());
 	        responseDto.setType(reunion.getType());
         responseDto.setEmployes(reunion.getEmployes().stream().map(Employe::getIdEmploye).collect(Collectors.toSet()));
