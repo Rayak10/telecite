@@ -61,6 +61,23 @@ public class ReunionController {
 	            return ResponseEntity.badRequest().body("Cannot retrieve Reunion with null ID");
 	        }
 	        Optional<Reunion> reunionScrum = reunionRepository.findById(idReunion);
+	        
+	        if (reunionScrum == null) {
+	            return ResponseEntity.notFound().build();
+	        }
+	        return ResponseEntity.ok().body(reunionScrum);
+	}
+	
+	@GetMapping("/dto/{idReunion}")
+	
+	public ResponseEntity findReunionDtoById(@PathVariable(name="idReunion") Long idReunion) { 
+		
+		  if (idReunion == null) {
+	            return ResponseEntity.badRequest().body("Cannot retrieve Reunion with null ID");
+	        }
+		  
+	        Optional<ReunionDto> reunionScrum = reunionService.findById(idReunion);
+	        
 	        if (reunionScrum == null) {
 	            return ResponseEntity.notFound().build();
 	        }
@@ -97,6 +114,22 @@ public class ReunionController {
 	        ReunionDto rdto = reunionService.addReunion(reunionDto);
 	        return new ResponseEntity<>(rdto, HttpStatus.CREATED);
 	    }
+	 
+	 
+	 
+	  @PutMapping("/updateReunion/{idReunion}")
+	    public ResponseEntity<ReunionDto> updateRieunion(@PathVariable(name = "idReunion") Long idReunion,
+	            @RequestBody ReunionDto reunion) {
+	        ReunionDto rdto = reunionService.updateReunion(idReunion, reunion);
+	        return new ResponseEntity<>(rdto, HttpStatus.CREATED);
+	    }
+	  
+	  
+	  
+	  
+	  
+	  
+	  
  @PutMapping("/update/{idReunion}")
 	public ResponseEntity<Reunion> updateRieunion(@PathVariable(value = "idReunion") Long idReunion, @RequestBody 
 		Reunion reunionDetails) throws ResourceNotFoundException {
