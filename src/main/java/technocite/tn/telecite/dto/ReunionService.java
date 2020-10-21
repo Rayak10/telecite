@@ -3,7 +3,6 @@ package technocite.tn.telecite.dto;
 import java.util.List;
 import java.util.Optional;
 
-import technocite.tn.telecite.entities.Reunion;
 
 public interface ReunionService {
 	   

@@ -61,11 +61,19 @@ public class ReunionController {
 	            return ResponseEntity.badRequest().body("Cannot retrieve Reunion with null ID");
 	        }
 	        Optional<Reunion> reunionScrum = reunionRepository.findById(idReunion);
+	        Reunion reunion=null;
+
 	        
-	        if (reunionScrum == null) {
-	            return ResponseEntity.notFound().build();
+	        
+	        if(reunionScrum.isPresent()) {
+	        reunion = reunionScrum.get();
+
+	        reunion.setHeurDeb(reunion.getHeurDeb().minusHours(1));
+	        reunion.setHeurFin(reunion.getHeurFin().minusHours(1));
+
 	        }
-	        return ResponseEntity.ok().body(reunionScrum);
+	        
+	        return ResponseEntity.ok().body(reunion);
 	}
 	
 	@GetMapping("/dto/{idReunion}")
