@@ -35,26 +35,21 @@ public class ReunionServiceImpl implements ReunionService {
 	public ReunionDto addReunion(ReunionDto reunionDto) {
 		int i;
 		String Newligne=System.getProperty("line.separator");
-		 SimpleDateFormat formater = null;
-		 Reunion reunion = new Reunion();
+		SimpleDateFormat formater = null;
+	    formater = new SimpleDateFormat("dd-MM-yy");
+
+		Reunion reunion = new Reunion();
 	        mapDtoToEntity(reunionDto, reunion);
-	        
 	        Reunion savedReunion = reunionRepository.save(reunion);
-	        System.out.println("/////////////////////////"+reunion.getDescriptionReunion());
-	        System.out.println("/////////////////////////"+reunion.getType());
-	        System.out.println("/////////////////////////"+reunion.getNomReunion());
-	        System.out.println("/////////////////////////"+reunion.getEmployes());
-	        System.out.println("/////////////////////////"+reunion.getDateDebut());
-	        System.out.println("/////////////////////////"+reunion.getHeurDeb());
-	        formater = new SimpleDateFormat("dd-MM-yy");
-for(i=0;i<=reunion.getEmployes().size();i++) {
+	        System.out.println(reunion+"ùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùù");
+	       for(i=0;i<=reunion.getEmployes().size();i++) {
 	emailrepository.sendEmail(reunion.getEmployes().get(i).getEmail()," "+
 							reunion.getType(),"Bonjour Nous avons l’honneur de vous convier à une réunion d’information le "+
 							formater.format(reunion.getDateDebut())+" à "+(reunion.getHeurDeb().getHour()-1)+"h"+
 							(reunion.getHeurDeb().getMinute())+"mnt."+Newligne+" Cette rencontre sera l’occasion d’aborder "+
                              reunion.getNomReunion()+"."+" Espérant vous compter parmi les membres présents, nous vous prions d’agréer,"+
 			                  reunion.getEmployes().get(i).getPrenomEmploye()+" "+reunion.getEmployes().get(i).getNomEmploye()+"."+Newligne+
-			                  " l’expression de nos sentiments les meilleurs.");	
+			                  " l’expression de nos sentiments les meilleurs."+Newligne+"lien de reunion: http://localhost:5000/"+Newligne+"clé de session :Session"+reunion.getIdReunion());	
 }
 	        return mapEntityToDto(savedReunion);
 	}

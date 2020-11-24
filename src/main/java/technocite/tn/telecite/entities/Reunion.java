@@ -55,6 +55,7 @@ public class Reunion {
 	private Date dateFin;
 	private LocalTime heurDeb; 
 	private LocalTime heurFin; 
+	private String session;
 
     @Enumerated(EnumType.STRING)
     private ReunionType type;	
@@ -96,7 +97,7 @@ public class Reunion {
 
 
 	public Reunion(Long idReunion, String nomReunion, String descriptionReunion, Date dateDebut, Date dateFin,
-			LocalTime heurDeb, LocalTime heurFin, ReunionType type, Notification notification, Equipe equipe,
+			LocalTime heurDeb, LocalTime heurFin, String session, ReunionType type, Notification notification, Equipe equipe,
 			Conversation conversation, List<Employe> employes) {
 		super();
 		this.idReunion = idReunion;
@@ -106,6 +107,7 @@ public class Reunion {
 		this.dateFin = dateFin;
 		this.heurDeb = heurDeb;
 		this.heurFin = heurFin;
+		this.session = session;
 		this.type = type;
 		this.notification = notification;
 		this.equipe = equipe;
@@ -189,6 +191,22 @@ public class Reunion {
 	}
 	public void setHeurFin(LocalTime heurFin) {
 		this.heurFin = heurFin;
+	}
+
+
+
+
+
+	public String getSession() {
+		return session;
+	}
+
+
+
+
+
+	public void setSession(String session) {
+		this.session = session;
 	}
 
 

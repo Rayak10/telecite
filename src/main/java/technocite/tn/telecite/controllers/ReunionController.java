@@ -120,6 +120,8 @@ public class ReunionController {
 		 //reunionDto.setHeurFin(LocalTime.of(reunionDto.getHeureFin().getHour()+1,reunionDto.getHeureFin().getMinute(),00));
 
 	        ReunionDto rdto = reunionService.addReunion(reunionDto);
+	        
+	        
 	        return new ResponseEntity<>(rdto, HttpStatus.CREATED);
 	    }
 	 

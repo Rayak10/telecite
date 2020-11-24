@@ -34,6 +34,7 @@ public class ReunionDto {
 	private Date dateFin= new Date();
 	private TimeDTO heureDeb;
 	private TimeDTO heureFin;
+	private String session;
 	private Notification notification;
 	private Equipe equipe;
 	private Set<Long> employes;
@@ -52,6 +53,7 @@ public class ReunionDto {
 
 
 	private ReunionType type;
+	
 	public Long getIdReunion() {
 		return idReunion;
 	}
@@ -115,6 +117,12 @@ public class ReunionDto {
 	
 	
 	
+	public String getSession() {
+		return session;
+	}
+	public void setSession(String session) {
+		this.session = session;
+	}
 	@Override
 	public String toString() {
 		return "ReunionDto [idReunion=" + idReunion + ", nomReunion=" + nomReunion + ", descriptionReunion="
