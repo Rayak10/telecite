@@ -2,6 +2,7 @@ package technocite.tn.telecite.repositories;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -22,5 +23,7 @@ public interface IEmploye extends JpaRepository<Employe, Long>{
 	List<Employe> findByBureau(Bureau bureau);
 	List<Employe> findByDepartement(Optional<Departement> departement);
 	List<Employe> findByReunions(Optional<Reunion> reunion);
+	//List<Employe> findEmployeByReunion(Reunion reunion);
+
 	}
 

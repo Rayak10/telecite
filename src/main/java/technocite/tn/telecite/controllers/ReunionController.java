@@ -1,7 +1,11 @@
 package technocite.tn.telecite.controllers;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -203,4 +207,28 @@ public class ReunionController {
 
      return ResponseEntity.ok(typeReunions);
  }
-}
+// @GetMapping("/reunionsDate")
+// public ResponseEntity findAllReunionsType() {
+//	 Date currentDate=null;
+//		try {
+//
+//			SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd");
+//			DateFormat formatterDate= new SimpleDateFormat("yyyy-MM-dd");
+//			String datStr = formatter.format(new Date());
+//			 currentDate= formatterDate.parse(datStr);
+//			 System.out.println(currentDate);
+//		} catch (ParseException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+		//System.out.println();
+//		List<Reunion> reunions=new ArrayList<>();
+//		reunions=reunionRepository.findByDateDebut();
+//		for (Reunion reunion : reunions) {
+//			System.out.println("reunion:"+reunion.getNomReunion());
+//		} 
+//    
+
+//     return ResponseEntity.ok(reunions);
+ }
+
