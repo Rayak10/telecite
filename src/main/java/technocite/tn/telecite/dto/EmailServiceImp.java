@@ -48,7 +48,6 @@ public class EmailServiceImp implements IMail{
 		SimpleDateFormat formater = new SimpleDateFormat("dd-MM-yy");
 
 //		
-		System.out.println("dddddddddddddddd");
 	List<MailReunionDTO> mailReunionDTOs = mailRepository.getAdministrativeReunionMailInfo();
 	mailReunionDTOs.forEach(
 				mailInfo -> {
