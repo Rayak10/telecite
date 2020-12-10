@@ -169,12 +169,12 @@ public class EmloyeController {
 	        employe.setActive(isActive);
 	        return ResponseEntity.ok(employeRepository.save(employe));
 	    }
-	 @GetMapping("/employesEquipe/{nomEquipe}")
-	    public ResponseEntity findAllEemployesEquipe(@PathVariable String nomEquipe) {
-	        if (nomEquipe == null) {
-	            return ResponseEntity.badRequest().body("Cannot find employes with null nomEquipe");
+	 @GetMapping("/employesEquipe/{idEquipe}")
+	    public ResponseEntity findAllEemployesEquipe(@PathVariable Long idEquipe) {
+	        if (idEquipe == null) {
+	            return ResponseEntity.badRequest().body("Cannot find employes with null id");
 	        }
-	        Equipe equipe = equipeRepository.findByNomEquipe(nomEquipe);
+	        Optional<Equipe> equipe = equipeRepository.findById(idEquipe);
 	        if (equipe == null) {
 	            return ResponseEntity.notFound().build();
 	        }
