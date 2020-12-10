@@ -1,7 +1,9 @@
-package technocite.tn.telecite.dto;
+package technocite.tn.telecite.repositories;
 
 import java.util.List;
 import java.util.Optional;
+
+import technocite.tn.telecite.dto.ReunionDto;
 
 
 public interface ReunionService {

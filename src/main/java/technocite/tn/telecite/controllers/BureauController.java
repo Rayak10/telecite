@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import technocite.tn.telecite.entities.Bureau;
 import technocite.tn.telecite.entities.Employe;
-import technocite.tn.telecite.entities.Equipe;
 import technocite.tn.telecite.exception.ResourceNotFoundException;
 import technocite.tn.telecite.repositories.IBureau;
 import technocite.tn.telecite.repositories.IEmploye;

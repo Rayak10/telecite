@@ -1,4 +1,4 @@
-package technocite.tn.telecite.dto;
+package technocite.tn.telecite.services;
 
 import java.util.List;
 
@@ -14,8 +14,10 @@ import org.hibernate.type.StringType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import technocite.tn.telecite.dto.MailReunionDTO;
+
 @Repository
-public class ReunionMailRepository {
+public class MailReunionImpl {
 	@Autowired
 	private EntityManager em;
 

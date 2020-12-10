@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -42,6 +43,7 @@ public class EmloyeController {
 	private IBureau bureauRepository;
 	@Autowired
 	private IDepartement departementRepository;
+
 	@Autowired
 	private IReunion reunionRepository;
 	
@@ -130,6 +132,8 @@ public class EmloyeController {
 			employe.setBureau(employeeDetails.getBureau());
 			employe.setDepartement(employeeDetails.getDepartement());
 			employe.setEquipe(employeeDetails.getEquipe());
+			employe.setRoleMember(employeeDetails.getRoleMember());
+
 			final Employe updatedEmploye = employeRepository.save(employe);
 			 return ResponseEntity.ok(employeRepository.findAll());
 		}

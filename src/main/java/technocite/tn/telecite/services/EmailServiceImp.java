@@ -1,4 +1,4 @@
-package technocite.tn.telecite.dto;
+package technocite.tn.telecite.services;
 
 import java.awt.event.ActionListener;
 import java.text.ParseException;
@@ -18,16 +18,15 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
-import technocite.tn.telecite.entities.Reunion;
+import technocite.tn.telecite.dto.MailReunionDTO;
 import technocite.tn.telecite.repositories.IEmploye;
-import technocite.tn.telecite.repositories.IEquipe;
-import technocite.tn.telecite.repositories.IReunion;
+import technocite.tn.telecite.repositories.IMail;
 @Service
 public class EmailServiceImp implements IMail{
 	@Resource
 	public JavaMailSender javaMailSender;
 	@Autowired
-	private ReunionMailRepository mailRepository;
+	private MailReunionImpl mailRepository;
 	@Autowired
 	private IMail emailrepository;
 	@Autowired

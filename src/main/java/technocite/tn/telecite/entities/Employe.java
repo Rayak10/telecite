@@ -64,7 +64,9 @@ public class Employe {
 	@ManyToOne
 	@JoinColumn(name="FK_Eq_Emp_ID")
 	private Equipe equipe;
-	
+	@ManyToOne
+	@JoinColumn(name="FK_role_Emp_ID")
+	private RoleMember roleMember;
 	@ManyToOne
 	@JoinColumn(name="FK_Bur_Emp_ID")
 	private Bureau bureau;
@@ -97,15 +99,12 @@ public class Employe {
 		super();
 	}
 	
-	
 
-
-	
 	public Employe(Long idEmploye, String matricule, String nomEmploye, String prenomEmploye, Date dateNaissance,
 			String email, String password, Date dateEmbauche, Float salaire, String post, String role, Boolean active,
 			Boolean isChecked, Byte[] photo, List<Remarque> remarques, Equipe equipe, Bureau bureau,
 			List<Postit> postits, List<Tache> taches, Departement departement, List<Message> envoimessages,
-			Set<Conversation> conversations, Set<Message> recevoirMessages, Set<Reunion> reunions) {
+			Set<Conversation> conversations, Set<Message> recevoirMessages, Set<Reunion> reunions,RoleMember roleMember) {
 		super();
 		this.idEmploye = idEmploye;
 		this.matricule = matricule;
@@ -131,6 +130,7 @@ public class Employe {
 		this.conversations = conversations;
 		this.recevoirMessages = recevoirMessages;
 		this.reunions = reunions;
+		this.roleMember=roleMember;
 	}
 
 
@@ -184,6 +184,23 @@ public class Employe {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+	
+	public RoleMember getRoleMember() {
+		return roleMember;
+	}
+
+
+
+
+
+	public void setRoleMember(RoleMember roleMember) {
+		this.roleMember = roleMember;
+	}
+
+
+
+
+
 	public Date getDateEmbauche() {
 		return dateEmbauche;
 	}

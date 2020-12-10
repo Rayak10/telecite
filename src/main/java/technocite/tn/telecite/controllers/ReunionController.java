@@ -25,7 +25,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import technocite.tn.telecite.dto.ReunionDto;
-import technocite.tn.telecite.dto.ReunionService;
 import technocite.tn.telecite.entities.Employe;
 import technocite.tn.telecite.entities.Equipe;
 import technocite.tn.telecite.entities.Reunion;
@@ -34,6 +33,7 @@ import technocite.tn.telecite.exception.ResourceNotFoundException;
 import technocite.tn.telecite.repositories.IEmploye;
 import technocite.tn.telecite.repositories.IEquipe;
 import technocite.tn.telecite.repositories.IReunion;
+import technocite.tn.telecite.repositories.ReunionService;
 
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
