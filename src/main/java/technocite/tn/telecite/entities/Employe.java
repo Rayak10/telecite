@@ -137,10 +137,6 @@ public class Employe {
 
 
 
-	public Employe(String nomEmploye) {
-		super();
-		this.nomEmploye = nomEmploye;
-	}
 
 	public Long getIdEmploye() {
 		return idEmploye;
@@ -188,18 +184,9 @@ public class Employe {
 	public RoleMember getRoleMember() {
 		return roleMember;
 	}
-
-
-
-
-
 	public void setRoleMember(RoleMember roleMember) {
 		this.roleMember = roleMember;
 	}
-
-
-
-
 
 	public Date getDateEmbauche() {
 		return dateEmbauche;

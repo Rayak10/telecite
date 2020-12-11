@@ -20,8 +20,12 @@ private PasswordEncoder paswordEncoder;
 private IEmploye employerepository; 
 
 public Employe saveEmploye (Employe employe) {
-	RoleMember empRole=roleRepository.findByNomRole("ROLE_EMPLOYE");
-	employe.setRoleMember(empRole);
+    System.out.println("gggggggggggggggggggggggggg"+employe);
+    RoleMember roleMember = roleRepository.findByNomRole(employe.getRoleMember().getNomRole());
+    System.out.println("gggggggggggggggggggggggggg"+employe.getRoleMember().getNomRole());
+
+    employe.setRoleMember(roleMember);
+	
     employe.setPassword(paswordEncoder.encode(employe.getPassword()));
     return employerepository.save(employe);
 
