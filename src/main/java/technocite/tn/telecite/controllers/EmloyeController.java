@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -66,6 +65,7 @@ public class EmloyeController {
 	@GetMapping("/{idEmploye}")
 	
 	public ResponseEntity findEmployeById(@PathVariable(name="idEmploye") Long idEmploye) { 
+		System.out.println("eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
 		
 		  if (idEmploye == null) {
 	            return ResponseEntity.badRequest().body("Cannot retrieve Employe with null ID");
@@ -77,12 +77,22 @@ public class EmloyeController {
 	        return ResponseEntity.ok().body(employe);
 	}
 	@GetMapping("/nom/{nomEmploye}")
-
 	public ResponseEntity findByNomEmploye(@PathVariable(name="nomEmploye") String nomEmploye) { 
 		 if (nomEmploye == null) {
 	            return ResponseEntity.badRequest().body("Cannot retrieve employe with null name");
 	        }
 		  Employe employe = employeRepository.findByNomEmploye(nomEmploye);
+	        if (employe == null) {
+	            return ResponseEntity.notFound().build();
+	        }
+	        return ResponseEntity.ok().body(employe);
+	}
+	@GetMapping("/email/{email}")
+	public ResponseEntity findByEmail(@PathVariable(name="email") String email) { 
+		 if (email == null) {
+	            return ResponseEntity.badRequest().body("Cannot retrieve employe with null name");
+	        }
+		  Employe employe = employeRepository.findByEmail(email);
 	        if (employe == null) {
 	            return ResponseEntity.notFound().build();
 	        }
@@ -126,7 +136,6 @@ public class EmloyeController {
 			employe.setSalaire(employeeDetails.getSalaire());
 			
 			employe.setPost(employeeDetails.getPost());
-			employe.setRole(employeeDetails.getRole());
 			employe.setActive(employeeDetails.getActive());
 			employe.setPhoto(employeeDetails.getPhoto());
 			employe.setBureau(employeeDetails.getBureau());

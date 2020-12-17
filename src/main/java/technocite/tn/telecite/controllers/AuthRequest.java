@@ -4,8 +4,17 @@ import lombok.Data;
 
 @Data
 public class AuthRequest {
+    public AuthRequest() {
+		super();
+	}
+	public AuthRequest(String password, String email) {
+		super();
+		this.password = password;
+		this.email = email;
+	}
+	private String password;
     private String email;
-    private String password;
+    
 	public String getEmail() {
 		return email;
 	}
@@ -18,5 +27,10 @@ public class AuthRequest {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+	@Override
+	public String toString() {
+		return "AuthRequest [password=" + password + ", email=" + email + "]";
+	}
+	
     
 }

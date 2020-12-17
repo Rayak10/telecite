@@ -7,7 +7,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import javax.persistence.CascadeType;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -18,19 +20,13 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import technocite.tn.telecite.dto.ReunionDto;
 
 @Entity
 @Table(name="EMPLOYE")
@@ -52,9 +48,9 @@ public class Employe {
 	private Date  dateEmbauche;
 	private Float salaire;
 	private String post;
-	private String role;
 	private Boolean active;
 	private Boolean isChecked;
+
 	@Lob
 	private Byte[] photo;
 	
@@ -104,7 +100,7 @@ public class Employe {
 			String email, String password, Date dateEmbauche, Float salaire, String post, String role, Boolean active,
 			Boolean isChecked, Byte[] photo, List<Remarque> remarques, Equipe equipe, Bureau bureau,
 			List<Postit> postits, List<Tache> taches, Departement departement, List<Message> envoimessages,
-			Set<Conversation> conversations, Set<Message> recevoirMessages, Set<Reunion> reunions,RoleMember roleMember) {
+			Set<Conversation> conversations, Set<Message> recevoirMessages, Set<Reunion> reunions, RoleMember roleMember) {
 		super();
 		this.idEmploye = idEmploye;
 		this.matricule = matricule;
@@ -116,7 +112,6 @@ public class Employe {
 		this.dateEmbauche = dateEmbauche;
 		this.salaire = salaire;
 		this.post = post;
-		this.role = role;
 		this.active = active;
 		this.isChecked = isChecked;
 		this.photo = photo;
@@ -206,12 +201,7 @@ public class Employe {
 	public void setPost(String post) {
 		this.post = post;
 	}
-	public String getRole() {
-		return role;
-	}
-	public void setRole(String role) {
-		this.role = role;
-	}
+
 	public Boolean getActive() {
 		return active;
 	}
@@ -306,19 +296,22 @@ public class Employe {
 
 
 
+	
 
+	
 	@Override
 	public String toString() {
 		return "Employe [idEmploye=" + idEmploye + ", matricule=" + matricule + ", nomEmploye=" + nomEmploye
 				+ ", prenomEmploye=" + prenomEmploye + ", dateNaissance=" + dateNaissance + ", email=" + email
 				+ ", password=" + password + ", dateEmbauche=" + dateEmbauche + ", salaire=" + salaire + ", post="
-				+ post + ", role=" + role + ", active=" + active + ", isChecked=" + isChecked + ", photo="
-				+ Arrays.toString(photo) + "]";
+				+ post + ", active=" + active + ", isChecked=" + isChecked + ", photo=" + Arrays.toString(photo)
+				+ ", remarques=" + remarques + ", equipe=" + equipe + ", roleMember=" + roleMember + ", bureau="
+				+ bureau + ", postits=" + postits + ", taches=" + taches + ", departement=" + departement
+				+ ", envoimessages=" + envoimessages + ", conversations=" + conversations + ", recevoirMessages="
+				+ recevoirMessages + ", reunions=" + reunions + "]";
 	}
 
-	
 
-	
 	public void addReunion(Reunion reunion) {
 		this.reunions.add(reunion);	
 	}

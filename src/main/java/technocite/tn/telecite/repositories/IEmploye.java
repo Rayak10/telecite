@@ -15,17 +15,28 @@ import technocite.tn.telecite.entities.Reunion;
 @Repository
 public interface IEmploye extends JpaRepository<Employe, Long>{
 	Employe findByEmailAndPassword(String email,String password);
-	Employe findByEmail(String email);
+	
+	
 	List<Employe> findByActive(Boolean active);
+	
 	 List<Employe> findByEquipe(Optional<Equipe> equipe);
+	 
     Employe findEmployeByIdEmploye(Long idEmploye);
+    
 	Employe findByNomEmploye (String nomEmploye);
+	
 	Employe findByNomEmployeAndPrenomEmploye (String nomEmploye ,String PrenomEmploye);
+	
 	List<Employe> findByBureau(Bureau bureau);
+	
 	List<Employe> findByDepartement(Optional<Departement> departement);
+	
 	List<Employe> findByReunions(Optional<Reunion> reunion);
-	//List<Employe> findEmployeByReunion(Reunion reunion);
+	
 	List<Employe> findByEquipe(Equipe equipe);
+
+
+	Employe findByEmail(String email);
 
 	}
 

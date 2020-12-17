@@ -12,8 +12,8 @@ import technocite.tn.telecite.repositories.IRoleMmember;
 public class EmployeService {
 
 	
-@Autowired
-private IRoleMmember roleRepository;
+//@Autowired
+//private IRoleMmember roleRepository;
 @Autowired	
 private PasswordEncoder paswordEncoder; 
 @Autowired	
@@ -21,11 +21,11 @@ private IEmploye employerepository;
 
 public Employe saveEmploye (Employe employe) {
     System.out.println("gggggggggggggggggggggggggg"+employe);
-    RoleMember roleMember = roleRepository.findByNomRole(employe.getRoleMember().getNomRole());
-    System.out.println("gggggggggggggggggggggggggg"+employe.getRoleMember().getNomRole());
-
-    employe.setRoleMember(roleMember);
-	
+//    RoleMember roleMember = roleRepository.findByNomRole(employe.getRoleMember().getNomRole());
+//    System.out.println("gggggggggggggggggggggggggg"+employe.getRoleMember().getNomRole());
+//
+//    employe.setRoleMember(roleMember);
+//	
     employe.setPassword(paswordEncoder.encode(employe.getPassword()));
     return employerepository.save(employe);
 

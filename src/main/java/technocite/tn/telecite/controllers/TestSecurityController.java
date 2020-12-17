@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class TestSecurityController {
 
-    @GetMapping("/employe/get")
+    @GetMapping("/productowner/get")
     public String getAdmin() {
         return "Hi admin";
     }
