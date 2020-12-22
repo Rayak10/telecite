@@ -21,8 +21,8 @@ public class UserService {
     private PasswordEncoder passwordEncoder;
 
     public Employe saveUser(Employe emp) {
-        RoleMember roleMember = roleMmemberrepository.findByNomRole(emp.getRoleMember().getNomRole());
-        emp.setRoleMember(roleMember);
+        RoleMember roleMember = roleMmemberrepository.findByNomRole(emp.getRole().getNomRole());
+        emp.setRole(roleMember);
         emp.setPassword(passwordEncoder.encode(emp.getPassword()));
         
         return employerepository.save(emp);

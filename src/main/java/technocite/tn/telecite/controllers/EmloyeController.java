@@ -1,9 +1,14 @@
 package technocite.tn.telecite.controllers;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -16,6 +21,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import javassist.expr.NewArray;
+import technocite.tn.telecite.dto.Response;
 import technocite.tn.telecite.entities.Bureau;
 import technocite.tn.telecite.entities.Departement;
 import technocite.tn.telecite.entities.Employe;
@@ -76,6 +89,27 @@ public class EmloyeController {
 	        }
 	        return ResponseEntity.ok().body(employe);
 	}
+@GetMapping("/photo/{idEmploye}")
+	
+	public ResponseEntity findPhotoEmployeById(@PathVariable(name="idEmploye") Long idEmploye) { 
+		System.out.println("eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
+		
+		  if (idEmploye == null) {
+	            return ResponseEntity.badRequest().body("Cannot retrieve Employe with null ID");
+	        }
+	        Employe employe = employeRepository.getOne(idEmploye);
+	        if (employe == null) {
+	            return ResponseEntity.notFound().build();
+	        }
+	        if(employe.getPhoto()==null) {
+	        	return ResponseEntity.notFound().build();
+	        }
+	        return ResponseEntity.ok()
+	        		.contentType(MediaType.IMAGE_GIF)
+	        		.contentType(MediaType.IMAGE_JPEG)
+	        		.contentType(MediaType.IMAGE_PNG)
+	        		.body(new InputStreamResource(new ByteArrayInputStream(employe.getPhoto())));
+	}
 	@GetMapping("/nom/{nomEmploye}")
 	public ResponseEntity findByNomEmploye(@PathVariable(name="nomEmploye") String nomEmploye) { 
 		 if (nomEmploye == null) {
@@ -112,6 +146,20 @@ public class EmloyeController {
 	        }
 	        return ResponseEntity.ok().body(employe);
 	}
+	
+	@PostMapping("/saveEmployeProfile")
+	public ResponseEntity<Response> saveEmployeProfile(@RequestParam("file") MultipartFile file, @RequestParam("employee") String employee) throws IOException{
+		Employe employe =new ObjectMapper().readValue(employee, Employe.class);
+		System.out.println("eeeeeeeeeeeeeeeeee"+employee);
+		employe.setPhoto(file.getBytes());
+		employe.setFileName(file.getOriginalFilename());
+		Employe emp =employeRepository.save(employe);
+		if(emp!=null) { 
+		return new ResponseEntity<Response>(new Response ("employe is save successfully"),HttpStatus.OK);
+	}else {
+		return new ResponseEntity<Response>(new Response ("employe not saved"),HttpStatus.BAD_REQUEST);
+	}
+	}
 	@PostMapping("/")
     	public ResponseEntity createEmploye(@RequestBody Employe employe) {
         if (employe == null) {
@@ -141,7 +189,7 @@ public class EmloyeController {
 			employe.setBureau(employeeDetails.getBureau());
 			employe.setDepartement(employeeDetails.getDepartement());
 			employe.setEquipe(employeeDetails.getEquipe());
-			employe.setRoleMember(employeeDetails.getRoleMember());
+			employe.setRole(employeeDetails.getRole());
 
 			final Employe updatedEmploye = employeRepository.save(employe);
 			 return ResponseEntity.ok(employeRepository.findAll());

@@ -39,7 +39,7 @@ public class AuthController {
         e.setPhoto(registrationRequest.getPhoto());
         e.setPost(registrationRequest.getPost());
     	e.setEquipe(registrationRequest.getEquipe());
-		e.setRoleMember(registrationRequest.getRoleMember());
+		e.setRole(registrationRequest.getRoleMember());
         userService.saveUser(e);
         return "OK";
     }

@@ -20,7 +20,7 @@ public class CustomUserDetails implements UserDetails {
 
         c.login = employe.getEmail();
         c.password = employe.getPassword();
-        c.grantedAuthorities = Collections.singletonList(new SimpleGrantedAuthority(employe.getRoleMember().getNomRole()));
+        c.grantedAuthorities = Collections.singletonList(new SimpleGrantedAuthority(employe.getRole().getNomRole()));
         return c;
     }
 

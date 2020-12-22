@@ -50,9 +50,10 @@ public class Employe {
 	private String post;
 	private Boolean active;
 	private Boolean isChecked;
+	private String fileName;
 
-	@Lob
-	private Byte[] photo;
+	
+	private byte[] photo;
 	
 	@OneToMany(targetEntity = Remarque.class,mappedBy = "employe",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
 	private List<Remarque>remarques;
@@ -62,7 +63,7 @@ public class Employe {
 	private Equipe equipe;
 	@ManyToOne
 	@JoinColumn(name="FK_role_Emp_ID")
-	private RoleMember roleMember;
+	private RoleMember role;
 	@ManyToOne
 	@JoinColumn(name="FK_Bur_Emp_ID")
 	private Bureau bureau;
@@ -77,6 +78,31 @@ public class Employe {
 	@JoinColumn(name="FK_Dep_Emp_ID")
 	private Departement departement;
 	
+	public Employe(String matricule, String nomEmploye, String prenomEmploye, Date dateNaissance, String email,
+			String password, Date dateEmbauche, Float salaire, String post, Boolean active, String fileName,
+			byte[] photo) {
+		super();
+		this.matricule = matricule;
+		this.nomEmploye = nomEmploye;
+		this.prenomEmploye = prenomEmploye;
+		this.dateNaissance = dateNaissance;
+		this.email = email;
+		this.password = password;
+		this.dateEmbauche = dateEmbauche;
+		this.salaire = salaire;
+		this.post = post;
+		this.active = active;
+		this.fileName = fileName;
+		this.photo = photo;
+	}
+
+
+
+
+
+
+
+
 	@OneToMany(targetEntity = Message.class,mappedBy = "employe",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
 	private List<Message>envoimessages;
 	@ManyToMany(fetch = FetchType.LAZY,cascade =CascadeType.ALL,mappedBy = "employes" )
@@ -96,37 +122,6 @@ public class Employe {
 	}
 	
 
-	public Employe(Long idEmploye, String matricule, String nomEmploye, String prenomEmploye, Date dateNaissance,
-			String email, String password, Date dateEmbauche, Float salaire, String post, String role, Boolean active,
-			Boolean isChecked, Byte[] photo, List<Remarque> remarques, Equipe equipe, Bureau bureau,
-			List<Postit> postits, List<Tache> taches, Departement departement, List<Message> envoimessages,
-			Set<Conversation> conversations, Set<Message> recevoirMessages, Set<Reunion> reunions, RoleMember roleMember) {
-		super();
-		this.idEmploye = idEmploye;
-		this.matricule = matricule;
-		this.nomEmploye = nomEmploye;
-		this.prenomEmploye = prenomEmploye;
-		this.dateNaissance = dateNaissance;
-		this.email = email;
-		this.password = password;
-		this.dateEmbauche = dateEmbauche;
-		this.salaire = salaire;
-		this.post = post;
-		this.active = active;
-		this.isChecked = isChecked;
-		this.photo = photo;
-		this.remarques = remarques;
-		this.equipe = equipe;
-		this.bureau = bureau;
-		this.postits = postits;
-		this.taches = taches;
-		this.departement = departement;
-		this.envoimessages = envoimessages;
-		this.conversations = conversations;
-		this.recevoirMessages = recevoirMessages;
-		this.reunions = reunions;
-		this.roleMember=roleMember;
-	}
 
 
 
@@ -176,13 +171,7 @@ public class Employe {
 		this.password = password;
 	}
 	
-	public RoleMember getRoleMember() {
-		return roleMember;
-	}
-	public void setRoleMember(RoleMember roleMember) {
-		this.roleMember = roleMember;
-	}
-
+	
 	public Date getDateEmbauche() {
 		return dateEmbauche;
 	}
@@ -214,12 +203,18 @@ public class Employe {
 	public void setIsChecked(Boolean isChecked) {
 		this.isChecked = isChecked;
 	}
-	public Byte[] getPhoto() {
+
+	
+	public byte[] getPhoto() {
 		return photo;
 	}
-	public void setPhoto(Byte[] photo) {
+
+
+	public void setPhoto(byte[] photo) {
 		this.photo = photo;
 	}
+
+
 	@JsonIgnore
 	public List<Remarque> getRemarques() {
 		return remarques;
@@ -299,17 +294,92 @@ public class Employe {
 	
 
 	
+
+
+	public RoleMember getRole() {
+		return role;
+	}
+
+
+
+
+
+
+
+
+	public void setRole(RoleMember role) {
+		this.role = role;
+	}
+
+
+
+
+
+
+
+
+	public String getFileName() {
+		return fileName;
+	}
+
+
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
+	}
+
+
 	@Override
 	public String toString() {
 		return "Employe [idEmploye=" + idEmploye + ", matricule=" + matricule + ", nomEmploye=" + nomEmploye
 				+ ", prenomEmploye=" + prenomEmploye + ", dateNaissance=" + dateNaissance + ", email=" + email
 				+ ", password=" + password + ", dateEmbauche=" + dateEmbauche + ", salaire=" + salaire + ", post="
-				+ post + ", active=" + active + ", isChecked=" + isChecked + ", photo=" + Arrays.toString(photo)
-				+ ", remarques=" + remarques + ", equipe=" + equipe + ", roleMember=" + roleMember + ", bureau="
-				+ bureau + ", postits=" + postits + ", taches=" + taches + ", departement=" + departement
-				+ ", envoimessages=" + envoimessages + ", conversations=" + conversations + ", recevoirMessages="
-				+ recevoirMessages + ", reunions=" + reunions + "]";
+				+ post + ", active=" + active + ", isChecked=" + isChecked + ", fileName=" + fileName + ", photo="
+				+ Arrays.toString(photo) + ", remarques=" + remarques + ", equipe=" + equipe + ", roleMember="
+				+ role + ", bureau=" + bureau + ", postits=" + postits + ", taches=" + taches + ", departement="
+				+ departement + ", envoimessages=" + envoimessages + ", conversations=" + conversations
+				+ ", recevoirMessages=" + recevoirMessages + ", reunions=" + reunions + "]";
 	}
+
+
+	public Employe(Long idEmploye, String matricule, String nomEmploye, String prenomEmploye, Date dateNaissance,
+			String email, String password, Date dateEmbauche, Float salaire, String post, Boolean active,
+			Boolean isChecked, String fileName, byte[] photo, List<Remarque> remarques, Equipe equipe, RoleMember role,
+			Bureau bureau, List<Postit> postits, List<Tache> taches, Departement departement,
+			List<Message> envoimessages, Set<Conversation> conversations, Set<Message> recevoirMessages,
+			Set<Reunion> reunions) {
+		super();
+		this.idEmploye = idEmploye;
+		this.matricule = matricule;
+		this.nomEmploye = nomEmploye;
+		this.prenomEmploye = prenomEmploye;
+		this.dateNaissance = dateNaissance;
+		this.email = email;
+		this.password = password;
+		this.dateEmbauche = dateEmbauche;
+		this.salaire = salaire;
+		this.post = post;
+		this.active = active;
+		this.isChecked = isChecked;
+		this.fileName = fileName;
+		this.photo = photo;
+		this.remarques = remarques;
+		this.equipe = equipe;
+		this.role = role;
+		this.bureau = bureau;
+		this.postits = postits;
+		this.taches = taches;
+		this.departement = departement;
+		this.envoimessages = envoimessages;
+		this.conversations = conversations;
+		this.recevoirMessages = recevoirMessages;
+		this.reunions = reunions;
+	}
+
+
+
+
+
+
 
 
 	public void addReunion(Reunion reunion) {

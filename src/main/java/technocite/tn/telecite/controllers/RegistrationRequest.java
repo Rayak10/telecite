@@ -35,8 +35,8 @@ public class RegistrationRequest {
 	private Boolean active;
 	private Boolean isChecked;
     private RoleMember RoleMember;
-	@Lob
-	private Byte[] photo;
+	
+	private byte[] photo;
 	
 	
 	
@@ -174,12 +174,15 @@ public class RegistrationRequest {
 	}
 
 
-	public Byte[] getPhoto() {
+
+
+
+	public byte[] getPhoto() {
 		return photo;
 	}
 
 
-	public void setPhoto(Byte[] photo) {
+	public void setPhoto(byte[] photo) {
 		this.photo = photo;
 	}
 

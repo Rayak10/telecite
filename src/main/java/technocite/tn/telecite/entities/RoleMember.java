@@ -11,6 +11,9 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -29,9 +32,16 @@ public class RoleMember {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long idRole;
 	private String nomRole;
-	@OneToMany(targetEntity = Employe.class,mappedBy = "roleMember",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+	@OneToMany(targetEntity = Employe.class,mappedBy = "role",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
 	private List<Employe>employes;
 	
+	public RoleMember(Long idRole, String nomRole, List<Employe> employes) {
+		super();
+		this.idRole = idRole;
+		this.nomRole = nomRole;
+		this.employes = employes;
+	}
+
 	public RoleMember() {
 		super();
 	}
@@ -42,13 +52,6 @@ public class RoleMember {
 		this.nomRole = nomRole;
 	}
 	
-
-	public RoleMember(Long idRole, String nomRole, List<Employe> employes) {
-		super();
-		this.idRole = idRole;
-		this.nomRole = nomRole;
-		this.employes = employes;
-	}
 
 	public Long getIdRole() {
 		return idRole;
@@ -65,7 +68,8 @@ public class RoleMember {
 	public void setNomRole(String nomRole) {
 		this.nomRole = nomRole;
 	}
-
+@JsonManagedReference
+@JsonIgnore
 	public List<Employe> getEmployes() {
 		return employes;
 	}
