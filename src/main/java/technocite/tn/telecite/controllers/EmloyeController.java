@@ -154,6 +154,7 @@ public class EmloyeController {
 		employe.setPhoto(file.getBytes());
 		employe.setFileName(file.getOriginalFilename());
 		Employe emp =employeRepository.save(employe);
+		
 		if(emp!=null) { 
 		return new ResponseEntity<Response>(new Response ("employe is save successfully"),HttpStatus.OK);
 	}else {
@@ -166,34 +167,33 @@ public class EmloyeController {
             return ResponseEntity.badRequest().body("Cannot create employe with empty fields");
         }
         Employe createEmploye = employeRepository.save(employe);
-        return ResponseEntity.ok(createEmploye);
+        return ResponseEntity.ok(employeRepository.findAll());
     }
-	 @PutMapping("/update/{idEmploye}")
-		public ResponseEntity updateEmploye(@PathVariable(value = "idEmploye") Long idEmploye, @RequestBody 
-			Employe employeeDetails) throws ResourceNotFoundException {
-			Employe employe = employeRepository.findById(idEmploye)
-					.orElseThrow(() -> new ResourceNotFoundException("Employee not found for this id :: " + idEmploye));
-			
-			employe.setMatricule(employeeDetails.getMatricule());
-			employe.setNomEmploye(employeeDetails.getNomEmploye());
-			employe.setPrenomEmploye(employeeDetails.getPrenomEmploye());
-			employe.setDateNaissance(employeeDetails.getDateNaissance());
-			employe.setEmail(employeeDetails.getEmail());
-			employe.setPassword(employeeDetails.getPassword());
-			employe.setDateEmbauche(employeeDetails.getDateEmbauche());
-			employe.setSalaire(employeeDetails.getSalaire());
-			
-			employe.setPost(employeeDetails.getPost());
-			employe.setActive(employeeDetails.getActive());
-			employe.setPhoto(employeeDetails.getPhoto());
-			employe.setBureau(employeeDetails.getBureau());
-			employe.setDepartement(employeeDetails.getDepartement());
-			employe.setEquipe(employeeDetails.getEquipe());
-			employe.setRole(employeeDetails.getRole());
-
-			final Employe updatedEmploye = employeRepository.save(employe);
-			 return ResponseEntity.ok(employeRepository.findAll());
-		}
+	@PutMapping("/update/{idEmploye}")
+	public ResponseEntity updateEmploye(@PathVariable(value = "idEmploye") Long idEmploye, @RequestBody 
+		Employe employeeDetails) throws ResourceNotFoundException {
+		Employe employe = employeRepository.findById(idEmploye)
+				.orElseThrow(() -> new ResourceNotFoundException("Employee not found for this id :: " + idEmploye));
+		
+		employe.setMatricule(employeeDetails.getMatricule());
+		employe.setNomEmploye(employeeDetails.getNomEmploye());
+		employe.setPrenomEmploye(employeeDetails.getPrenomEmploye());
+		employe.setDateNaissance(employeeDetails.getDateNaissance());
+		employe.setEmail(employeeDetails.getEmail());
+		employe.setPassword(employeeDetails.getPassword());
+		employe.setDateEmbauche(employeeDetails.getDateEmbauche());
+		employe.setSalaire(employeeDetails.getSalaire());
+		
+		employe.setPost(employeeDetails.getPost());
+		employe.setRole(employeeDetails.getRole());
+		employe.setActive(employeeDetails.getActive());
+		employe.setPhoto(employeeDetails.getPhoto());
+		employe.setBureau(employeeDetails.getBureau());
+		employe.setDepartement(employeeDetails.getDepartement());
+		employe.setEquipe(employeeDetails.getEquipe());
+		final Employe updatedEmploye = employeRepository.save(employe);
+		 return ResponseEntity.ok(employeRepository.findAll());
+	}
 	@PostMapping("/login")
     public ResponseEntity login(@RequestParam(name = "email") String email, @RequestParam(name = "password") String password) {
         if (StringUtils.isEmpty(email) || StringUtils.isEmpty(password)) {
