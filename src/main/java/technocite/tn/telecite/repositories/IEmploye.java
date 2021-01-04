@@ -28,7 +28,6 @@ public interface IEmploye extends JpaRepository<Employe, Long>{
 	
 	List<Employe> findByBureau(Bureau bureau);
 	
-	List<Employe> findByDepartement(Optional<Departement> departement);
 	
 	List<Employe> findByReunions(Optional<Reunion> reunion);
 	
@@ -37,6 +36,15 @@ public interface IEmploye extends JpaRepository<Employe, Long>{
 	Employe findByEmail(String email);
 	
     String findByFileName(String fileName);
+
+	boolean existsByEmail(String email);
+
+	boolean existsByPassword(String password);
+
+
+
+	List<Employe> findByDepartement(Optional<Departement> departement);
+
 
 	}
 

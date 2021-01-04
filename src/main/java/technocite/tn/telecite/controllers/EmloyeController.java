@@ -10,6 +10,7 @@ import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -46,7 +47,9 @@ import technocite.tn.telecite.repositories.IReunion;
 @RequestMapping("/telecite/employes")
 public class EmloyeController {
 	
-	
+	 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 	@Autowired
 	private IEmploye employeRepository;
 	@Autowired
@@ -150,9 +153,13 @@ public class EmloyeController {
 	@PostMapping("/saveEmployeProfile")
 	public ResponseEntity<Response> saveEmployeProfile(@RequestParam("file") MultipartFile file, @RequestParam("employee") String employee) throws IOException{
 		Employe employe =new ObjectMapper().readValue(employee, Employe.class);
+		
+		
 		System.out.println("eeeeeeeeeeeeeeeeee"+employee);
 		employe.setPhoto(file.getBytes());
 		employe.setFileName(file.getOriginalFilename());
+		employe.setPassword(passwordEncoder.encode(employe.getPassword()));
+
 		Employe emp =employeRepository.save(employe);
 		
 		if(emp!=null) { 
@@ -166,6 +173,11 @@ public class EmloyeController {
         if (employe == null) {
             return ResponseEntity.badRequest().body("Cannot create employe with empty fields");
         }
+        if(employeRepository.existsByEmail(employe.getEmail())) {
+			return new ResponseEntity<Response>(new Response("email is already taken"),HttpStatus.BAD_REQUEST);
+		}
+		employe.setPassword(passwordEncoder.encode(employe.getPassword()));
+
         Employe createEmploye = employeRepository.save(employe);
         return ResponseEntity.ok(employeRepository.findAll());
     }
@@ -248,60 +260,25 @@ public class EmloyeController {
 	    }
 	    
 	 
-	
-	 @GetMapping("/employesBureau/{nomBureau}")
-	    public ResponseEntity findAllEemployesBureau(@PathVariable String nomBureau) {
-	        if (nomBureau == null) {
-	            return ResponseEntity.badRequest().body("Cannot find employes with null nomBureau");
-	        }
-	        Bureau bureau = bureauRepository.findByNomBureau(nomBureau);
-	        if (bureau == null) {
-	            return ResponseEntity.notFound().build();
-	        }
-	        List<Employe> equipeEmployes = employeRepository.findByBureau(bureau);
-	        
-	        
-	       
-
-	        return ResponseEntity.ok(equipeEmployes);
-	    }
-	 
-	 @GetMapping("/employesDepartement/{idDepartement}")
-	    public ResponseEntity findAllEemployesDepartement(@PathVariable Long idDepartement) {
+	 @GetMapping("/employesdepartement/{idDepartement}")
+	    public ResponseEntity findAllEemployesRDepartement(@PathVariable Long idDepartement) {
 	        if (idDepartement == null) {
-	            return ResponseEntity.badRequest().body("Cannot find employes with null idDepartement");
+	            return ResponseEntity.badRequest().body("Cannot find employes with null departement");
 	        }
 	        Optional<Departement> departement = departementRepository.findById(idDepartement);
-	        System.out.println("55555555555555"+departement);
+	        System.out.println("55555555555555"+idDepartement);
 
 	        if (departement == null) {
 	            return ResponseEntity.notFound().build();
 	        }
 	        List<Employe> departementEmployes = employeRepository.findByDepartement(departement);
 	        
-	        System.out.println("55555555555555"+departementEmployes);
 	       
 
 	        return ResponseEntity.ok(departementEmployes);
 	    }
-	 @GetMapping("/employesDepartements/{idDepartement}")
-	    public ResponseEntity findAllEemployesDepartements(@PathVariable Long idDepartement) {
-	        if (idDepartement == null) {
-	            return ResponseEntity.badRequest().body("Cannot find employes with null idDepartement");
-	        }
-	        Optional<Departement> departement = departementRepository.findById(idDepartement);
-	        System.out.println("55555555555555"+departement);
 
-	        if (departement == null) {
-	            return ResponseEntity.notFound().build();
-	        }
-	        List<Employe> departementEmployes = employeRepository.findByDepartement(departement);
-	        
-	        System.out.println("55555555555555"+departementEmployes);
-	       
 
-	        return ResponseEntity.ok(departementEmployes);
-	    }
 	 @GetMapping("/employesReunions/{idReunion}")
 	    public ResponseEntity findAllEemployesReunion(@PathVariable Long idReunion) {
 	        if (idReunion == null) {

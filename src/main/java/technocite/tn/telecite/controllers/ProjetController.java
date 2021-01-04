@@ -12,9 +12,14 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import technocite.tn.telecite.entities.Employe;
+import technocite.tn.telecite.entities.Equipe;
 import technocite.tn.telecite.entities.Projet;
 import technocite.tn.telecite.entities.Sprint;
 import technocite.tn.telecite.exception.ResourceNotFoundException;
+import technocite.tn.telecite.repositories.IEmploye;
+import technocite.tn.telecite.repositories.IEquipe;
 import technocite.tn.telecite.repositories.IProjet;
 import technocite.tn.telecite.repositories.ISprint;
 
@@ -27,6 +32,10 @@ public class ProjetController {
 	private IProjet projetRepository;
 	@Autowired
 	private ISprint sprintRepository;
+	@Autowired
+	private IEquipe equipeRepository;
+	@Autowired
+	private IEmploye employeRepository;
 	@GetMapping("/")
 	public ResponseEntity findAll() {
 		
@@ -79,6 +88,28 @@ public ResponseEntity findProjetSprint(@PathVariable Long idSprint) {
 
     return ResponseEntity.ok(projetSprint);
 }
+@GetMapping("projetsEmploye/{idEmploye}")
+public ResponseEntity findProjetsEmploye(@PathVariable Long idEmploye) {
+	  if (idEmploye == null) {
+	        return ResponseEntity.badRequest().body("Cannot find projet with null idEmploye");
+	    }
+	    Optional<Employe> employe = employeRepository.findById(idEmploye);
+	    System.out.println("ttttttttttttttt"+employe.getClass().getName());
+	    if (employe == null) {
+	        return ResponseEntity.notFound().build();
+	    }
+	    Equipe equipeEmploye = equipeRepository.findByEmployes(employe);
+	    System.out.println("ttttttttttttt"+equipeEmploye);
+    
+    
+    Projet projetsEmploye= projetRepository.findByEquipe(equipeEmploye);
+    
+    
+   
+
+    return ResponseEntity.ok(projetsEmploye);
+}
+
 
 	@PostMapping("/")
     public ResponseEntity createProjet(@RequestBody Projet projet) {

@@ -280,64 +280,32 @@ public class Employe {
 		return reunions;
 	}
 
-
-
-
-
 	public void setReunions(Set<Reunion> reunions) {
 		this.reunions = reunions;
 	}
-
-
-
-
-	
-
-	
-
 
 	public RoleMember getRole() {
 		return role;
 	}
 
-
-
-
-
-
-
-
 	public void setRole(RoleMember role) {
 		this.role = role;
 	}
-
-
-
-
-
-
-
 
 	public String getFileName() {
 		return fileName;
 	}
 
-
 	public void setFileName(String fileName) {
 		this.fileName = fileName;
 	}
-
 
 	@Override
 	public String toString() {
 		return "Employe [idEmploye=" + idEmploye + ", matricule=" + matricule + ", nomEmploye=" + nomEmploye
 				+ ", prenomEmploye=" + prenomEmploye + ", dateNaissance=" + dateNaissance + ", email=" + email
 				+ ", password=" + password + ", dateEmbauche=" + dateEmbauche + ", salaire=" + salaire + ", post="
-				+ post + ", active=" + active + ", isChecked=" + isChecked + ", fileName=" + fileName + ", photo="
-				+ Arrays.toString(photo) + ", remarques=" + remarques + ", equipe=" + equipe + ", roleMember="
-				+ role + ", bureau=" + bureau + ", postits=" + postits + ", taches=" + taches + ", departement="
-				+ departement + ", envoimessages=" + envoimessages + ", conversations=" + conversations
-				+ ", recevoirMessages=" + recevoirMessages + ", reunions=" + reunions + "]";
+				+ post + ", active=" + active + ", isChecked=" + isChecked + "]";
 	}
 
 

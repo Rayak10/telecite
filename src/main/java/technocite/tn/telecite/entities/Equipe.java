@@ -26,6 +26,15 @@ import lombok.ToString;
 @Builder
 @ToString
 public class Equipe {
+	@Override
+	public String toString() {
+		return "Equipe [idEquipe=" + idEquipe + ", nomEquipe=" + nomEquipe + ", specialite=" + specialite
+			+"]";
+	}
+
+
+
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long idEquipe;

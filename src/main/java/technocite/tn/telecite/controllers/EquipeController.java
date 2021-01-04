@@ -51,7 +51,7 @@ public class EquipeController {
 	@GetMapping("employeEquipe/{idEmploye}")
 	public ResponseEntity findEquipeEmploye(@PathVariable Long idEmploye) {
 	    if (idEmploye == null) {
-	        return ResponseEntity.badRequest().body("Cannot find bureau with null idEmploye");
+	        return ResponseEntity.badRequest().body("Cannot find equipe with null idEmploye");
 	    }
 	    Optional<Employe> employe = employeRepository.findById(idEmploye);
 	    if (employe == null) {
