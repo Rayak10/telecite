@@ -1,5 +1,6 @@
 package technocite.tn.telecite.controllers;
 
+import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -102,7 +103,7 @@ public ResponseEntity findProjetsEmploye(@PathVariable Long idEmploye) {
 	    System.out.println("ttttttttttttt"+equipeEmploye);
     
     
-    Projet projetsEmploye= projetRepository.findByEquipe(equipeEmploye);
+    List<Projet>  projetsEmploye=projetRepository.findByEquipe(equipeEmploye);
     
     
    

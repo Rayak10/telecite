@@ -36,17 +36,22 @@ import technocite.tn.telecite.entities.Employe;
 import technocite.tn.telecite.entities.Equipe;
 import technocite.tn.telecite.entities.Reunion;
 import technocite.tn.telecite.exception.ResourceNotFoundException;
+import technocite.tn.telecite.jwt.JwtProvider;
 import technocite.tn.telecite.repositories.IBureau;
 import technocite.tn.telecite.repositories.IDepartement;
 import technocite.tn.telecite.repositories.IEmploye;
 import technocite.tn.telecite.repositories.IEquipe;
 import technocite.tn.telecite.repositories.IReunion;
+import technocite.tn.telecite.services.EmployeService;
 
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RequestMapping("/telecite/employes")
 public class EmloyeController {
-	
+	   @Autowired
+	    private JwtProvider jwtProvider;
+	    @Autowired
+	    private EmployeService employerepository;
 	 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -192,7 +197,7 @@ public class EmloyeController {
 		employe.setPrenomEmploye(employeeDetails.getPrenomEmploye());
 		employe.setDateNaissance(employeeDetails.getDateNaissance());
 		employe.setEmail(employeeDetails.getEmail());
-		employe.setPassword(employeeDetails.getPassword());
+		employe.setPassword(passwordEncoder.encode(employe.getPassword()));
 		employe.setDateEmbauche(employeeDetails.getDateEmbauche());
 		employe.setSalaire(employeeDetails.getSalaire());
 		
@@ -217,6 +222,19 @@ public class EmloyeController {
         }
         return ResponseEntity.ok(authenticatedEmploye);
     }
+//	 @PostMapping("/auth")
+//	    public AuthResponse auth(@RequestBody AuthRequest request) {
+//	        Employe e = employerepository.findByEmailAndPassword(request.getEmail(), request.getPassword());
+//	        String token = jwtProvider.generateToken(e.getEmail());
+//	        return new AuthResponse(token);
+//	    }
+	 @PostMapping("/auth")
+	    public ResponseEntity auth(@RequestBody AuthRequest request) {
+		 Employe authenticatedEmploye= employerepository.findByEmailAndPassword(request.getEmail(), request.getPassword());
+	        String token = jwtProvider.generateToken(authenticatedEmploye.getEmail());
+	       // return new AuthResponse(token);
+	        return ResponseEntity.ok(authenticatedEmploye);
+	    }
 	
 	 @DeleteMapping("/{idEmploye}")
 	    public ResponseEntity deleteEmploye(@PathVariable(name = "idEmploye") Long idEmploye) {

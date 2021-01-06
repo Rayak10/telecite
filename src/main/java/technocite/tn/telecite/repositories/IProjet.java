@@ -1,5 +1,6 @@
 package technocite.tn.telecite.repositories;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -14,7 +15,7 @@ public interface IProjet  extends JpaRepository<Projet, Long>{
 
 	Projet findBySprints(Optional<Sprint> sprint);
 
-	Projet findByEquipe(Equipe equipeEmploye);
+	List<Projet> findByEquipe(Equipe equipeEmploye);
 
 
 }
