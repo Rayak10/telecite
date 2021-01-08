@@ -12,6 +12,7 @@ import technocite.tn.telecite.entities.Departement;
 import technocite.tn.telecite.entities.Employe;
 import technocite.tn.telecite.entities.Equipe;
 import technocite.tn.telecite.entities.Reunion;
+import technocite.tn.telecite.entities.Tache;
 @Repository
 public interface IEmploye extends JpaRepository<Employe, Long>{
 	Employe findByEmailAndPassword(String email,String password);
@@ -44,6 +45,8 @@ public interface IEmploye extends JpaRepository<Employe, Long>{
 
 
 	List<Employe> findByDepartement(Optional<Departement> departement);
+
+	List<Employe> findByTaches(Optional<Tache> tache);
 
 
 	}

@@ -35,6 +35,7 @@ import technocite.tn.telecite.entities.Departement;
 import technocite.tn.telecite.entities.Employe;
 import technocite.tn.telecite.entities.Equipe;
 import technocite.tn.telecite.entities.Reunion;
+import technocite.tn.telecite.entities.Tache;
 import technocite.tn.telecite.exception.ResourceNotFoundException;
 import technocite.tn.telecite.jwt.JwtProvider;
 import technocite.tn.telecite.repositories.IBureau;
@@ -42,6 +43,7 @@ import technocite.tn.telecite.repositories.IDepartement;
 import technocite.tn.telecite.repositories.IEmploye;
 import technocite.tn.telecite.repositories.IEquipe;
 import technocite.tn.telecite.repositories.IReunion;
+import technocite.tn.telecite.repositories.ITache;
 import technocite.tn.telecite.services.EmployeService;
 
 @RestController
@@ -59,8 +61,7 @@ public class EmloyeController {
 	private IEmploye employeRepository;
 	@Autowired
 	private IEquipe equipeRepository;
-	@Autowired
-	private IBureau bureauRepository;
+
 	@Autowired
 	private IDepartement departementRepository;
 
@@ -276,6 +277,8 @@ public class EmloyeController {
 
 	        return ResponseEntity.ok(equipeEmployes);
 	    }
+	
+	 
 	    
 	 
 	 @GetMapping("/employesdepartement/{idDepartement}")

@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import technocite.tn.telecite.entities.Employe;
 import technocite.tn.telecite.entities.Tache;
 import technocite.tn.telecite.entities.UserStory;
 import technocite.tn.telecite.exception.ResourceNotFoundException;
@@ -117,5 +119,21 @@ public class TacheController {
    			tacheRepository.delete(tache);
    			return ResponseEntity.ok(tacheRepository.findAll());
    		}
+   	 @GetMapping("/employeTache/{idTache}")
+	    public ResponseEntity findEmployeByTache(@PathVariable Long idTache) {
+	        if (idTache == null) {
+	            return ResponseEntity.badRequest().body("Cannot find employes with null id");
+	        }
+	        Optional<Tache> tache = tacheRepository.findById(idTache);
+	        if (tache == null) {
+	            return ResponseEntity.notFound().build();
+	        }
+	        List<Employe> EmployeTache = employeRepository.findByTaches(tache);
+	        
+	        
+	       
 
+	        return ResponseEntity.ok(EmployeTache);
+	    }
+	    
 }
