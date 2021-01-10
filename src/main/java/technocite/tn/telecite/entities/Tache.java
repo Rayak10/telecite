@@ -29,6 +29,8 @@ import lombok.ToString;
 @JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
 
 public class Tache {
+	
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long idTache;
@@ -120,6 +122,11 @@ public class Tache {
 		this.employe = employe;
 	}
 
+	@Override
+	public String toString() {
+		return "Tache [idTache=" + idTache + ", descriptionTache=" + descriptionTache + ", etatTache=" + etatTache
+				+ ", dureeTache=" + dureeTache + ", userStory=" + userStory + ", employe=" + employe + "]";
+	}
 
 
 }

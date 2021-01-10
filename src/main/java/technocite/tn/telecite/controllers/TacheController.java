@@ -3,6 +3,7 @@ package technocite.tn.telecite.controllers;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -92,7 +93,7 @@ public class TacheController {
 	
 
    		@PutMapping("/update/{idTache}")
-   		public ResponseEntity<Tache> updateSprint(@PathVariable(value = "idTache") Long idTache, @RequestBody 
+   		public ResponseEntity<Tache> updatTache(@PathVariable(value = "idTache") Long idTache, @RequestBody 
 			Tache tacheDetails) throws ResourceNotFoundException {
    			Tache tache = tacheRepository.findById(idTache)
 			.orElseThrow(() -> new ResourceNotFoundException("Tache not found for this id :: " + idTache));
@@ -105,7 +106,15 @@ public class TacheController {
 		final Tache updateTache = tacheRepository.save(tache);
 		return ResponseEntity.ok(updateTache);
    		}
+   		@PutMapping("/afectationEmployeTache/{idTache}/{idEmploye}")
+   		public ResponseEntity<Tache> updateTacheEmploye(@PathVariable(name = "idTache") Long idTache, @PathVariable(name = "idEmploye") Long idEmploye) throws ResourceNotFoundException {
 
+   			tacheRepository.updateTacheEmploye(idTache, idEmploye);
+	
+		return ResponseEntity.ok(null);
+   		}
+  
+   			  
 
    		@DeleteMapping("/{idTache}")
    		public ResponseEntity deleteSprint(@PathVariable(name = "idTache") Long idTache) {
