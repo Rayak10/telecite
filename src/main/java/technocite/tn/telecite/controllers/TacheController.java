@@ -55,14 +55,24 @@ public class TacheController {
 	        }
 	        List<Tache> storieTaches = tacheRepository.findByUserStory(userStory);
 	        
-	        
-	       // projetSprint.forEach(sprint -> sprint.setIdOwner(idProjet));
-	       
-
 	        return ResponseEntity.ok(storieTaches);
 	    }
 	    
-	
+   		@GetMapping("/allTacheEtatUserStory/{idUserStory}/{etatTache}")
+	    public ResponseEntity findAllTachesStoriesEtat(@PathVariable Long idUserStory,@PathVariable String etatTache) {
+	        if (idUserStory == null) {
+	            return ResponseEntity.badRequest().body("Cannot find taches with null UserStory");
+	        }
+	        UserStory userStory = userStoryRepository.getOne(idUserStory);
+	        if (userStory == null) {
+	            return ResponseEntity.notFound().build();
+	        }
+	        List<Tache> storieTaches = tacheRepository.findByUserStoryAndEtatTache(userStory,etatTache);
+
+
+	        return ResponseEntity.ok(storieTaches);
+	    }
+   		
 	
    		@GetMapping("/{idTache}")
    		public ResponseEntity findTacheById(@PathVariable(name="idTache") Long idTache) { 
@@ -86,7 +96,7 @@ public class TacheController {
         	
           return ResponseEntity.badRequest().body("Cannot create tache with empty fields");
         	}
-        tache.setEtatTache("to do");
+        tache.setEtatTache("Todo");
         Tache creatTache = tacheRepository.save(tache);
           return ResponseEntity.ok(creatTache);
    		}
@@ -113,7 +123,13 @@ public class TacheController {
 	
 		return ResponseEntity.ok(null);
    		}
-  
+   		@PutMapping("/etatTacheEmploye/{idTache}/{etatTache}")
+   		public ResponseEntity<Tache> updateEtatTacheEmploye(@PathVariable(name = "idTache") Long idTache, @PathVariable(name = "etatTache") String etatTache) throws ResourceNotFoundException {
+
+   			tacheRepository.updateEtatTacheEmploye(idTache, etatTache);
+	
+		return ResponseEntity.ok(null);
+   		}
    			  
 
    		@DeleteMapping("/{idTache}")
