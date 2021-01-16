@@ -67,6 +67,7 @@ public class TacheController {
 	        if (userStory == null) {
 	            return ResponseEntity.notFound().build();
 	        }
+	        
 	        List<Tache> storieTaches = tacheRepository.findByUserStoryAndEtatTache(userStory,etatTache);
 
 

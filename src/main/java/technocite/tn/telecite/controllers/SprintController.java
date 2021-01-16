@@ -67,6 +67,19 @@ public class SprintController {
 	    }
 	
 	
+	 @GetMapping("/projetSprintProgress/{idProjet}")
+	    public ResponseEntity projetSprintProgress(@PathVariable Long idProjet) {
+	        if (idProjet == null) {
+	            return ResponseEntity.badRequest().body("Cannot find sprints with null idProjet");
+	        }
+	       System.out.println("nnnnnnnnnnnnnnnnnnnnnnnnnnn");
+	       List<Sprint> sprints= sprintRepository.sprintsProgress(idProjet);
+		       System.out.println("yyyyyyeeeees");
+System.out.println("zzzzzzzzzzzzzzzzzzzzzzzzzz"+sprints);
+			return ResponseEntity.ok(sprints);
+	    }
+	
+	 
 @GetMapping("/{idSprint}")
 	
 	public ResponseEntity findSprintById(@PathVariable(name="idSprint") Long idSprint) { 
@@ -174,6 +187,11 @@ public ResponseEntity findByEtatSprint(@PathVariable(name="etatSprint") String e
         reunionreview.setDescriptionReunion("Réunion sprint review du sprint "+sprint.getNomSprint());;
         reunionreview.setType(ReunionType.Reunion_Scrum);
         reunionreview.setEquipe(sprint.getProjet().getEquipe());
+        System.out.println("fffffffffffffffffffffffffffffffff"+sprint.getProjet().getIdProjet());
+
+        int nbr=sprintRepository.nembreSprint(sprint.getProjet().getIdProjet());
+        System.out.println("fffffffffffffffffffffffffffffffff"+nbr);
+        sprint.setNumeroSprint(nbr+1);
         Sprint createSprint = sprintRepository.save(sprint);
         reunionRepository.save(reunionPlanification);
         reunionRepository.save(dalyScrum);

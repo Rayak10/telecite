@@ -85,7 +85,37 @@ public ResponseEntity findUserStorysByProjet(@PathVariable(name="idProjet") Long
 return ResponseEntity.ok().body(userstorysprintsprojet);
 
 }
+@GetMapping("userstorysSprintBaclogProjet/{idProjet}")
 
+public ResponseEntity findUserStorysSprintBaclogProjet(@PathVariable(name="idProjet") Long idProjet) { 
+	Optional<Projet> projet=projetRepository.findById(idProjet);
+	List<Sprint> sprintsProjet =sprintRepository.findByProjet(projet);
+	System.out.println("rrrrrrrrrr"+sprintsProjet);
+	Sprint sprintBL=sprintsProjet.stream().filter(s->s.getNomSprint().equals("Backlog produit")).findFirst().orElse(null);
+	System.out.println("rrrrrrrrrr"+sprintBL);
+
+    List<UserStory> userstorysprintBLprojet = userStoryRepository.findBySprint(sprintBL);
+    
+
+
+return ResponseEntity.ok().body(userstorysprintBLprojet);
+
+}
+@GetMapping("userstorysSprintProjet/{idProjet}/{idSprint}")
+public ResponseEntity findUserStorysSprintByProjet(@PathVariable(name="idProjet") Long idProjet,@PathVariable(name="idSprint") Long idSprint) { 
+	Optional<Projet> projet=projetRepository.findById(idProjet);
+	List<Sprint> sprintsProjet =sprintRepository.findByProjet(projet);
+	System.out.println("rrrrrrrrrr"+sprintsProjet);
+	Sprint sprintBL=sprintsProjet.stream().filter(s->s.getIdSprint()==(idSprint)).findFirst().orElse(null);
+	System.out.println("rrrrrrrrrr"+sprintBL);
+
+    List<UserStory> userstorysprintBLprojet = userStoryRepository.findBySprint(sprintBL);
+    
+
+
+return ResponseEntity.ok().body(userstorysprintBLprojet);
+
+}
 @GetMapping("userstoryTache/{idTache}")
 
 public ResponseEntity findUserStorysByTache(@PathVariable(name="idTache") Long idTache) { 
@@ -124,6 +154,14 @@ return ResponseEntity.ok().body(userstorys);
 		
 		final UserStory updatedUserStory = userStoryRepository.save(userStory);
 		return ResponseEntity.ok(updatedUserStory);
+	}
+@PutMapping("/updateSprintUserStory/{idUserStory}/{idSprint}")
+	public ResponseEntity<UserStory> updateSprintUserStory(@PathVariable(value = "idUserStory") Long idUserStory, @PathVariable(value = "idSprint") Long idSprint) throws ResourceNotFoundException {
+ 
+	
+		userStoryRepository.updateSprintUserStory(idUserStory, idSprint);
+
+return ResponseEntity.ok(null);
 	}
 
 
