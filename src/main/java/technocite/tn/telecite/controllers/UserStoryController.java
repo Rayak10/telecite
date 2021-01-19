@@ -27,6 +27,7 @@ import technocite.tn.telecite.repositories.IUserStory;
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RequestMapping("/telecite/userStorys")
 public class UserStoryController {
+private	boolean test;
 @Autowired
 	private ISprint sprintRepository;
 @Autowired
@@ -75,6 +76,21 @@ private ITache tacheRepository;
 		        return ResponseEntity.ok().body(userStory);
 		          
 		}
+
+@GetMapping("UserStoryNonTerminerBySprint/{idUserStory}")
+
+public boolean etatUserstoryById(@PathVariable(name="idUserStory") Long idUserStory) { 
+	
+	    UserStory userStory = userStoryRepository.getOne(idUserStory);
+        List<Tache> taches =tacheRepository.findByUserStory(userStory);
+        for ( Tache tache : taches) {
+           if(!tache.getEtatTache().equals("Done")) 
+           return test=true;
+           
+        }
+ 	   return test=false;
+          
+}
 @GetMapping("userstorysProjet/{idProjet}")
 
 public ResponseEntity findUserStorysByProjet(@PathVariable(name="idProjet") Long idProjet) { 

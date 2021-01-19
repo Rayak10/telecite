@@ -74,8 +74,7 @@ public class SprintController {
 	        }
 	       System.out.println("nnnnnnnnnnnnnnnnnnnnnnnnnnn");
 	       List<Sprint> sprints= sprintRepository.sprintsProgress(idProjet);
-		       System.out.println("yyyyyyeeeees");
-System.out.println("zzzzzzzzzzzzzzzzzzzzzzzzzz"+sprints);
+		
 			return ResponseEntity.ok(sprints);
 	    }
 	
