@@ -1,5 +1,6 @@
 package technocite.tn.telecite.controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -141,6 +142,48 @@ public ResponseEntity findUserStorysByTache(@PathVariable(name="idTache") Long i
 return ResponseEntity.ok().body(userstorys);
 
 }
+
+@GetMapping("/tablecomplexite/{idProjet}")
+
+public List<Integer> tableComplexite(@PathVariable(name="idProjet") Long idProjet) {
+	 Integer complexe=0;
+	 Integer ComplexeTotal=0;
+	 List<Integer>complexProjet=new ArrayList<Integer>();
+	 
+	Optional<Projet> projet=projetRepository.findById(idProjet);
+	 System.out.println("ppppppppppppp"+projet);
+		List<UserStory>allUserStoryProjet=userStoryRepository.findBySprint_Projet_IdProjet(idProjet);
+for(UserStory userStory :allUserStoryProjet) {
+	ComplexeTotal= ComplexeTotal+userStory.getComplexite();
+
+}
+complexProjet.add(ComplexeTotal);
+
+
+	List<Sprint> sprints=sprintRepository.sprintsProgress(idProjet);
+	
+	for (Sprint sprint : sprints) {
+		if(!(sprint.getNomSprint().equals("Backlog produit"))) {
+		
+		List<UserStory>userStoriesSprint=userStoryRepository.findBySprint(sprint);
+		 System.out.println("uuuuuuuuuuu"+userStoriesSprint);
+
+		for(UserStory us :userStoriesSprint) {
+			
+			complexe=complexe+(us.getComplexite());
+		}
+		complexe=ComplexeTotal-complexe;
+
+		complexProjet.add(complexe);
+		ComplexeTotal=complexe;
+		complexe=0;
+		}
+	}
+	 System.out.println("ffffffffffff"+complexProjet);
+return complexProjet;
+
+}
+
 
 @PostMapping("/")
 
