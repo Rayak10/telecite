@@ -156,7 +156,7 @@ public class EmloyeController {
 	        return ResponseEntity.ok().body(employe);
 	}
 	
-	@PostMapping("/saveEmployeProfile")
+	@PostMapping("/ROLE_DRH/saveEmployeProfile")
 	public ResponseEntity<Response> saveEmployeProfile(@RequestParam("file") MultipartFile file, @RequestParam("employee") String employee) throws IOException{
 		Employe employe =new ObjectMapper().readValue(employee, Employe.class);
 		
@@ -174,7 +174,7 @@ public class EmloyeController {
 		return new ResponseEntity<Response>(new Response ("employe not saved"),HttpStatus.BAD_REQUEST);
 	}
 	}
-	@PostMapping("/")
+	@PostMapping("/ROLE_DRH/createEmploye")
     	public ResponseEntity createEmploye(@RequestBody Employe employe) {
         if (employe == null) {
             return ResponseEntity.badRequest().body("Cannot create employe with empty fields");
@@ -233,7 +233,7 @@ public class EmloyeController {
 	    public ResponseEntity auth(@RequestBody AuthRequest request) {
 		 Employe authenticatedEmploye= employerepository.findByEmailAndPassword(request.getEmail(), request.getPassword());
 	        String token = jwtProvider.generateToken(authenticatedEmploye.getEmail());
-	       // return new AuthResponse(token);
+	        authenticatedEmploye.setToken(token);
 	        return ResponseEntity.ok(authenticatedEmploye);
 	    }
 	

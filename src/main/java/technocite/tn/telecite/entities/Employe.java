@@ -21,6 +21,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -51,7 +53,7 @@ public class Employe {
 	private Boolean active;
 	private Boolean isChecked;
 	private String fileName;
-
+	private String token;
 	
 	private byte[] photo;
 	
@@ -353,6 +355,13 @@ public class Employe {
 	public void addReunion(Reunion reunion) {
 		this.reunions.add(reunion);	
 	}
-
+	
+	@Transient
+	public String getToken() {
+		return token;
+	}
+	public void setToken(String token) {
+		this.token = token;
+	}
 
 }

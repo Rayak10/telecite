@@ -111,7 +111,7 @@ public ResponseEntity findUserStorysSprintBaclogProjet(@PathVariable(name="idPro
 	Sprint sprintBL=sprintsProjet.stream().filter(s->s.getNomSprint().equals("Backlog produit")).findFirst().orElse(null);
 	System.out.println("rrrrrrrrrr"+sprintBL);
 
-    List<UserStory> userstorysprintBLprojet = userStoryRepository.findBySprint(sprintBL);
+    List<UserStory> userstorysprintBLprojet = userStoryRepository.findBySprintOrderByPrioriteAsc(sprintBL);
     
 
 
