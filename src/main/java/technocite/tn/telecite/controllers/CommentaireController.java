@@ -13,21 +13,35 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import technocite.tn.telecite.entities.Remarque;
+import technocite.tn.telecite.entities.Commentaire;
+import technocite.tn.telecite.entities.Projet;
 import technocite.tn.telecite.entities.Sprint;
 import technocite.tn.telecite.exception.ResourceNotFoundException;
-import technocite.tn.telecite.repositories.IRemarque;
+import technocite.tn.telecite.repositories.ICommentaire;
 import technocite.tn.telecite.repositories.ISprint;
 
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RequestMapping("/telecite/remarques")
-public class RemarqueController {
+public class CommentaireController {
 	@Autowired
-	private IRemarque remarqueRepository;
+	private ICommentaire remarqueRepository;
 	@Autowired
 	private ISprint sprintRepository;
 	
+	@GetMapping("/{idCommentaire}")
+	
+	public ResponseEntity findProjetById(@PathVariable(name="idCommentaire") Long idCommentaire) { 
+		
+		  if (idCommentaire == null) {
+	            return ResponseEntity.badRequest().body("Cannot retrieve commentaire with null ID");
+	        }
+	        Optional<Commentaire> commentaire = remarqueRepository.findById(idCommentaire);
+	        if (commentaire == null) {
+	            return ResponseEntity.notFound().build();
+	        }
+	        return ResponseEntity.ok().body(commentaire);
+	}
 	@GetMapping("/remarquesSprint/{idSprint}")
     public ResponseEntity findAllRemarquesSprint(@PathVariable Long idSprint) {
         if (idSprint == null) {
@@ -37,7 +51,7 @@ public class RemarqueController {
         if (sprint == null) {
             return ResponseEntity.notFound().build();
         }
-        List<Remarque> sprintRemarques = remarqueRepository.findBySprint(sprint);
+        List<Commentaire> sprintRemarques = remarqueRepository.findBySprint(sprint);
         
         
        
@@ -47,34 +61,34 @@ public class RemarqueController {
 
 
 	@PostMapping("/")
-	public ResponseEntity createRemarque(@RequestBody Remarque remarque) {
-	if (remarque == null) {
-	    return ResponseEntity.badRequest().body("Cannot create remarque with empty fields");
+	public ResponseEntity createRemarque(@RequestBody Commentaire commentaire) {
+	if (commentaire == null) {
+	    return ResponseEntity.badRequest().body("Cannot create commentaire with empty fields");
 	}
-	Remarque createRemarque = remarqueRepository.save(remarque);
+	Commentaire createRemarque = remarqueRepository.save(commentaire);
 	return ResponseEntity.ok(createRemarque);
 	}
 
 
-	@PutMapping("/update/{idRemarque}")
-	public ResponseEntity<Remarque> updateRemarque(@PathVariable(value = "idRemarque") Long idRemarque, @RequestBody 
-		Remarque remarqueDetails) throws ResourceNotFoundException {
-		Remarque remarque = remarqueRepository.findById(idRemarque)
-				.orElseThrow(() -> new ResourceNotFoundException("remarque not found for this id :: " + idRemarque));
+	@PutMapping("/update/{idCommentaire}")
+	public ResponseEntity<Commentaire> updateRemarque(@PathVariable(value = "idCommentaire") Long idCommentaire, @RequestBody 
+		Commentaire remarqueDetails) throws ResourceNotFoundException {
+		Commentaire remarque = remarqueRepository.findById(idCommentaire)
+				.orElseThrow(() -> new ResourceNotFoundException("remarque not found for this id :: " + idCommentaire));
 		
-		remarque.setLibelleRemarque(remarqueDetails.getLibelleRemarque());
-		remarque.setDateRemarque(remarqueDetails.getDateRemarque());
+		remarque.setLibelleCommentaire(remarqueDetails.getLibelleCommentaire());
+		remarque.setDateCommentaire(remarqueDetails.getDateCommentaire());
 		
-		final Remarque updatedRemarque = remarqueRepository.save(remarque);
+		final Commentaire updatedRemarque = remarqueRepository.save(remarque);
 		return ResponseEntity.ok(updatedRemarque);
 	}
 
-	@DeleteMapping("/{idRemarque}")
-	public ResponseEntity deleteRemarque(@PathVariable(name = "idRemarque") Long idRemarque) {
-	    if (idRemarque == null) {
+	@DeleteMapping("/{idCommentaire}")
+	public ResponseEntity deleteRemarque(@PathVariable(name = "idRemarque") Long idCommentaire) {
+	    if (idCommentaire == null) {
 	        return ResponseEntity.badRequest().body("Cannot remove Remarque with null ID");
 	    }
-	    Remarque remarque = remarqueRepository.getOne(idRemarque);
+	    Commentaire remarque = remarqueRepository.getOne(idCommentaire);
 	    if (remarque == null) {
 	        return  ResponseEntity.notFound().build();
 	    }

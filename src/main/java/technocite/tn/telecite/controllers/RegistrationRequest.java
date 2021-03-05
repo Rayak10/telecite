@@ -4,7 +4,7 @@ import technocite.tn.telecite.entities.Bureau;
 import technocite.tn.telecite.entities.Departement;
 import technocite.tn.telecite.entities.Equipe;
 import technocite.tn.telecite.entities.Postit;
-import technocite.tn.telecite.entities.Remarque;
+import technocite.tn.telecite.entities.Commentaire;
 import technocite.tn.telecite.entities.RoleMember;
 import technocite.tn.telecite.entities.Tache;
 
@@ -52,7 +52,7 @@ public class RegistrationRequest {
 
 	private Departement departement;
 
-	private List<Remarque>remarques;
+	private List<Commentaire>remarques;
 
 	public Long getIdEmploye() {
 		return idEmploye;
@@ -187,12 +187,12 @@ public class RegistrationRequest {
 	}
 
 
-	public List<Remarque> getRemarques() {
+	public List<Commentaire> getRemarques() {
 		return remarques;
 	}
 
 
-	public void setRemarques(List<Remarque> remarques) {
+	public void setRemarques(List<Commentaire> remarques) {
 		this.remarques = remarques;
 	}
 

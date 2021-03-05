@@ -51,15 +51,15 @@ public class Sprint {
 	@OneToMany(targetEntity = UserStory.class,mappedBy = "sprint",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
 	private List<UserStory>userstorys;
 
-	@OneToMany(targetEntity = Remarque.class,mappedBy = "sprint",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
-	private List<Remarque>remarques;
+	@OneToMany(targetEntity = Commentaire.class,mappedBy = "sprint",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+	private List<Commentaire>commentaires;
 
 	public Sprint() {
 		super();
 	}
 
 	public Sprint(Long idSprint, String nomSprint, Integer numeroSprint, Date dateDebut, Date dateFin,
-			String etatSprint, String descriptionSprint,Projet projet, List<UserStory> userstorys, List<Remarque> remarques) {
+			String etatSprint, String descriptionSprint,Projet projet, List<UserStory> userstorys, List<Commentaire> commentaires) {
 		super();
 		this.idSprint = idSprint;
 		this.nomSprint = nomSprint;
@@ -69,7 +69,7 @@ public class Sprint {
 		this.etatSprint = etatSprint;
 		this.projet = projet;
 		this.userstorys = userstorys;
-		this.remarques = remarques;
+		this.commentaires = commentaires;
 		this.descriptionSprint=descriptionSprint;
 	}
 
@@ -146,12 +146,12 @@ public class Sprint {
 		this.userstorys = userstorys;
 	}
 	@JsonIgnore
-	public List<Remarque> getRemarques() {
-		return remarques;
+	public List<Commentaire> getCommentaires() {
+		return commentaires;
 	}
 
-	public void setRemarques(List<Remarque> remarques) {
-		this.remarques = remarques;
+	public void setCommentaires(List<Commentaire> commentaires) {
+		this.commentaires = commentaires;
 	}
 
 

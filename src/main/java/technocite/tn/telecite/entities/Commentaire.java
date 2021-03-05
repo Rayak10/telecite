@@ -19,63 +19,67 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 @Entity
-@Table(name="REMARQUE")
+@Table(name="COMMENTAIRE")
 @NoArgsConstructor
 @Data
 @AllArgsConstructor
 @Builder
 @ToString
-public class Remarque {
+public class Commentaire {
+	
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private Long idRemarque;
-	private String libelleRemarque;
-	private Date dateRemarque;
+	private Long idCommentaire;
+	private String libelleCommentaire;
+	private Date dateCommentaire;
 	@ManyToOne
-	@JoinColumn(name="FK_Sprint_Rmq_ID")
+	@JoinColumn(name="FK_Sprint_Cmt_ID")
 	private Sprint sprint;
 	@ManyToOne
-	@JoinColumn(name="FK_Emp_Rmq_ID")
+	@JoinColumn(name="FK_Emp_Cmt_ID")
 	private Employe employe;
 	
-	public Remarque() {
+	
+
+	public Commentaire() {
 		super();
 	}
 
-	public Remarque(Long idRemarque, String libelleRemarque,Date dateRemarque, Sprint sprint, Employe employe) {
+	public Commentaire(Long idCommentaire, String libelleCommentaire, Date dateCommentaire, Sprint sprint,
+			Employe employe) {
 		super();
-		this.idRemarque = idRemarque;
-		this.libelleRemarque = libelleRemarque;
-		this.dateRemarque=dateRemarque;
+		this.idCommentaire = idCommentaire;
+		this.libelleCommentaire = libelleCommentaire;
+		this.dateCommentaire = dateCommentaire;
 		this.sprint = sprint;
 		this.employe = employe;
 	}
 
-	public Long getIdRemarque() {
-		return idRemarque;
+	public Long getIdCommentaire() {
+		return idCommentaire;
 	}
 
-	public void setIdRemarque(Long idRemarque) {
-		this.idRemarque = idRemarque;
+	public void setIdCommentaire(Long idCommentaire) {
+		this.idCommentaire = idCommentaire;
 	}
 
-	public String getLibelleRemarque() {
-		return libelleRemarque;
+	public String getLibelleCommentaire() {
+		return libelleCommentaire;
 	}
 
-	public void setLibelleRemarque(String libelleRemarque) {
-		this.libelleRemarque = libelleRemarque;
+	public void setLibelleCommentaire(String libelleCommentaire) {
+		this.libelleCommentaire = libelleCommentaire;
 	}
 	
 
-	public Date getDateRemarque() {
-		return dateRemarque;
+	public Date getDateCommentaire() {
+		return dateCommentaire;
 	}
 
-	public void setDateRemarque(Date dateRemarque) {
-		this.dateRemarque = dateRemarque;
+	public void setDateCommentaire(Date dateCommentaire) {
+		this.dateCommentaire = dateCommentaire;
 	}
-@JsonIgnore
 	public Sprint getSprint() {
 		return sprint;
 	}
@@ -83,7 +87,6 @@ public class Remarque {
 	public void setSprint(Sprint sprint) {
 		this.sprint = sprint;
 	}
-@JsonIgnore
 	public Employe getEmploye() {
 		return employe;
 	}

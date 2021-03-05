@@ -174,7 +174,7 @@ public class EmloyeController {
 		return new ResponseEntity<Response>(new Response ("employe not saved"),HttpStatus.BAD_REQUEST);
 	}
 	}
-	@PostMapping("/ROLE_DRH/createEmploye")
+	@PostMapping("/createEmploye")
     	public ResponseEntity createEmploye(@RequestBody Employe employe) {
         if (employe == null) {
             return ResponseEntity.badRequest().body("Cannot create employe with empty fields");
@@ -199,6 +199,7 @@ public class EmloyeController {
 		employe.setDateNaissance(employeeDetails.getDateNaissance());
 		employe.setEmail(employeeDetails.getEmail());
 		employe.setPassword(passwordEncoder.encode(employe.getPassword()));
+
 		employe.setDateEmbauche(employeeDetails.getDateEmbauche());
 		employe.setSalaire(employeeDetails.getSalaire());
 		

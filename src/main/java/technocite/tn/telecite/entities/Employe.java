@@ -57,8 +57,8 @@ public class Employe {
 	
 	private byte[] photo;
 	
-	@OneToMany(targetEntity = Remarque.class,mappedBy = "employe",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
-	private List<Remarque>remarques;
+	@OneToMany(targetEntity = Commentaire.class,mappedBy = "employe",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+	private List<Commentaire>commentaires;
 	
 	@ManyToOne
 	@JoinColumn(name="FK_Eq_Emp_ID")
@@ -218,11 +218,11 @@ public class Employe {
 
 
 	@JsonIgnore
-	public List<Remarque> getRemarques() {
-		return remarques;
+	public List<Commentaire> getCommentaires() {
+		return commentaires;
 	}
-	public void setRemarques(List<Remarque> remarques) {
-		this.remarques = remarques;
+	public void setCommentaires(List<Commentaire> commentaires) {
+		this.commentaires = commentaires;
 	}
 	public Equipe getEquipe() {
 		return equipe;
@@ -313,7 +313,7 @@ public class Employe {
 
 	public Employe(Long idEmploye, String matricule, String nomEmploye, String prenomEmploye, Date dateNaissance,
 			String email, String password, Date dateEmbauche, Float salaire, String post, Boolean active,
-			Boolean isChecked, String fileName, byte[] photo, List<Remarque> remarques, Equipe equipe, RoleMember role,
+			Boolean isChecked, String fileName, byte[] photo, List<Commentaire> commentaires, Equipe equipe, RoleMember role,
 			Bureau bureau, List<Postit> postits, List<Tache> taches, Departement departement,
 			List<Message> envoimessages, Set<Conversation> conversations, Set<Message> recevoirMessages,
 			Set<Reunion> reunions) {
@@ -332,7 +332,7 @@ public class Employe {
 		this.isChecked = isChecked;
 		this.fileName = fileName;
 		this.photo = photo;
-		this.remarques = remarques;
+		this.commentaires = commentaires;
 		this.equipe = equipe;
 		this.role = role;
 		this.bureau = bureau;
