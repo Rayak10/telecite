@@ -34,6 +34,23 @@ public class ReunionDto {
 	private Date dateFin= new Date();
 	private TimeDTO heureDeb;
 	private TimeDTO heureFin;
+	private LocalTime heurDeb; 
+	private LocalTime heurFin; 
+	public LocalTime getHeurDeb() {
+		return heurDeb;
+	}
+	public void setHeurDeb(LocalTime heurDeb) {
+		this.heurDeb = heurDeb;
+	}
+	public LocalTime getHeurFin() {
+		return heurFin;
+	}
+	public void setHeurFin(LocalTime heurFin) {
+		this.heurFin = heurFin;
+	}
+
+
+
 	private String session;
 	private Notification notification;
 	private Equipe equipe;

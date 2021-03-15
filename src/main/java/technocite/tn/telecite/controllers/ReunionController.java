@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import technocite.tn.telecite.dto.ReunionDto;
+import technocite.tn.telecite.dto.TimeDTO;
 import technocite.tn.telecite.entities.Employe;
 import technocite.tn.telecite.entities.Equipe;
 import technocite.tn.telecite.entities.Reunion;
@@ -191,6 +192,24 @@ public class ReunionController {
 
      return ResponseEntity.ok(equipeReunions);
  }
+ 
+ private ReunionDto mapEntityToDto(Reunion reunion) {
+ 	ReunionDto responseDto = new ReunionDto();
+     responseDto.setIdReunion(reunion.getIdReunion());
+     responseDto.setNomReunion(reunion.getNomReunion());
+     responseDto.setDateFin(reunion.getDateFin());
+     responseDto.setDescriptionReunion(reunion.getDescriptionReunion());
+     responseDto.setEquipe(reunion.getEquipe());
+     responseDto.setHeurDeb(reunion.getHeurDeb().minusHours(1));
+     responseDto.setHeurFin(reunion.getHeurFin().minusHours(1));
+	 System.out.println("kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk");
+
+     responseDto.setDateDebut(reunion.getDateDebut());
+     responseDto.setType(reunion.getType());
+ responseDto.setEmployes(reunion.getEmployes().stream().map(Employe::getIdEmploye).collect(Collectors.toSet()));
+     return responseDto;
+ }
+
  @GetMapping("/reunionsType/{type}")
  public ResponseEntity findAllReunionsType(@PathVariable ReunionType type) {
      if (type == null) {
@@ -203,9 +222,10 @@ public class ReunionController {
 		});
      
      
-    
+    List<ReunionDto> dtos=new ArrayList<>();
+    typeReunions.forEach(r-> dtos.add(mapEntityToDto(r)));
 
-     return ResponseEntity.ok(typeReunions);
+    return ResponseEntity.ok(dtos);
  }
 // @GetMapping("/reunionsDate")
 // public ResponseEntity findAllReunionsType() {
