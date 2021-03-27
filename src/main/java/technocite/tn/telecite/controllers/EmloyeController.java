@@ -174,6 +174,32 @@ public class EmloyeController {
 		return new ResponseEntity<Response>(new Response ("employe not saved"),HttpStatus.BAD_REQUEST);
 	}
 	}
+	@PutMapping("/updateProfil")
+	public ResponseEntity updateEmployeprofil(@RequestParam("file") MultipartFile file, @RequestParam("employee") String employee) throws IOException{
+		Employe employeeDetails =new ObjectMapper().readValue(employee, Employe.class);
+		
+		Optional<Employe> employe = employeRepository.findById(employeeDetails.getIdEmploye());
+
+		employe.get().setMatricule(employeeDetails.getMatricule());
+		employe.get().setNomEmploye(employeeDetails.getNomEmploye());
+		employe.get().setPrenomEmploye(employeeDetails.getPrenomEmploye());
+		employe.get().setDateNaissance(employeeDetails.getDateNaissance());
+		employe.get().setEmail(employeeDetails.getEmail());
+		employe.get().setPassword(passwordEncoder.encode(employeeDetails.getPassword()));
+		employe.get().setDateEmbauche(employeeDetails.getDateEmbauche());
+		employe.get().setSalaire(employeeDetails.getSalaire());
+		employe.get().setPost(employeeDetails.getPost());
+		employe.get().setRole(employeeDetails.getRole());
+		employe.get().setActive(employeeDetails.getActive());
+		employe.get().setPhoto(file.getBytes());
+		employe.get().setFileName(file.getOriginalFilename());
+		employe.get().setBureau(employeeDetails.getBureau());
+		employe.get().setDepartement(employeeDetails.getDepartement());
+		employe.get().setEquipe(employeeDetails.getEquipe());
+		final Employe updatedEmploye = employeRepository.save(employe.get());
+		 return ResponseEntity.ok(employeRepository.findAll());
+			}
+	
 	@PostMapping("/ROLE_DRH/createEmploye")
     	public ResponseEntity createEmploye(@RequestBody Employe employe) {
         if (employe == null) {
@@ -198,7 +224,7 @@ public class EmloyeController {
 		employe.setPrenomEmploye(employeeDetails.getPrenomEmploye());
 		employe.setDateNaissance(employeeDetails.getDateNaissance());
 		employe.setEmail(employeeDetails.getEmail());
-		employe.setPassword(passwordEncoder.encode(employe.getPassword()));
+		employe.setPassword(passwordEncoder.encode(employeeDetails.getPassword()));
 
 		employe.setDateEmbauche(employeeDetails.getDateEmbauche());
 		employe.setSalaire(employeeDetails.getSalaire());
@@ -209,6 +235,17 @@ public class EmloyeController {
 		employe.setPhoto(employeeDetails.getPhoto());
 		employe.setBureau(employeeDetails.getBureau());
 		employe.setDepartement(employeeDetails.getDepartement());
+		employe.setEquipe(employeeDetails.getEquipe());
+
+		  
+		final Employe updatedEmploye = employeRepository.save(employe);
+		 return ResponseEntity.ok(employeRepository.findAll());
+	}
+	@PutMapping("/updateProfilRoleScrummaster/{idEmploye}")
+	public ResponseEntity updateProfilRoleScrummaster(@PathVariable(value = "idEmploye") Long idEmploye, @RequestBody 
+		Employe employeeDetails) throws ResourceNotFoundException {
+		Employe employe = employeRepository.findById(idEmploye)
+				.orElseThrow(() -> new ResourceNotFoundException("Employee not found for this id :: " + idEmploye));
 		employe.setEquipe(employeeDetails.getEquipe());
 		final Employe updatedEmploye = employeRepository.save(employe);
 		 return ResponseEntity.ok(employeRepository.findAll());
