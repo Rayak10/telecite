@@ -174,7 +174,7 @@ public class EmloyeController {
 		return new ResponseEntity<Response>(new Response ("employe not saved"),HttpStatus.BAD_REQUEST);
 	}
 	}
-	@PostMapping("/createEmploye")
+	@PostMapping("/ROLE_DRH/createEmploye")
     	public ResponseEntity createEmploye(@RequestBody Employe employe) {
         if (employe == null) {
             return ResponseEntity.badRequest().body("Cannot create employe with empty fields");
@@ -213,30 +213,31 @@ public class EmloyeController {
 		final Employe updatedEmploye = employeRepository.save(employe);
 		 return ResponseEntity.ok(employeRepository.findAll());
 	}
-	@PostMapping("/login")
+	/*@PostMapping("/login")
     public ResponseEntity login(@RequestParam(name = "email") String email, @RequestParam(name = "password") String password) {
         if (StringUtils.isEmpty(email) || StringUtils.isEmpty(password)) {
             return ResponseEntity.badRequest().body("Cannot login with empty employe email or password");
         }
         Employe authenticatedEmploye = employeRepository.findByEmailAndPassword(email, password);
-        if (authenticatedEmploye == null) {
+        if (authenticatedEmploye == null || authenticatedEmploye.getActive()==false) {
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(authenticatedEmploye);
-    }
-//	 @PostMapping("/auth")
-//	    public AuthResponse auth(@RequestBody AuthRequest request) {
-//	        Employe e = employerepository.findByEmailAndPassword(request.getEmail(), request.getPassword());
-//	        String token = jwtProvider.generateToken(e.getEmail());
-//	        return new AuthResponse(token);
-//	    }
+        else 
+        	return ResponseEntity.ok(authenticatedEmploye);
+    }*/
+
 	 @PostMapping("/auth")
 	    public ResponseEntity auth(@RequestBody AuthRequest request) {
 		 Employe authenticatedEmploye= employerepository.findByEmailAndPassword(request.getEmail(), request.getPassword());
+		 if (authenticatedEmploye == null || authenticatedEmploye.getActive()==false) {
+	            return ResponseEntity.notFound().build();
+	        }
+		 else {
 	        String token = jwtProvider.generateToken(authenticatedEmploye.getEmail());
 	        authenticatedEmploye.setToken(token);
 	        return ResponseEntity.ok(authenticatedEmploye);
 	    }
+	 }
 	
 	 @DeleteMapping("/{idEmploye}")
 	    public ResponseEntity deleteEmploye(@PathVariable(name = "idEmploye") Long idEmploye) {

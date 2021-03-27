@@ -217,8 +217,7 @@ public class ReunionController {
      }
      List<Reunion> typeReunions = reunionRepository.findByType(type);
 		typeReunions.forEach(reunion -> {
-			reunion.setHeurDeb(reunion.getHeurDeb().minusHours(1));
-			reunion.setHeurFin(reunion.getHeurFin().minusHours(1));
+			
 		});
      
      

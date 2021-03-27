@@ -13,4 +13,6 @@ public interface IEquipe  extends JpaRepository<Equipe, Long>{
 
 	Equipe findByEmployes(Optional<Employe> employe);
 
+	Iterable<Equipe> findAllByOrderByIdEquipeAsc();
+
 }

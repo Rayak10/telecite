@@ -32,7 +32,7 @@ public class EquipeController {
 	@GetMapping("/")
 	public List<Equipe> findAll() {
 		List<Equipe> equipes= new ArrayList<>();
-		equipeRepository.findAll().forEach(equipes::add);
+		equipeRepository.findAllByOrderByIdEquipeAsc().forEach(equipes::add);
 		return equipes; 
 	}
 	@GetMapping("/{idEquipe}")

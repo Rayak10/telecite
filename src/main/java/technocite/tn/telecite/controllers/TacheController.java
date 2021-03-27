@@ -97,7 +97,7 @@ public class TacheController {
         	
           return ResponseEntity.badRequest().body("Cannot create tache with empty fields");
         	}
-        tache.setEtatTache("Todo");
+        tache.setEtatTache("To do");
         Tache creatTache = tacheRepository.save(tache);
           return ResponseEntity.ok(creatTache);
    		}

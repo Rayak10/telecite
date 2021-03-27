@@ -151,7 +151,6 @@ public List<Integer> tableComplexite(@PathVariable(name="idProjet") Long idProje
 	 List<Integer>complexProjet=new ArrayList<Integer>();
 	 
 	Optional<Projet> projet=projetRepository.findById(idProjet);
-	 System.out.println("ppppppppppppp"+projet);
 		List<UserStory>allUserStoryProjet=userStoryRepository.findBySprint_Projet_IdProjet(idProjet);
 for(UserStory userStory :allUserStoryProjet) {
 	ComplexeTotal= ComplexeTotal+userStory.getComplexite();
@@ -166,7 +165,6 @@ complexProjet.add(ComplexeTotal);
 		if(!(sprint.getNomSprint().equals("Backlog produit"))) {
 		
 		List<UserStory>userStoriesSprint=userStoryRepository.findBySprint(sprint);
-		 System.out.println("uuuuuuuuuuu"+userStoriesSprint);
 
 		for(UserStory us :userStoriesSprint) {
 			
