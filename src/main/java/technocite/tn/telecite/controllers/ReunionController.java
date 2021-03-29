@@ -99,17 +99,10 @@ public class ReunionController {
 
 	 @PostMapping("/")
 	    public ResponseEntity<ReunionDto> addReunions(@RequestBody ReunionDto reunionDto) {
-		 
-		// reunionDto.setHeurDeb(LocalTime.of(reunionDto.getHeureDeb().getHour()+1,reunionDto.getHeureDeb().getMinute(),00));
-		 //reunionDto.setHeurFin(LocalTime.of(reunionDto.getHeureFin().getHour()+1,reunionDto.getHeureFin().getMinute(),00));
 	        ReunionDto rdto = reunionService.addReunion(reunionDto);
-	        
-	        
 	        return new ResponseEntity<>(rdto, HttpStatus.CREATED);
 	    }
-	 
-	 
-	 
+	
 	  @PutMapping("/updateReunion/{idReunion}")
 	    public ResponseEntity<ReunionDto> updateRieunion(@PathVariable(name = "idReunion") Long idReunion,
 	            @RequestBody ReunionDto reunion) {
@@ -204,28 +197,6 @@ public class ReunionController {
 
     return ResponseEntity.ok(dtos);
  }
-// @GetMapping("/reunionsDate")
-// public ResponseEntity findAllReunionsType() {
-//	 Date currentDate=null;
-//		try {
-//
-//			SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd");
-//			DateFormat formatterDate= new SimpleDateFormat("yyyy-MM-dd");
-//			String datStr = formatter.format(new Date());
-//			 currentDate= formatterDate.parse(datStr);
-//			 System.out.println(currentDate);
-//		} catch (ParseException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-		//System.out.println();
-//		List<Reunion> reunions=new ArrayList<>();
-//		reunions=reunionRepository.findByDateDebut();
-//		for (Reunion reunion : reunions) {
-//			System.out.println("reunion:"+reunion.getNomReunion());
-//		} 
-//    
 
-//     return ResponseEntity.ok(reunions);
  }
 

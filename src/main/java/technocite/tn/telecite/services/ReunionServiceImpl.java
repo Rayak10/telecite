@@ -45,7 +45,7 @@ public class ReunionServiceImpl implements ReunionService {
 		Reunion reunion = new Reunion();
 	        mapDtoToEntity(reunionDto, reunion);
 	        Reunion savedReunion = reunionRepository.save(reunion);
-	       for(i=0;i<=reunion.getEmployes().size();i++) {
+	       for(i=0;i<reunion.getEmployes().size();i++) {
 	emailrepository.sendEmail(reunion.getEmployes().get(i).getEmail()," "+
 							reunion.getType(),"Bonjour Nous avons l’honneur de vous convier à une réunion d’information le "+
 							formater.format(reunion.getDateDebut())+" à "+(reunion.getHeurDeb().getHour()-1)+"h"+
