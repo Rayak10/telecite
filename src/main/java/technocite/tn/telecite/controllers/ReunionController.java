@@ -96,34 +96,12 @@ public class ReunionController {
 	        }
 	        return ResponseEntity.ok().body(reunionScrum);
 	}
-	//
-	//@PostMapping("/")
-	//public ResponseEntity createReunion(@RequestBody ReunionDto reunionDto) {
-	//	System.out.println("dtoùùùùù: "+ reunionDto);
-	
-	//	System.out.println("entity: £££££"+reunion);
-	//	return ResponseEntity.ok("ok");
-    //if (reunion == null) {
-    //    return ResponseEntity.badRequest().body("Cannot create Reunion   with empty fields");
-   // }
-  
-	//reunion.setHeurDeb(LocalTime.of(reunion.getHeureDeb().getHour()+1, reunion.getHeureDeb().getMinute(),00));
-	//reunion.setHeurFin(LocalTime.of(reunion.getHeureFin().getHour()+1, reunion.getHeureFin().getMinute(),00));
-	//reunion.getEmployes().forEach(emp->reunion.addEmployes(emp));
-	//System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"+reunion);
 
-	//  Reunion createReunion = reunionRepository.save(reunion);
-	  //  return ResponseEntity.ok(createReunion);
-		//ReunionDto rund = ReunionService.class
-	   //     return new ResponseEntity<>(rund, HttpStatus.CREATED);
-	  
-	//}
 	 @PostMapping("/")
 	    public ResponseEntity<ReunionDto> addReunions(@RequestBody ReunionDto reunionDto) {
 		 
 		// reunionDto.setHeurDeb(LocalTime.of(reunionDto.getHeureDeb().getHour()+1,reunionDto.getHeureDeb().getMinute(),00));
 		 //reunionDto.setHeurFin(LocalTime.of(reunionDto.getHeureFin().getHour()+1,reunionDto.getHeureFin().getMinute(),00));
-
 	        ReunionDto rdto = reunionService.addReunion(reunionDto);
 	        
 	        

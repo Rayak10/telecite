@@ -45,7 +45,6 @@ public class ReunionServiceImpl implements ReunionService {
 		Reunion reunion = new Reunion();
 	        mapDtoToEntity(reunionDto, reunion);
 	        Reunion savedReunion = reunionRepository.save(reunion);
-	        System.out.println(reunion+"ùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùù");
 	       for(i=0;i<=reunion.getEmployes().size();i++) {
 	emailrepository.sendEmail(reunion.getEmployes().get(i).getEmail()," "+
 							reunion.getType(),"Bonjour Nous avons l’honneur de vous convier à une réunion d’information le "+
@@ -75,11 +74,9 @@ public class ReunionServiceImpl implements ReunionService {
 		        Reunion reunion = reunionRepository.save(r);
 		        return mapEntityToDto(reunion);
 		    }
-		 // que?
-
+		
 	@Override
 	public String deleteReunion(Long idReunion) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -101,7 +98,6 @@ public class ReunionServiceImpl implements ReunionService {
 	        if (reunionDto.getType()==ReunionType.Reunion_Scrum) {
 	        	 reunion.setEmployes(employeRepository.findByEquipe(reunionDto.getEquipe()));
 	        	 
-	        	 System.out.println("ddddddddddddddddddddddddddddddddddddddddddddddddddddd");
 	        }
 	        else {
 	        	  reunionDto.getEmployes().stream().forEach(id -> {
@@ -112,7 +108,6 @@ public class ReunionServiceImpl implements ReunionService {
 	  	            }
 	  	            employe.setIdEmploye(id);
 	  	            reunion.addEmploye(employe);
-		        	 System.out.println("ttttttttttttttttttttttttttttttttttttttttttttttt");
 
 	  	        });
 	        }

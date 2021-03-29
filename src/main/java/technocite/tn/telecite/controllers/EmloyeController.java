@@ -266,10 +266,14 @@ public class EmloyeController {
 	 @PostMapping("/auth")
 	    public ResponseEntity auth(@RequestBody AuthRequest request) {
 		 Employe authenticatedEmploye= employerepository.findByEmailAndPassword(request.getEmail(), request.getPassword());
-		 if (authenticatedEmploye == null || authenticatedEmploye.getActive()==false) {
+		 if (authenticatedEmploye.getActive()==false) {
+	            return ResponseEntity.status(HttpStatus.FORBIDDEN)
+	                    .body("Error Message");
+	        }
+		  if (authenticatedEmploye == null) {
 	            return ResponseEntity.notFound().build();
 	        }
-		 else {
+		  else {
 	        String token = jwtProvider.generateToken(authenticatedEmploye.getEmail());
 	        authenticatedEmploye.setToken(token);
 	        return ResponseEntity.ok(authenticatedEmploye);

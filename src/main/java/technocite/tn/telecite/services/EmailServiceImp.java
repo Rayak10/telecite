@@ -41,7 +41,7 @@ public class EmailServiceImp implements IMail{
 		return "successfully sent email";
 	}
 	
-	@Scheduled(fixedDelay = 24*60*1000)
+	@Scheduled(fixedDelay = 24*60*60*1000)
 	public void sendMailConfirmation() {
 		String Newligne=System.getProperty("line.separator");
 		SimpleDateFormat formater = new SimpleDateFormat("dd-MM-yy");
@@ -59,8 +59,7 @@ public class EmailServiceImp implements IMail{
 	                             mailInfo.getNameEmploye()+"."+Newligne+
 				                  " l’expression de nos sentiments les meilleurs."+Newligne+"lien de reunion: http://localhost:5000/"+Newligne+"clé de session :Session"+ mailInfo.getIdReunion());	
 				});
-		//Reunion reunion = aloooo 
-		//send mail 
+		
 	 
 
 }
