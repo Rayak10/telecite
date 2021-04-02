@@ -218,26 +218,20 @@ public class EmloyeController {
 		Employe employeeDetails) throws ResourceNotFoundException {
 		Employe employe = employeRepository.findById(idEmploye)
 				.orElseThrow(() -> new ResourceNotFoundException("Employee not found for this id :: " + idEmploye));
-		
 		employe.setMatricule(employeeDetails.getMatricule());
 		employe.setNomEmploye(employeeDetails.getNomEmploye());
 		employe.setPrenomEmploye(employeeDetails.getPrenomEmploye());
 		employe.setDateNaissance(employeeDetails.getDateNaissance());
 		employe.setEmail(employeeDetails.getEmail());
-		employe.setPassword(passwordEncoder.encode(employeeDetails.getPassword()));
-
 		employe.setDateEmbauche(employeeDetails.getDateEmbauche());
 		employe.setSalaire(employeeDetails.getSalaire());
-		
 		employe.setPost(employeeDetails.getPost());
 		employe.setRole(employeeDetails.getRole());
 		employe.setActive(employeeDetails.getActive());
 		employe.setPhoto(employeeDetails.getPhoto());
 		employe.setBureau(employeeDetails.getBureau());
 		employe.setDepartement(employeeDetails.getDepartement());
-		employe.setEquipe(employeeDetails.getEquipe());
-
-		  
+		employe.setEquipe(employeeDetails.getEquipe()); 
 		final Employe updatedEmploye = employeRepository.save(employe);
 		 return ResponseEntity.ok(employeRepository.findAll());
 	}
@@ -250,19 +244,17 @@ public class EmloyeController {
 		final Employe updatedEmploye = employeRepository.save(employe);
 		 return ResponseEntity.ok(employeRepository.findAll());
 	}
-	/*@PostMapping("/login")
-    public ResponseEntity login(@RequestParam(name = "email") String email, @RequestParam(name = "password") String password) {
-        if (StringUtils.isEmpty(email) || StringUtils.isEmpty(password)) {
-            return ResponseEntity.badRequest().body("Cannot login with empty employe email or password");
-        }
-        Employe authenticatedEmploye = employeRepository.findByEmailAndPassword(email, password);
-        if (authenticatedEmploye == null || authenticatedEmploye.getActive()==false) {
-            return ResponseEntity.notFound().build();
-        }
-        else 
-        	return ResponseEntity.ok(authenticatedEmploye);
-    }*/
 
+	@PutMapping("/updatepwd/{idEmploye}")
+	public ResponseEntity updatepwd(@PathVariable(value = "idEmploye") Long idEmploye, @RequestBody 
+		Employe employeeDetails) throws ResourceNotFoundException {
+		Employe employe = employeRepository.findById(idEmploye)
+				.orElseThrow(() -> new ResourceNotFoundException("Employee not found for this id :: " + idEmploye));
+		employe.setPassword(passwordEncoder.encode(employeeDetails.getPassword()));
+		final Employe updatedEmploye = employeRepository.save(employe);
+		 return ResponseEntity.ok(employeRepository.findAll());
+	}
+	
 	 @PostMapping("/auth")
 	    public ResponseEntity auth(@RequestBody AuthRequest request) {
 		 Employe authenticatedEmploye= employerepository.findByEmailAndPassword(request.getEmail(), request.getPassword());
@@ -314,16 +306,10 @@ public class EmloyeController {
 	            return ResponseEntity.notFound().build();
 	        }
 	        List<Employe> equipeEmployes = employeRepository.findByEquipe(equipe);
-	        
-	        
-	       
 
 	        return ResponseEntity.ok(equipeEmployes);
 	    }
 	
-	 
-	    
-	 
 	 @GetMapping("/employesdepartement/{idDepartement}")
 	    public ResponseEntity findAllEemployesRDepartement(@PathVariable Long idDepartement) {
 	        if (idDepartement == null) {

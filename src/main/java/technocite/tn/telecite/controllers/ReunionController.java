@@ -115,24 +115,7 @@ public class ReunionController {
 	  
 	  
 	  
-	  
- @PutMapping("/update/{idReunion}")
-	public ResponseEntity<Reunion> updateRieunion(@PathVariable(value = "idReunion") Long idReunion, @RequestBody 
-		Reunion reunionDetails) throws ResourceNotFoundException {
-		Reunion reunion = reunionRepository.findById(idReunion)
-				.orElseThrow(() -> new ResourceNotFoundException("Employee not found for this id :: " + idReunion));
-		
-		reunion.setNomReunion(reunionDetails.getNomReunion());
-		reunion.setDescriptionReunion(reunionDetails.getDescriptionReunion());
-		reunion.setDateDebut(reunionDetails.getDateDebut());
-		reunion.setDateFin(reunionDetails.getDateFin());
-		reunion.setNotification(reunionDetails.getNotification());
-		reunion.setConversation(reunionDetails.getConversation());
-		reunion.setEquipe(reunionDetails.getEquipe());
-		reunion.setType(reunionDetails.getType());
-		final Reunion updatedReunion = reunionRepository.save(reunion);
-		return ResponseEntity.ok(updatedReunion);
-	}
+
  
  @DeleteMapping("/{idReunion}")
  public ResponseEntity deleteReunion(@PathVariable(name = "idReunion") Long idReunion) {

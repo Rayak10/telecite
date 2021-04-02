@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 import java.util.stream.Collectors;
 
 import javax.annotation.Resource;
@@ -45,6 +46,8 @@ public class ReunionServiceImpl implements ReunionService {
 		Reunion reunion = new Reunion();
 	        mapDtoToEntity(reunionDto, reunion);
 	        Reunion savedReunion = reunionRepository.save(reunion);
+	        Random random = new Random();
+	        int randomWithNextInt = random.nextInt();
 	       for(i=0;i<reunion.getEmployes().size();i++) {
 	emailrepository.sendEmail(reunion.getEmployes().get(i).getEmail()," "+
 							reunion.getType(),"Bonjour Nous avons l’honneur de vous convier à une réunion d’information le "+
@@ -52,7 +55,7 @@ public class ReunionServiceImpl implements ReunionService {
 							(reunion.getHeurDeb().getMinute())+"mnt."+Newligne+" Cette rencontre sera l’occasion d’aborder "+
                              reunion.getNomReunion()+"."+" Espérant vous compter parmi les membres présents, nous vous prions d’agréer,"+
 			                  reunion.getEmployes().get(i).getPrenomEmploye()+" "+reunion.getEmployes().get(i).getNomEmploye()+"."+Newligne+
-			                  " l’expression de nos sentiments les meilleurs."+Newligne+"lien de reunion: http://localhost:5000/"+Newligne+"clé de session :Session"+reunion.getIdReunion());	
+			                  " l’expression de nos sentiments les meilleurs."+Newligne+"lien de reunion: http://localhost:5000/"+Newligne+"clé de session :Session"+reunion.getIdReunion()+randomWithNextInt);	
 }
 	        return mapEntityToDto(savedReunion);
 	}
@@ -67,11 +70,25 @@ public class ReunionServiceImpl implements ReunionService {
 	}
 	@Override
 	public ReunionDto updateReunion(Long idReunion, ReunionDto reunionDto) {
-	        
+		int i;
+		String Newligne=System.getProperty("line.separator");
+		SimpleDateFormat formater = null;
+	    formater = new SimpleDateFormat("dd-MM-yy");
 		        Reunion r = reunionRepository.getOne(idReunion);
 		        r.getEmployes().clear();
 		        mapDtoToEntity(reunionDto, r);
 		        Reunion reunion = reunionRepository.save(r);
+		        Random random = new Random();
+		        int randomWithNextInt = random.nextInt();
+		       for(i=0;i<reunion.getEmployes().size();i++) {
+		emailrepository.sendEmail(reunion.getEmployes().get(i).getEmail()," "+
+								reunion.getType(),"Bonjour Nous avons l’honneur de vous convier à une réunion d’information le "+
+								formater.format(reunion.getDateDebut())+" à "+(reunion.getHeurDeb().getHour()-1)+"h"+
+								(reunion.getHeurDeb().getMinute())+"mnt."+Newligne+" Cette rencontre sera l’occasion d’aborder "+
+	                             reunion.getNomReunion()+"."+" Espérant vous compter parmi les membres présents, nous vous prions d’agréer,"+
+				                  reunion.getEmployes().get(i).getPrenomEmploye()+" "+reunion.getEmployes().get(i).getNomEmploye()+"."+Newligne+
+				                  " l’expression de nos sentiments les meilleurs."+Newligne+"lien de reunion: http://localhost:5000/"+Newligne+"clé de session :Session"+reunion.getIdReunion()+randomWithNextInt);	
+		       }
 		        return mapEntityToDto(reunion);
 		    }
 		
