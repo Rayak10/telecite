@@ -185,7 +185,6 @@ public class EmloyeController {
 		employe.get().setPrenomEmploye(employeeDetails.getPrenomEmploye());
 		employe.get().setDateNaissance(employeeDetails.getDateNaissance());
 		employe.get().setEmail(employeeDetails.getEmail());
-		employe.get().setPassword(passwordEncoder.encode(employeeDetails.getPassword()));
 		employe.get().setDateEmbauche(employeeDetails.getDateEmbauche());
 		employe.get().setSalaire(employeeDetails.getSalaire());
 		employe.get().setPost(employeeDetails.getPost());
